@@ -36,3 +36,25 @@
     transform: rotate(360deg);
   }
 }
+
+.predict-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.predict-form-item {
+  width: 500px;
+  margin: 5px;
+  padding: 8px;
+  font-size: 20px;
+}
+
+.result-good {
+  color: green;
+}
+
+.result-bad {
+  color: red;
+}
