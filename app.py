@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 import json
 
-filename = 'diabetes-model.pkl'
+filename = 'diabetes-model2.pkl'
 model = pickle.load(open(filename, 'rb'))
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True;
