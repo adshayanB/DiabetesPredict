@@ -15,8 +15,12 @@ from functools import wraps
 filename = 'diabetes-model2.pkl'
 model = pickle.load(open(filename, 'rb'))
 app = Flask(__name__)
+<<<<<<< HEAD
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///' + os.path.join(basedir,'users.db')
+=======
+app.config["TEMPLATES_AUTO_RELOAD"] = True;
+>>>>>>> c20cea6b79869b3370b2d1441f3277bd536c0340
 
 db=SQLAlchemy(app)
 @app.cli.command('dbCreate')
@@ -77,6 +81,7 @@ def token_required(f):
 
 @app.route('/')
 def home():
+<<<<<<< HEAD
     return render_template('index.html', token="React Connected!")
 @app.route('/users',methods=['GET'])
 def users():
@@ -99,6 +104,9 @@ def users():
 
 
 
+=======
+    return render_template('index.html')
+>>>>>>> c20cea6b79869b3370b2d1441f3277bd536c0340
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
@@ -135,4 +143,3 @@ def predict():
   
 if __name__ == '__main__':
     app.run(debug=True)
-    
