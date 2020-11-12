@@ -22,7 +22,7 @@ function App() {
       <Router>
         <div className="App">
           <Switch>
-            <Route exact path='/' component={Auth}/>
+            <Route exact path='/' component={Home}/>
             <Route exact path='/predict' component={PredictorForm}/>
             <Route exact path='/results' component={Result}/>
             <Route exact path='/auth' component={Auth}/>
