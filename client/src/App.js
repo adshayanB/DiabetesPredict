@@ -5,6 +5,7 @@ import Context from './utils/context';
 import Home from './components/Home';
 import PredictorForm from './components/PredictorForm';
 import Result from './components/Result';
+import Auth from './components/Auth';
 
 function App() {
   const [prediction, setPrediction] = useState(false);
@@ -20,11 +21,11 @@ function App() {
     }}>
       <Router>
         <div className="App">
-          <h1>Diabetes Predictor</h1>
           <Switch>
             <Route exact path='/' component={Home}/>
             <Route exact path='/predict' component={PredictorForm}/>
             <Route exact path='/results' component={Result}/>
+            <Route exact path='/auth' component={Auth}/>
           </Switch>
         </div>
       </Router>

@@ -6,11 +6,12 @@ import json
 filename = 'diabetes-model.pkl'
 model = pickle.load(open(filename, 'rb'))
 app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True;
 
 
 @app.route('/')
 def home():
-    return render_template('index.html', token="React Connected!")
+    return render_template('index.html')
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
@@ -46,4 +47,4 @@ def predict():
         
   
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
