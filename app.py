@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 import json
 
-filename = 'diabetes-model.pkl'
+filename = 'diabetes-model2.pkl'
 model = pickle.load(open(filename, 'rb'))
 app = Flask(__name__)
 
@@ -46,4 +46,5 @@ def predict():
         
   
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
+    
