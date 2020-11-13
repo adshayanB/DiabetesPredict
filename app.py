@@ -95,10 +95,34 @@ def users():
         user_data['confirmedOn']=user.confirmedOn
         output.append(user_data)
 
-    return jsonify(doctors=output)
+    return jsonify(users=output)
 
+@app.route('/api/register', methods=['POST'])
+def register():
+    data=request.json
+    emailUser=data['email']
 
+    test=User.query.filter_by(email=emailUser).first()
 
+    if test:
+        return jsonify(message='User already exists'), 409
+    else:
+        hashed_password=generate_password_hash(data['password'], method='sha256')
+        new_user=User(
+                             public_id=str(uuid.uuid4()),
+                             firstName=data['firstName'],
+                             lastName=data['lastName'],
+                             email=data['email'],
+                             healthCard=data['healthCard'],
+                             phoneNumber=data['phoneNumber'],
+                             password=hashed_password,
+                             confirmedEmail=False,
+                             confirmedOn=None
+                             )
+
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify(message='User Created'),201
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
