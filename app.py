@@ -1,7 +1,10 @@
 from flask import Flask,render_template, request, jsonify, make_response, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager,jwt_required,create_access_token
+from flask_mail import Mail, Message
 from sqlalchemy import Column, Integer,String, Float, Boolean
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+
 import pickle
 import numpy as np
 import json
@@ -19,6 +22,14 @@ app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///' + os.path.join(basedir,'users.db')
 app.config['SECRET_KEY']='secret-key'
+app.config['MAIL_SERVER']='smtp.mailtrap.io'
+app.config['MAIL_PORT'] = 2525
+app.config['MAIL_USERNAME'] = 'ea1b2115a85da6'
+app.config['MAIL_PASSWORD'] = 'f4639f2ee2cb85'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+mail=Mail(app)
+s = URLSafeTimedSerializer('SECRET_KEY')
 
 db=SQLAlchemy(app)
 @app.cli.command('dbCreate')
@@ -122,6 +133,16 @@ def register():
                              confirmedEmail=False,
                              confirmedOn=None
                              )
+    email = data['email']
+    token = s.dumps(email, salt='email-confirm')
+
+    msg = Message('Confirm Email', sender='bookingapp@booking.com', recipients=[email])
+
+    link = url_for('confirm_email', token=token, _external=True)
+
+    msg.body = 'Your link is {}'.format(link)
+
+    mail.send(msg)
 
     db.session.add(new_user)
     db.session.commit()
@@ -141,6 +162,21 @@ def login():
     else:
         return jsonify('Login Sucessful'),201
 
+@app.route('/confirm_email/<token>')
+def confirm_email(token):
+    try:
+        email = s.loads(token, salt='email-confirm', max_age=3600)
+    except SignatureExpired:
+        return jsonify(message='Invalid token')
+    user=User.query.filter_by(email=email).first()
+    if user.confirmedEmail:
+        return jsonify(message='Email already confirmed')
+    else:
+        user.confirmedEmail= True
+        user.confirmedOn = datetime.datetime.now()
+        db.session.add(user)
+        db.session.commit()
+        return jsonify(message='Email confirmed')
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
