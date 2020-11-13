@@ -1,5 +1,6 @@
 from flask import Flask,render_template, request, jsonify, make_response, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager,jwt_required,create_access_token
 from sqlalchemy import Column, Integer,String, Float, Boolean
 import pickle
 import numpy as np
@@ -80,7 +81,8 @@ def token_required(f):
 def home():
     return render_template('index.html', token="React Connected!")
 @app.route('/api/users',methods=['GET'])
-def users():
+@token_required
+def users(current_user):
     users=User.query.all()
     output=[]
     for user in users:
@@ -138,11 +140,6 @@ def login():
         return jsonify(token=token.decode('UTF-8'))
     else:
         return jsonify('Login Sucessful'),201
-
-
-
-
-
 
 
 @app.route('/api/predict', methods=['POST'])
