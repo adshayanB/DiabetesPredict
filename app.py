@@ -17,6 +17,7 @@ model = pickle.load(open(filename, 'rb'))
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///' + os.path.join(basedir,'users.db')
+app.config['SECRET_KEY']='secret-key'
 
 db=SQLAlchemy(app)
 @app.cli.command('dbCreate')
@@ -124,18 +125,30 @@ def register():
     db.session.commit()
     return jsonify(message='User Created'),201
 
+@app.route('/api/login', methods=['POST'])
+def login():
+    login=request.json
+
+    user=User.query.filter_by(email=login['email']).first()
+
+    if not user:
+        return jsonify(message='This email is invalid')
+    if check_password_hash(user.password,login['password']):
+        token=jwt.encode({'public_id': user.public_id,'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+        return jsonify(token=token.decode('UTF-8'))
+    else:
+        return jsonify('Login Sucessful'),201
+
+
+
+
+
+
+
 @app.route('/api/predict', methods=['POST'])
 def predict():
     json_data = request.get_json()
     
-    #pregnancies = int(request.form['pregnancies'])
-    #glucose = int(request.form['glucose'])
-    #bp = int(request.form['bloodpressure'])
-    #st = int(request.form['skinthickness'])
-    #insulin = int(request.form['insulin'])
-    #bmi = float(request.form['bmi'])
-    #dpf = float(request.form['dpf'])
-    #age = int(request.form['age'])
     pregnancies = int(json_data['pregnancies'])
     glucose = int(json_data['glucose'])
     bp = int(json_data['bloodpressure'])
