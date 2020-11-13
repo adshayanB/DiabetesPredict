@@ -94,20 +94,19 @@ def home():
 @app.route('/api/users',methods=['GET'])
 @token_required
 def users(current_user):
-    users=User.query.all()
     output=[]
-    for user in users:
-        user_data={}
-        user_data['public_id']=user.public_id
-        user_data['firstName']=user.firstName
-        user_data['lastName']=user.lastName
-        user_data['password']=user.password
-        user_data['email']=user.email
-        user_data['healthCard']=user.healthCard
-        user_data['phoneNumber']=user.phoneNumber
-        user_data['confirmedEmail']=user.confirmedEmail
-        user_data['confirmedOn']=user.confirmedOn
-        output.append(user_data)
+  
+    user_data={}
+    user_data['public_id']=current_user.public_id
+    user_data['firstName']=current_user.firstName
+    user_data['lastName']=current_user.lastName
+    user_data['password']=current_user.password
+    user_data['email']=current_user.email
+    user_data['healthCard']=current_user.healthCard
+    user_data['phoneNumber']=current_user.phoneNumber
+    user_data['confirmedEmail']=current_user.confirmedEmail
+    user_data['confirmedOn']=current_user.confirmedOn
+    output.append(user_data)
 
     return jsonify(users=output)
 
@@ -160,7 +159,7 @@ def login():
         token=jwt.encode({'public_id': user.public_id,'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
         return jsonify(token=token.decode('UTF-8'))
     else:
-        return jsonify('Login Sucessful'),201
+        return jsonify('Invalid Credentials'),401
 
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
