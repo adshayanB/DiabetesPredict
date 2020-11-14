@@ -91,24 +91,19 @@ def token_required(f):
 @app.route('/')
 def home():
     return render_template('index.html', token="React Connected!")
-@app.route('/api/users',methods=['GET'])
+@app.route('/api/user',methods=['GET'])
 @token_required
-def users(current_user):
-    output=[]
-  
+def user(current_user):
     user_data={}
-    user_data['public_id']=current_user.public_id
     user_data['firstName']=current_user.firstName
     user_data['lastName']=current_user.lastName
-    user_data['password']=current_user.password
     user_data['email']=current_user.email
     user_data['healthCard']=current_user.healthCard
     user_data['phoneNumber']=current_user.phoneNumber
     user_data['confirmedEmail']=current_user.confirmedEmail
     user_data['confirmedOn']=current_user.confirmedOn
-    output.append(user_data)
 
-    return jsonify(users=output)
+    return jsonify(user=user_data)
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -154,12 +149,12 @@ def login():
     user=User.query.filter_by(email=login['email']).first()
 
     if not user:
-        return jsonify(message='This email is invalid')
+        return jsonify(message='A user with this email does not exist.')
     if check_password_hash(user.password,login['password']):
         token=jwt.encode({'public_id': user.public_id,'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
         return jsonify(token=token.decode('UTF-8'))
     else:
-        return jsonify('Invalid Credentials'),401
+        return jsonify('Your email or password is incorrect'),401
 
 @app.route('/confirm_email/<token>')
 def confirm_email(token):

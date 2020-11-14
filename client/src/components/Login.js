@@ -1,23 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import '../css/Login.css';
+import Context from '../utils/context'
 
 const Login = (props) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const context = useContext(Context);
 
-    const handleSubmit = (e) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [fName, setFName] = useState('');
+    const [lName, setLName] = useState('');
+
+    const handleSubmit = async e => {
         e.preventDefault();
-        console.log('submitted')
-        //Enter authentication code here to validate user credentials
+        let response;
+        let json;
+        //Perform front-end form validation before sending to posting to back-end
+        
+
+        //Post email and password to back end and get authenticated
+        response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        })
+
+        json = await response.json();
+        context.assignTokenFunction(json.token, async() => {
+            console.log(context.stateToken);
+
+            if (context.stateToken){
+                response = await fetch('/api/user', {headers: { 'x-access-tokens': context.stateToken}});
+                json = await response.json();
+                console.log(json.firstname);
+                setFName(', ' + json.firstname, () => {
+                    setLName(json.lastname);
+                });
+            }
+        });
+        
     }
 
     //Password field should be secured and should not be openly updated in state
 
     return (
         <div className='login-container'>
-            <h1 className='welcome-message'>Welcome</h1>
+            <h1 className='welcome-message'>Welcome{fName} {lName}</h1>
             <form className='login-form' onSubmit={handleSubmit}>
-                <input className='login-form-item login-input' type='text' placeholder='Username' onChange={e => setUsername(e.target.value)}/>
+                <input className='login-form-item login-input' type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
                 <input className='login-form-item login-input' type='password' placeholder='Password' onChange={e => setPassword(e.target.value)}/>
                 <button className='login-form-item login-button' type='submit'>Sign in</button>
             </form>

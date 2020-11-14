@@ -9,15 +9,22 @@ import Auth from './components/Auth';
 
 function App() {
   const [prediction, setPrediction] = useState(false);
+  const [token, setToken] = useState();
 
   const assignPrediction = (pred) => {
-    setPrediction(pred)
+    setPrediction(pred);
+  }
+
+  const assignToken = (token) => {
+    setToken(token);
   }
   
   return (
     <Context.Provider value = {{
       statePrediction: prediction,
-      assignPredictionFunction: (pred) => assignPrediction(pred)
+      assignPredictionFunction: (pred) => assignPrediction(pred),
+      stateToken: token,
+      assignTokenFunction: (token) => assignToken(token)
     }}>
       <Router>
         <div className="App">

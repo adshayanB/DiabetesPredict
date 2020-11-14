@@ -24,6 +24,7 @@
 }
 
 .login-button {
+  transform: scale(1);
   border-radius: 15px;
   border: none;
   font-size: 25px;
@@ -35,6 +36,12 @@
   color: white;
   font-weight: bold;
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.login-button:hover {
+  transform: scale(1.025);
+  transition: transform 0.2s ease-in-out;
 }
 
 .login-form-item {
