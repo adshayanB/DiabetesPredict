@@ -70,6 +70,19 @@ class User(db.Model):
     password=Column(String(50))
     confirmedEmail=Column(Boolean)
     confirmedOn=Column(String())
+
+class Data(db.Model):
+    id=Column(Integer,primary_key=True)
+    user_id=Column(String(50))
+    pregnancies=Column(Integer)
+    bp=Column(Float)
+    st=Column(Float)
+    insulin=Column(Float)
+    bmi=Column(Float)
+    dpf=Column(Float)
+    age=Column(Integer)
+    dateTested=Column(String())
+
     
 def token_required(f):
     @wraps(f)
@@ -173,7 +186,8 @@ def confirm_email(token):
         return jsonify(message='Email confirmed')
 
 @app.route('/api/predict', methods=['POST'])
-def predict():
+@token_required
+def predict(current_user):
     json_data = request.get_json()
     
     pregnancies = int(json_data['pregnancies'])
@@ -195,7 +209,35 @@ def predict():
     return json.dumps(serializable_prediction)
     #return render_template('result.html', prediction=my_prediction)
 
-        
+@app.route('/api/predictData',methods=['POST'])
+@token_required
+def predictData(current_user):
+   
+    user_data={}
+    user_data['public_id']=current_user.public_id
+    data=request.json
+    newData=Data(
+        user_id=user_data['public_id'],
+        pregnancies=data['pregnancies'],
+        bp=data['bp'],
+        st=data['st'],
+        insulin=data['insulin'],
+        bmi=data['bmi'],
+        dpf=data['dpf'],
+        age=data['age'],
+        dateTested=datetime.datetime.now()
+    )
+    db.session.add(newData)
+    db.session.commit()
+    return jsonify(message='Data Added'),201
+    # pregnancies=Column(Integer)
+    # bp=Column(Float)
+    # st=Column(Float)
+    # insulin=Column(Float)
+    # bmi=Column(Float)
+    # dpf=Column(Float)
+    # age=Column(Integer)
+    
   
 if __name__ == '__main__':
     app.run(debug=True)
