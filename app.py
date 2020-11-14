@@ -230,13 +230,25 @@ def predictData(current_user):
     db.session.add(newData)
     db.session.commit()
     return jsonify(message='Data Added'),201
-    # pregnancies=Column(Integer)
-    # bp=Column(Float)
-    # st=Column(Float)
-    # insulin=Column(Float)
-    # bmi=Column(Float)
-    # dpf=Column(Float)
-    # age=Column(Integer)
+
+@app.route('/api/predictData',methods=['GET'])
+@token_required
+def getPredictData(current_user):
+    user={}
+    user['public_id']=current_user.public_id
+
+    userData=Data.query.filter_by(user_id=user['public_id']).first()
+
+    user_data={}
+    user_data['pregnancies']=userData.pregnancies
+    user_data['bp']=userData.bp
+    user_data['st']=userData.st
+    user_data['insulin']=userData.insulin
+    user_data['bmi']=userData.bmi
+    user_data['dpf']=userData.dpf
+    user_data['age']=userData.age
+
+    return jsonify(user_data=user_data)
     
   
 if __name__ == '__main__':
