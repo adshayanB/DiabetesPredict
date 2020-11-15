@@ -67,4 +67,23 @@
 .submission-buttons {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.back-button {
+  border-radius: 15px;
+  border-style: none;
+  border: 2px rgba(0, 188, 255, 1) solid;
+  color: rgba(0, 188, 255, 1);
+  background-color: transparent;
+  font-size: 25px;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
+}
+
+.back-button:hover {
+  background-color: rgba(0, 188, 255, 1);
+  color: white;
+  transition: background-color 0.1s ease-in-out;
 }
