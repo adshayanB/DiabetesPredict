@@ -127,6 +127,8 @@ def register():
 
     if test:
         return jsonify(message='User already exists'), 409
+    if data['password'] != data['confirmPassword']:
+        return jsonify(message='Passwords do not  match')
     else:
         hashed_password=generate_password_hash(data['password'], method='sha256')
         new_user=User(
@@ -184,6 +186,8 @@ def login():
 
     if not user:
         return jsonify(message='A user with this email does not exist.')
+    if not user.confirmedEmail:
+        return jsonify(message='User is not verified')
     if check_password_hash(user.password,login['password']):
         token=jwt.encode({'public_id': user.public_id,'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
         return jsonify(token=token.decode('UTF-8'))
