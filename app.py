@@ -116,7 +116,7 @@ def user(current_user):
     user_data['confirmedEmail']=current_user.confirmedEmail
     user_data['confirmedOn']=current_user.confirmedOn
 
-    return jsonify(user_data)
+    return jsonify(user=user_data)
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -154,6 +154,27 @@ def register():
     db.session.add(new_user)
     db.session.commit()
     return jsonify(message='User Created'),201
+@app.route('/api/resendToken',methods=['POST'])
+def resend():
+    data=request.json
+
+    test=User.query.filter_by(email=data['email']).first()
+    if not test:
+        return jsonify(message="Invalid Email")
+    if test.confirmedEmail:
+        return jsonify(message="Already Verified!")
+    else:
+        email = data['email']
+        token = s.dumps(email, salt='email-confirm')
+
+        msg = Message('Verify your email', sender='bookingapp@booking.com', recipients=[email])
+
+        link = url_for('confirm_email', token=token, _external=True)
+
+        msg.body = 'Your link is {}'.format(link)
+
+        mail.send(msg)
+        return jsonify(message='Sent a new token!')
 
 @app.route('/api/login', methods=['POST'])
 def login():
