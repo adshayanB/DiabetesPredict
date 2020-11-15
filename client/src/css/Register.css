@@ -63,3 +63,8 @@
   color: #07b6fe;
   cursor: pointer;
 }
+
+.submission-buttons {
+  display: flex;
+  flex-direction: row;
+}
