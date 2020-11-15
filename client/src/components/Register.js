@@ -8,6 +8,7 @@ const Register = (props) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
 
     const [nameEmailPassword, setNameEmailPassword] = useState(0);
 
@@ -17,26 +18,41 @@ const Register = (props) => {
     const handleNameNext = (e) => {
         e.preventDefault();
         setNameEmailPassword(1);
-        //Enter authentication code here to validate user credentials
     }
 
     const handleEmailNext = (e) => {
         e.preventDefault();
         setNameEmailPassword(2);
-        //Enter authentication code here to validate user credentials
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
-        //Enter authentication code here to validate user credentials
+
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                firstName,
+                lastName,
+                email,
+                healthCard: '',
+                phoneNumber,
+                password
+            })
+        })
+
+        const json = await response.json();
+        console.log(json);
     }
 
 
     if (nameEmailPassword === 0) {
         regFormPage = (
             <form className='register-form' onSubmit={handleNameNext}>
-                <input className='register-form-item register-input' type='text' placeholder='First Name' onChange={e => setFirstName(e.target.value)}/>
-                <input className='register-form-item register-input' type='text' placeholder='Last Name' onChange={e => setLastName(e.target.value)}/>
+                <input className='register-form-item register-input' value={firstName} type='text' placeholder='First Name' onChange={e => setFirstName(e.target.value)}/>
+                <input className='register-form-item register-input' value={lastName} type='text' placeholder='Last Name' onChange={e => setLastName(e.target.value)}/>
                 <div className='submission-buttons'>
                     <button className='register-form-item register-button' type='submit'>Next</button>
                 </div>
@@ -47,7 +63,9 @@ const Register = (props) => {
     else if (nameEmailPassword === 1) {
         regFormPage = (
             <form className='register-form' onSubmit={handleEmailNext}>
-                <input className='register-form-item register-input' type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
+                <input className='register-form-item register-input' value={email} type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
+                <input className='register-form-item register-input' value={phoneNumber} type='text' placeholder='Phone Number' onChange={e => setPhoneNumber(e.target.value)}/>
+                <div></div>
                 <div className='submission-buttons'>
                     <button className='register-form-item back-button' type='button' onClick={() => setNameEmailPassword(0)}>Back</button>
                     <div className='register-form-item'></div>
@@ -60,8 +78,8 @@ const Register = (props) => {
     else {
         regFormPage = (
             <form className='register-form' onSubmit={handleSubmit}>
-                <input className='register-form-item register-input' type='text' placeholder='Password' onChange={e => setPassword(e.target.value)}/>
-                <input className='register-form-item register-input' type='text' placeholder='Confirm Password' onChange={e => setConfirmPassword(e.target.value)}/>
+                <input className='register-form-item register-input' value={password} type='text' placeholder='Password' onChange={e => setPassword(e.target.value)}/>
+                <input className='register-form-item register-input' value={confirmPassword} type='text' placeholder='Confirm Password' onChange={e => setConfirmPassword(e.target.value)}/>
                 <div className='submission-buttons'>
                     <button className='register-form-item back-button' type='button' onClick={() => setNameEmailPassword(1)}>Back</button>
                     <div className='register-form-item'></div>

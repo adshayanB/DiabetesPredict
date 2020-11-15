@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import '../css/Login.css';
 import Context from '../utils/context'
 
@@ -9,6 +9,7 @@ const Login = (props) => {
     const [password, setPassword] = useState('');
     const [fName, setFName] = useState('');
     const [lName, setLName] = useState('');
+
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -30,18 +31,16 @@ const Login = (props) => {
         })
 
         json = await response.json();
-        context.assignTokenFunction(json.token, async() => {
-            console.log(context.stateToken);
+        context.assignTokenFunction(json.token);
+        console.log(json);
 
-            if (context.stateToken){
-                response = await fetch('/api/user', {headers: { 'x-access-tokens': context.stateToken}});
-                json = await response.json();
-                console.log(json.firstname);
-                setFName(', ' + json.firstname, () => {
-                    setLName(json.lastname);
-                });
-            }
-        });
+        if (json.token){
+            response = await fetch('/api/user', {headers: { 'x-access-tokens': json.token}});
+            json = await response.json();
+            console.log(json.firstName);
+            setFName(', ' + json.firstName);
+            setLName(json.lastName);
+        }
         
     }
 

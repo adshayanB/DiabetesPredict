@@ -116,7 +116,7 @@ def user(current_user):
     user_data['confirmedEmail']=current_user.confirmedEmail
     user_data['confirmedOn']=current_user.confirmedOn
 
-    return jsonify(user=user_data)
+    return jsonify(user_data)
 
 @app.route('/api/register', methods=['POST'])
 def register():
