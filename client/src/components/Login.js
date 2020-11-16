@@ -9,6 +9,9 @@ const Login = (props) => {
     const [password, setPassword] = useState('');
     const [fName, setFName] = useState('');
     const [lName, setLName] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    let showPasswordIcon;
+    let passwordType;
 
 
     const handleSubmit = async e => {
@@ -44,6 +47,20 @@ const Login = (props) => {
         
     }
 
+    if (showPassword) {
+        showPasswordIcon = (
+            <div className='hide-password' onClick={() => setShowPassword(false)}></div>
+        );
+
+        passwordType = 'text';
+    } else {
+        showPasswordIcon = (
+            <div className='show-password' onClick={() => setShowPassword(true)}></div>
+        );
+
+        passwordType = 'password';
+    }
+
     //Password field should be secured and should not be openly updated in state
 
     return (
@@ -51,7 +68,10 @@ const Login = (props) => {
             <h1 className='welcome-message'>Welcome{fName} {lName}</h1>
             <form className='login-form' onSubmit={handleSubmit}>
                 <input className='login-form-item login-input' type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
-                <input className='login-form-item login-input' type='password' placeholder='Password' onChange={e => setPassword(e.target.value)}/>
+                <div className='password-container'>
+                    <input className='password-item login-input' type={passwordType} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
+                    {showPasswordIcon}
+                </div>
                 <button className='login-form-item login-button' type='submit'>Sign in</button>
             </form>
             <h3 className='forgot-password'>Forgot your password?</h3>
