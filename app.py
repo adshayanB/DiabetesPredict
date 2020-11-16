@@ -90,6 +90,7 @@ class Track(db.Model):
     weight=Column(Float)
     height=Column(Integer)
     dateTested=Column(String())
+    bmi=Column(Float)
 
 
     
@@ -254,7 +255,8 @@ def trackData(current_user):
         hours=data['hours'],
         weight=data['weight'],
         height=data['height'],
-        dateTested=datetime.datetime.now()
+        dateTested=datetime.datetime.now(),
+        bmi=round((data['weight']/data['height']/data['height'])*10000, 2)
     )
     db.session.add(newTrackData)
     db.session.commit()
