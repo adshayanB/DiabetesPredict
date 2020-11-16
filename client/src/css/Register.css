@@ -18,7 +18,6 @@
 .register-input {
   border-radius: 50px;
   border-style: none;
-  border: 2px #7e7e7e solid;
   background-color: #e8e8e8;
   font-size: 25px;
 }
@@ -46,14 +45,13 @@
 
 .register-form-item {
   width: 100%;
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin-bottom: 50px;
   padding: 20px;
   height: 70px;
 }
 
 .welcome-message {
-  margin-bottom: 25px;
+  margin-bottom: 50px;
   width: 75.83%;
   text-align: left;
   font-size: 60px;
@@ -86,4 +84,20 @@
   background-color: rgba(0, 188, 255, 1);
   color: white;
   transition: background-color 0.1s ease-in-out;
+}
+
+.input-error-message {
+  width: 100%;
+  color: red;
+  font-weight: normal;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.border-error {
+  border: 2px red solid;
+}
+
+.border-normal {
+  border: 2px #7e7e7e solid;
 }
