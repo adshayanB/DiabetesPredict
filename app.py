@@ -82,6 +82,15 @@ class Data(db.Model):
     dpf=Column(Float)
     age=Column(Integer)
     dateTested=Column(String())
+class Track(db.Model):
+    id =Column(Integer,primary_key=True)
+    user_id=Column(String(50))
+    dailyGlucose=Column(Integer)
+    hours=Column(Integer)
+    weight=Column(Float)
+    height=Column(Integer)
+    dateTested=Column(String())
+
 
     
 def token_required(f):
@@ -233,6 +242,65 @@ def predict(current_user):
 
     return json.dumps(serializable_prediction)
     #return render_template('result.html', prediction=my_prediction)
+@app.route('/api/trackData', methods =['POST'])
+@token_required
+def trackData(current_user):
+    user_data={}
+    user_data['public_id']=current_user.public_id
+    data=request.json
+    newTrackData=Track(
+        user_id=user_data['public_id'],
+        dailyGlucose=data['dailyGlucose'],
+        hours=data['hours'],
+        weight=data['weight'],
+        height=data['height'],
+        dateTested=datetime.datetime.now()
+    )
+    db.session.add(newTrackData)
+    db.session.commit()
+    return jsonify(message='Data Added'),201
+
+@app.route('/api/trackDataAll',methods=['GET'])
+@token_required
+def trackDataAll(current_user):
+    user={}
+    user['public_id']=current_user.public_id
+    userData=Track.query.filter_by(user_id=user['public_id']).all()
+    output=[]
+    if userData:
+        for data in userData:
+            trackData={}
+            trackData['dailyGlucose']=data.dailyGlucose
+            trackData['hours']=data.hours
+            trackData['weight']=data.weight
+            trackData['height']=data.height
+            trackData['dateTested']=data.dateTested
+            output.append(trackData)
+        return jsonify(userData=output)
+    else:
+        return jsonify(message='You do not have any Tracking Data')
+
+@app.route('/api/trackData', methods=['GET'])
+@token_required
+def getTrackData(current_user):
+    user={}
+    user['public_id']=current_user.public_id
+
+    userDataAll=Track.query.filter_by(user_id=user['public_id']).order_by('dateTested').all()
+    userData=userDataAll[-1]
+    
+    if userData:
+        user_data={}
+        user_data['dailyGlucose']=userData.dailyGlucose
+        user_data['hours']=userData.hours
+        user_data['weight']=userData.weight
+        user_data['height']=userData.height
+        user_data['dateTested']=userData.dateTested
+
+        return jsonify(user_data=user_data)
+    else:
+        return jsonify(message='No Tracking Data')
+
 
 @app.route('/api/predictData',methods=['POST'])
 @token_required
@@ -258,22 +326,27 @@ def predictData(current_user):
 
 @app.route('/api/predictData',methods=['GET'])
 @token_required
-def getPredictData(current_user):
+def getPredictDataAll(current_user):
     user={}
     user['public_id']=current_user.public_id
 
-    userData=Data.query.filter_by(user_id=user['public_id']).first()
+    userDataAll=Data.query.filter_by(user_id=user['public_id']).all()
+    output=[]
+    if userDataAll:
+        for user in userDataAll:
+            user_data={}
+            user_data['pregnancies']=user.pregnancies
+            user_data['bp']=user.bp
+            user_data['st']=user.st
+            user_data['insulin']=user.insulin
+            user_data['bmi']=user.bmi
+            user_data['dpf']=user.dpf
+            user_data['age']=user.age
+            output.append(user_data)
 
-    user_data={}
-    user_data['pregnancies']=userData.pregnancies
-    user_data['bp']=userData.bp
-    user_data['st']=userData.st
-    user_data['insulin']=userData.insulin
-    user_data['bmi']=userData.bmi
-    user_data['dpf']=userData.dpf
-    user_data['age']=userData.age
-
-    return jsonify(user_data=user_data)
+        return jsonify(userData=output)
+    else:
+        return jsonify(message="No Predict Data")
     
   
 if __name__ == '__main__':
