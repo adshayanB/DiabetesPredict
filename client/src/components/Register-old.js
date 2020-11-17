@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Register.css';
+import classNames from 'classnames';
 
 const Register = (props) => {
     const [email, setEmail] = useState('');
@@ -34,7 +35,6 @@ const Register = (props) => {
     let confirmPasswordType;
     let showPasswordIcon;
     let showConfirmPasswordIcon;
-    let showHiddenDiv;
 
     let firstNameBorder = 'border-normal';
     let lastNameBorder = 'border-normal';
@@ -42,7 +42,10 @@ const Register = (props) => {
     let phoneNumberBorder = 'border-normal';
     let passwordBorder = 'border-normal';
     
-
+    useEffect (() => {
+        clearShake();
+    }, [submitted]);
+    
     const handleNameNext = (e) => {
         e.preventDefault();
         setNameEmailPassword(1);
@@ -54,12 +57,12 @@ const Register = (props) => {
         setNameEmailPassword(2);
         clearShake();
     }
-
     const handleSubmit = async e => {
         e.preventDefault();
 
         setSubmittedOnce(true);
         errorCheckSubmit();
+        setSubmitted(!submitted);
 
         if (firstNameError || lastNameError || emailError || phoneNumberError || passwordError) {
             return;
@@ -76,8 +79,7 @@ const Register = (props) => {
                 email,
                 healthCard: '',
                 phoneNumber,
-                password,
-                confirmPassword
+                password
             })
         })
 
@@ -288,7 +290,6 @@ if (phoneNumberError) {
 if (passwordError) {
     passwordBorder = 'border-error';
 }
-
     
 ////////////////////////////////////////////////////////////
     
@@ -329,14 +330,13 @@ if (passwordError) {
             <form className='register-form' onSubmit={handleSubmit}>
                 <h3 className='input-error-message'>{(submittedOnce) ? passwordError : null}</h3>
                 <div className='password-container'>
-                    <input className={`password-item register-input ${(submittedOnce) ? passwordBorder: 'border-normal'} ${passwordShake}`} type={passwordType} value={password} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
+                    <input className={classNames('password-item', 'register-input', (submittedOnce) ? passwordBorder: 'border-normal', passwordShake)} type={passwordType} value={password} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
                     {showPasswordIcon}
                 </div>
                 <div className='password-container'>
                     <input className={`password-item register-input ${(submittedOnce) ? passwordBorder: 'border-normal'} ${passwordShake}`} type={confirmPasswordType} value={confirmPassword} placeholder='Confirm Password' onChange={e => setConfirmPassword(e.target.value)}/>
                     {showConfirmPasswordIcon}
                 </div>
-                {showHiddenDiv}
                 <div className='submission-buttons'>
                     <button className='register-form-item back-button' type='button' onClick={() => setNameEmailPassword(1)}>Back</button>
                     <div className='register-form-item'></div>
