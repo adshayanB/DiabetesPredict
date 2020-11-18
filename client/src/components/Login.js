@@ -74,7 +74,7 @@ const Login = (props) => {
                 </div>
                 <button className='login-form-item login-button' type='submit'>Sign in</button>
             </form>
-            <h3 className='forgot-password'>Forgot your password?</h3>
+            <h5 className='forgot-password'>Forgot your password?</h5>
         </div>
     )
 }

@@ -83,6 +83,14 @@ const Register = (props) => {
 
         const json = await response.json();
         console.log(json);
+
+        if (json.message === 'User Created') {
+            props.assignRegNotif(['Registration Successful!', `Thank you for registering ${firstName}, please verify your account by clicking the verification link sent to your email.`, 'success']);
+        }
+
+        else if (json.message === 'User already exists') {
+            props.assignRegNotif(['Email already in use!',`A user with the email ${email} already exists. Please use another email.`, 'danger']);
+        }
     }
 
     const validateEmail = address => {
@@ -296,9 +304,9 @@ if (passwordError) {
     if (nameEmailPassword === 0) {
         regFormPage = (
             <form className='register-form' onSubmit={handleNameNext}>
-                <h3 className='input-error-message'>{(submittedOnce) ? firstNameError : null}</h3>
+                <h5 className='input-error-message'>{(submittedOnce) ? firstNameError : null}</h5>
                 <input className={`register-form-item register-input ${(submittedOnce) ? firstNameBorder: 'border-normal'} ${firstNameShake}`} value={firstName} type='text' placeholder='First Name' onChange={e => setFirstName(e.target.value)}/>
-                <h3 className='input-error-message'>{(submittedOnce) ? lastNameError : null}</h3>
+                <h5 className='input-error-message'>{(submittedOnce) ? lastNameError : null}</h5>
                 <input className={`register-form-item register-input ${(submittedOnce) ? lastNameBorder: 'border-normal'} ${lastNameShake}`} value={lastName} type='text' placeholder='Last Name' onChange={e => setLastName(e.target.value)}/>
                 <div className='submission-buttons'>
                     <button className='register-form-item register-button' type='submit'>Next</button>
@@ -310,9 +318,9 @@ if (passwordError) {
     else if (nameEmailPassword === 1) {
         regFormPage = (
             <form className='register-form' onSubmit={handleEmailNext}>
-                <h3 className='input-error-message'>{(submittedOnce) ? emailError : null}</h3>
+                <h5 className='input-error-message'>{(submittedOnce) ? emailError : null}</h5>
                 <input className={`register-form-item register-input ${(submittedOnce) ? emailBorder: 'border-normal'} ${emailShake}`} value={email} type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
-                <h3 className='input-error-message'>{(submittedOnce) ? phoneNumberError : null}</h3>
+                <h5 className='input-error-message'>{(submittedOnce) ? phoneNumberError : null}</h5>
                 <input className={`register-form-item register-input ${(submittedOnce) ? phoneNumberBorder: 'border-normal'} ${phoneNumberShake}`} value={phoneNumber} type='text' placeholder='Phone Number' onChange={e => setPhoneNumber(e.target.value)}/>
                 <div></div>
                 <div className='submission-buttons'>
@@ -327,7 +335,7 @@ if (passwordError) {
     else {
         regFormPage = (
             <form className='register-form' onSubmit={handleSubmit}>
-                <h3 className='input-error-message'>{(submittedOnce) ? passwordError : null}</h3>
+                <h5 className='input-error-message'>{(submittedOnce) ? passwordError : null}</h5>
                 <div className='password-container'>
                     <input className={`password-item register-input ${(submittedOnce) ? passwordBorder: 'border-normal'} ${passwordShake}`} type={passwordType} value={password} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
                     {showPasswordIcon}
