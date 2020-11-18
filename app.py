@@ -136,7 +136,7 @@ def register():
     test=User.query.filter_by(email=emailUser).first()
 
     if test:
-        return jsonify(message='User already exists'), 409
+        return jsonify(message='A user with this email already exists.'), 409
     if data['password'] != data['confirmPassword']:
         return jsonify(message='Passwords do not  match')
     else:
