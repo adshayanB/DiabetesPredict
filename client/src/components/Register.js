@@ -109,36 +109,7 @@ const Register = (props) => {
         (lastNameShake !== '') && setLastNameShake('');
     }
 
-    //Decides whether the password is currently shown or not
-    if (showPassword) {
-        showPasswordIcon = (
-            <div className='hide-password' onClick={() => setShowPassword(false)}></div>
-        );
-
-        passwordType = 'text';
-    } else {
-        showPasswordIcon = (
-            <div className='show-password' onClick={() => setShowPassword(true)}></div>
-        );
-
-        passwordType = 'password';
-    }
-
-
-    //Decides whether the confirm password is currently shown or not
-    if (showConfirmPassword) {
-        showConfirmPasswordIcon = (
-            <div className='hide-password' onClick={() => setShowConfirmPassword(false)}></div>
-        );
-
-        confirmPasswordType = 'text';
-    } else {
-        showConfirmPasswordIcon = (
-            <div className='show-password' onClick={() => setShowConfirmPassword(true)}></div>
-        );
-
-        confirmPasswordType = 'password';
-    }
+    
 
 
 
@@ -275,6 +246,36 @@ const errorCheckRender = () => {
 }
 
 errorCheckRender();
+
+//Decides whether the password is currently shown or not
+if (showPassword) {
+    showPasswordIcon = (
+        <div className={`hide-password ${passwordShake}`} onClick={() => setShowPassword(false)}></div>
+    );
+
+    passwordType = 'text';
+} else {
+    showPasswordIcon = (
+        <div className={`show-password ${passwordShake}`} onClick={() => setShowPassword(true)}></div>
+    );
+
+    passwordType = 'password';
+}
+
+ //Decides whether the confirm password is currently shown or not
+ if (showConfirmPassword) {
+    showConfirmPasswordIcon = (
+        <div className={`hide-password ${passwordShake}`} onClick={() => setShowConfirmPassword(false)}></div>
+    );
+
+    confirmPasswordType = 'text';
+} else {
+    showConfirmPasswordIcon = (
+        <div className={`show-password ${passwordShake}`} onClick={() => setShowConfirmPassword(true)}></div>
+    );
+
+    confirmPasswordType = 'password';
+}
 
 //Set error borders on inputs
 if (firstNameError) {

@@ -43,6 +43,9 @@ const Login = (props) => {
             console.log(json.firstName);
             setFName(', ' + json.firstName);
             setLName(json.lastName);
+            props.assignLogNotif([]);
+        } else {
+            props.assignLogNotif(['', json.message, 'danger']);
         }
         
     }

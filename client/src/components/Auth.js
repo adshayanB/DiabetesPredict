@@ -48,7 +48,10 @@ const Auth = () => {
             gradientDisplay = ( <div className="gradient-display-background gradient-display-background-register">
                                     <div className='gradient-display gradient-display-register-rtrue'>
                                         <h1 className='gradient-display-text'>Already have an account?</h1>
-                                        <button  onClick={() => setLoginRegister(false)} className='gradient-display-button gradient-display-button-red'>Login</button>
+                                        <button  onClick={() => {
+                                            setRegShow(false);
+                                            setRegNotification([]);
+                                            setLoginRegister(false)}} className='gradient-display-button gradient-display-button-red'>Login</button>
                                     </div>
                                     <div className='gradient-display gradient-display-register-bfalse'></div>
                                 </div>);
@@ -59,7 +62,10 @@ const Auth = () => {
                                     <div className='gradient-display gradient-display-login-rfalse'></div>
                                     <div className='gradient-display gradient-display-login-btrue'>
                                         <h1 className='gradient-display-text'>Don't have an account?</h1>
-                                        <button onClick={() => setLoginRegister(true)} className='gradient-display-button gradient-display-button-blue'>Register</button>
+                                        <button onClick={() => {
+                                            setLogShow(false);
+                                            setLogNotification([]);
+                                            setLoginRegister(true)}} className='gradient-display-button gradient-display-button-blue'>Register</button>
                                     </div>
                                 </div>);
     }
