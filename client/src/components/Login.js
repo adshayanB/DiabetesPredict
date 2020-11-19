@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import '../css/Login.css';
 import Context from '../utils/context'
+import Lottie from 'react-lottie';
+import loadingData from '../lotties/loading';
 
 const Login = (props) => {
     const context = useContext(Context);
@@ -10,16 +12,26 @@ const Login = (props) => {
     const [fName, setFName] = useState('');
     const [lName, setLName] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
     let showPasswordIcon;
     let passwordType;
 
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: loadingData,
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid slice"
+        }
+      };
 
     const handleSubmit = async e => {
+        
         e.preventDefault();
         let response;
         let json;
-        //Perform front-end form validation before sending to posting to back-end
-        
+
+        setLoading(true);
 
         //Post email and password to back end and get authenticated
         response = await fetch('/api/login', {
@@ -35,16 +47,16 @@ const Login = (props) => {
 
         json = await response.json();
         context.assignTokenFunction(json.token);
-        console.log(json);
 
         if (json.token){
             response = await fetch('/api/user', {headers: { 'x-access-tokens': json.token}});
             json = await response.json();
-            console.log(json.firstName);
+            setLoading(false);
             setFName(', ' + json.firstName);
             setLName(json.lastName);
             props.assignLogNotif([]);
         } else {
+            setLoading(false)
             props.assignLogNotif(['', json.message, 'danger']);
         }
         
@@ -75,7 +87,11 @@ const Login = (props) => {
                     <input className='password-item login-input' type={passwordType} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
                     {showPasswordIcon}
                 </div>
-                <button className='login-form-item login-button' type='submit'>Sign in</button>
+                <button className='login-form-item login-button' type='submit' disabled={loading}>
+                    {!loading && 'Sign in'}
+                    {loading && <Lottie options={defaultOptions} height={75} width={75}></Lottie>}
+                </button>
+                
             </form>
             <h5 className='forgot-password'>Forgot your password?</h5>
         </div>

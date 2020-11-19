@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Register.css';
+import Lottie from 'react-lottie';
+import loadingData from '../lotties/loading';
 
 const Register = (props) => {
     const [email, setEmail] = useState('');
@@ -29,6 +31,8 @@ const Register = (props) => {
     const [phoneNumberShake, setPhoneNumberShake] = useState('');
     const [passwordShake, setPasswordShake] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
     let regFormPage;
     let passwordType;
     let confirmPasswordType;
@@ -42,7 +46,15 @@ const Register = (props) => {
     let phoneNumberBorder = 'border-normal';
     let passwordBorder = 'border-normal';
     
-
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: loadingData,
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid slice"
+        }
+      };
+      
     const handleNameNext = (e) => {
         e.preventDefault();
         setNameEmailPassword(1);
@@ -58,10 +70,12 @@ const Register = (props) => {
     const handleSubmit = async e => {
         e.preventDefault();
 
+        setLoading(true);
         setSubmittedOnce(true);
         errorCheckSubmit();
 
         if (firstNameError || lastNameError || emailError || phoneNumberError || passwordError) {
+            setLoading(false);
             return;
         }
 
@@ -83,6 +97,8 @@ const Register = (props) => {
 
         const json = await response.json();
         console.log(json);
+
+        setLoading(false);
 
         if (json.message === 'User Created') {
             props.assignRegNotif(['Registration Successful!', `Thank you for registering ${firstName}, please verify your account by clicking the verification link sent to your email.`, 'success']);
@@ -349,7 +365,10 @@ if (passwordError) {
                 <div className='submission-buttons'>
                     <button className='register-form-item back-button' type='button' onClick={() => setNameEmailPassword(1)}>Back</button>
                     <div className='register-form-item'></div>
-                    <button className='register-form-item register-button' type='submit'>Sign up</button>
+                    <button className='register-form-item register-button' type='submit' disabled={loading}>
+                        {!loading && 'Sign up'}
+                        {loading && <Lottie options={defaultOptions} height={75} width={75}></Lottie>}
+                    </button>
                 </div>
             </form>
         );
