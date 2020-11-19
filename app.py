@@ -1,4 +1,4 @@
-from flask import Flask,render_template, request, jsonify, make_response, url_for
+from flask import Flask,render_template, request, jsonify, make_response, url_for,redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager,jwt_required,create_access_token
 from flask_mail import Mail, Message
@@ -24,13 +24,7 @@ app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///' + os.path.join(basedir,'users.db')
 app.config['SECRET_KEY']='secret-key'
-# app.config['MAIL_SERVER']='smtp.mailtrap.io'
-# app.config['MAIL_PORT'] = 2525
-# app.config['MAIL_USERNAME'] = 'ea1b2115a85da6'
-# app.config['MAIL_PASSWORD'] = 'f4639f2ee2cb85'
-# app.config['MAIL_USE_TLS'] = True
-# app.config['MAIL_USE_SSL'] = False
-# mail=Mail(app)
+
 SENDGRID_API_KEY = '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'
 
 sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
@@ -121,6 +115,19 @@ def token_required(f):
 @app.route('/')
 def home():
     return render_template('index.html', token="React Connected!")
+
+@app.route('/confirm')
+def confirm():
+    return render_template('index.html', token="Email Validated")
+
+@app.route('/alreadyConfirmed')
+def alreadyConfirmed():
+    return render_template('index.html', token="Email Already Confirmed")
+
+@app.route('/invalid')
+def invalid():
+    return render_template('index.html', token="Invalid Token")
+
 @app.route('/api/user',methods=['GET'])
 @token_required
 def user(current_user):
@@ -221,16 +228,16 @@ def confirm_email(token):
     try:
         email = s.loads(token, salt='email-confirm', max_age=3600)
     except SignatureExpired:
-        return jsonify(message='Invalid token')
+        return redirect(url_for('invalid'))
     user=User.query.filter_by(email=email).first()
     if user.confirmedEmail:
-        return jsonify(message='Email already confirmed')
+         return redirect(url_for('alreadyConfirmed'))
     else:
         user.confirmedEmail= True
         user.confirmedOn = datetime.datetime.now()
         db.session.add(user)
         db.session.commit()
-        return jsonify(message='Email confirmed')
+        return redirect(url_for('confirm'))
 
 @app.route('/api/predict', methods=['POST'])
 @token_required
