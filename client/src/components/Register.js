@@ -88,7 +88,7 @@ const Register = (props) => {
             props.assignRegNotif(['Registration Successful!', `Thank you for registering ${firstName}, please verify your account by clicking the verification link sent to your email.`, 'success']);
         }
 
-        else if (json.message === 'User already exists') {
+        else if (json.message === 'A user with this email already exists.') {
             props.assignRegNotif(['Email already in use!',`A user with the email ${email} already exists. Please use another email.`, 'danger']);
         }
     }

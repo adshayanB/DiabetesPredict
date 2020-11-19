@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Login from './Login';
 import Register from './Register';
 import { CSSTransition } from 'react-transition-group'; 
 import {Alert} from 'react-bootstrap'
 import '../css/Auth.css';
 
-const Auth = () => {
+const Auth = (props) => {
     const [loginRegister, setLoginRegister] = useState(false);
     const [regNotification, setRegNotification] = useState([]);
     const [logNotification, setLogNotification] = useState([]);
@@ -16,6 +16,29 @@ const Auth = () => {
     let resizeTimer;
     let regNotificationDisplay;
     let logNotificationDisplay;
+
+    useEffect(async() => {
+        const { token } = props.match.params;
+        let response;
+        let json;
+        if (token){
+            response = await fetch(`/api/confirm_email/${token}`);
+            json = await response.json();
+
+            if (json.message === 'token_expired') {
+                setLogNotification(['Verification Token Expired!', 'Your verification token session has expired. Please press Resend to send another verification link to your email.', 'danger']);
+                setLogShow(true);
+            }
+            else if (json.message === 'email_already_confirmed') {
+                setLogNotification(['Account already verified!', 'You have already verified this account.', 'warning']);
+                setLogShow(true);
+            }
+            else if (json.message === 'email_confirm_success') {
+                setLogNotification(['Account verified successfully!', 'Thank you for verifying your account. You may now log in.', 'success']);
+                setLogShow(true);
+            }
+        }
+    }, []);
 
     window.addEventListener("resize", () => {
     document.body.classList.add("resize-animation-stopper");

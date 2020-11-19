@@ -112,21 +112,14 @@ def token_required(f):
         return f(current_user, *args, **kwargs)
     return decorated
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def index(path):
+    return render_template('index.html')
+
 @app.route('/')
 def home():
     return render_template('index.html', token="React Connected!")
-
-@app.route('/confirm')
-def confirm():
-    return render_template('index.html', token="Email Validated")
-
-@app.route('/alreadyConfirmed')
-def alreadyConfirmed():
-    return render_template('index.html', token="Email Already Confirmed")
-
-@app.route('/invalid')
-def invalid():
-    return render_template('index.html', token="Invalid Token")
 
 @app.route('/api/user',methods=['GET'])
 @token_required
@@ -140,7 +133,7 @@ def user(current_user):
     user_data['confirmedEmail']=current_user.confirmedEmail
     user_data['confirmedOn']=current_user.confirmedOn
 
-    return jsonify(user=user_data)
+    return jsonify(user_data)
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -221,23 +214,27 @@ def login():
         token=jwt.encode({'public_id': user.public_id,'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
         return jsonify(token=token.decode('UTF-8'))
     else:
-        return jsonify('Your email or password is incorrect'),401
+        return jsonify(message='Your email or password is incorrect'),401
 
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
+    return redirect('/auth/' + token)
+
+@app.route('/api/confirm_email/<token>')
+def confirm_email_api(token):
     try:
         email = s.loads(token, salt='email-confirm', max_age=3600)
     except SignatureExpired:
-        return redirect(url_for('invalid'))
+        return jsonify(message='token_expired')
     user=User.query.filter_by(email=email).first()
     if user.confirmedEmail:
-         return redirect(url_for('alreadyConfirmed'))
+         return jsonify(message='email_already_confirmed')
     else:
         user.confirmedEmail= True
         user.confirmedOn = datetime.datetime.now()
         db.session.add(user)
         db.session.commit()
-        return redirect(url_for('confirm'))
+        return jsonify(message='email_confirm_success')
 
 @app.route('/api/predict', methods=['POST'])
 @token_required

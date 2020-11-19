@@ -32,7 +32,7 @@ function App() {
             <Route exact path='/' component={Home}/>
             <Route exact path='/predict' component={PredictorForm}/>
             <Route exact path='/results' component={Result}/>
-            <Route exact path='/auth' component={Auth}/>
+            <Route exact path='/auth/:token?' component={Auth}/>
           </Switch>
         </div>
       </Router>
