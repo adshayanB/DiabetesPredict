@@ -14,3 +14,4 @@ Flask-JWT-Extended==3.24.1
 Flask-JWT-Extended==3.24.1
 requests ==2.25.0
 Flask-Mail
+sendgrid
