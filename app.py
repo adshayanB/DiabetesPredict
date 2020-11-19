@@ -4,6 +4,8 @@ from flask_jwt_extended import JWTManager,jwt_required,create_access_token
 from flask_mail import Mail, Message
 from sqlalchemy import Column, Integer,String, Float, Boolean
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+import sendgrid
+from sendgrid.helpers.mail import *
 
 import pickle
 import numpy as np
@@ -21,14 +23,19 @@ model = pickle.load(open(filename, 'rb'))
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///' + os.path.join(basedir,'users.db')
-app.config['SECRET_KEY']='secret-key'
-app.config['MAIL_SERVER']='smtp.mailtrap.io'
-app.config['MAIL_PORT'] = 2525
-app.config['MAIL_USERNAME'] = 'ea1b2115a85da6'
-app.config['MAIL_PASSWORD'] = 'f4639f2ee2cb85'
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-mail=Mail(app)
+# app.config['SECRET_KEY']='secret-key'
+# app.config['MAIL_SERVER']='smtp.mailtrap.io'
+# app.config['MAIL_PORT'] = 2525
+# app.config['MAIL_USERNAME'] = 'ea1b2115a85da6'
+# app.config['MAIL_PASSWORD'] = 'f4639f2ee2cb85'
+# app.config['MAIL_USE_TLS'] = True
+# app.config['MAIL_USE_SSL'] = False
+# mail=Mail(app)
+SENDGRID_API_KEY = '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'
+
+sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
+
+
 s = URLSafeTimedSerializer('SECRET_KEY')
 
 db=SQLAlchemy(app)
@@ -152,20 +159,22 @@ def register():
                              confirmedEmail=False,
                              confirmedOn=None
                              )
-    email = data['email']
-    token = s.dumps(email, salt='email-confirm')
+        email = data['email']
+        from_email = Email("diabetesd0@gmail.com")
+        to_email=To(email)
+        subject="Verify your email"
+        token = s.dumps(email, salt='email-confirm')
+        link = url_for('confirm_email', token=token, _external=True)
+        content=Content("text/plain", "Your link is {}".format(link))
+        mail = Mail(from_email, to_email, subject, content)
 
-    msg = Message('Confirm Email', sender='bookingapp@booking.com', recipients=[email])
-
-    link = url_for('confirm_email', token=token, _external=True)
-
-    msg.body = 'Your link is {}'.format(link)
-
-    mail.send(msg)
-
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify(message='User Created'),201
+        response = sg.client.mail.send.post(request_body=mail.get())
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify(message='User Created'),201
 @app.route('/api/resendToken',methods=['POST'])
 def resend():
     data=request.json
@@ -177,15 +186,18 @@ def resend():
         return jsonify(message="Already Verified!")
     else:
         email = data['email']
+        from_email = Email("diabetesd0@gmail.com")
+        to_email=To(email)
+        subject="Verify your email"
         token = s.dumps(email, salt='email-confirm')
-
-        msg = Message('Verify your email', sender='bookingapp@booking.com', recipients=[email])
-
         link = url_for('confirm_email', token=token, _external=True)
+        content=Content("text/plain", "Your link is {}".format(link))
+        mail = Mail(from_email, to_email, subject, content)
 
-        msg.body = 'Your link is {}'.format(link)
-
-        mail.send(msg)
+        response = sg.client.mail.send.post(request_body=mail.get())
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
         return jsonify(message='Sent a new token!')
 
 @app.route('/api/login', methods=['POST'])
