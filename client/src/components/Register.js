@@ -98,6 +98,7 @@ const Register = (props) => {
         const json = await response.json();
         console.log(json);
 
+        props.assignAuthEmail(email);
         setLoading(false);
 
         if (json.message === 'User Created') {

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Login from './Login';
 import Register from './Register';
+import Lottie from 'react-lottie';
 import { CSSTransition } from 'react-transition-group'; 
-import {Alert} from 'react-bootstrap'
+import {Alert, Button} from 'react-bootstrap'
+import loadingData from '../lotties/loading';
 import '../css/Auth.css';
 
 const Auth = (props) => {
@@ -11,6 +13,8 @@ const Auth = (props) => {
     const [logNotification, setLogNotification] = useState([]);
     const [regShow, setRegShow] = useState(false);
     const [logShow, setLogShow] = useState(false);
+    const [authEmail, setAuthEmail] = useState('');
+    const [loading, setLoading] = useState(false);
 
     let gradientDisplay;
     let resizeTimer;
@@ -48,6 +52,19 @@ const Auth = (props) => {
     }, 400);
     });
 
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: loadingData,
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid slice"
+        }
+      };
+
+    const assignAuthEmail = (email) => {
+        setAuthEmail(email);
+    }
+
     const assignRegNotif = (regNotif) => {
         setRegNotification(regNotif);
     }
@@ -64,6 +81,33 @@ const Auth = (props) => {
     const logNotifClose = () => {
         setLogShow(true);
         setLogNotification([]);
+    }
+
+    const handleResendTokenReg = async() => {
+        let response;
+        let json;
+
+        setLoading(true);
+
+        response = await fetch('/api/resendToken', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: authEmail
+            })
+        })
+
+        json = await response.json();
+
+        setLoading(false);
+
+
+    }
+
+    const handleResendTokenLog = async() => {
+
     }
 
     //Check for which screen the user is currently on (login or register)
@@ -98,6 +142,12 @@ const Auth = (props) => {
         regNotificationDisplay = (  <Alert className='alert-align' variant={regNotification[2]} onClose={() => regNotifClose()} dismissible>
                                         <Alert.Heading>{regNotification[0]}</Alert.Heading>
                                         <p>{regNotification[1]}</p>
+                                        {(regNotification[0] === 'Registration Successful!') && (<div className="d-flex justify-content-end">
+                                            <Button onClick={() => handleResendTokenReg()} variant="outline-success" disabled={loading}>
+                                                {!loading && 'Resend'}
+                                                {loading && <Lottie options={defaultOptions} height={35} width={35}></Lottie>}
+                                            </Button>
+                                        </div>)}
                                     </Alert>);
         (regShow !== true) && setRegShow(true);
     }
@@ -135,7 +185,8 @@ const Auth = (props) => {
                     classNames="reg-transition"
                     unmountOnExit
                 >
-                    <Register assignRegNotif={(regNotif) => assignRegNotif(regNotif)}/>
+                    <Register assignRegNotif={(regNotif) => assignRegNotif(regNotif)}
+                              assignAuthEmail={(email) => assignAuthEmail(email)}/>
                 </CSSTransition>
             </div>
             <div className='fill'>
