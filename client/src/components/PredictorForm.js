@@ -49,7 +49,6 @@ const PredictorForm = () => {
             })
 
             const json = await response.json();
-            console.log(json[0]);
             context.assignPredictionFunction(json[0])
             history.push('/results')
     }

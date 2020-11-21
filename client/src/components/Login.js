@@ -48,6 +48,7 @@ const Login = (props) => {
         json = await response.json();
         context.assignTokenFunction(json.token);
 
+
         if (json.token){
             response = await fetch('/api/user', {headers: { 'x-access-tokens': json.token}});
             json = await response.json();
@@ -55,9 +56,16 @@ const Login = (props) => {
             setFName(', ' + json.firstName);
             setLName(json.lastName);
             props.assignLogNotif([]);
-        } else {
+        } else if (json.message === 'User is not verified'){
             setLoading(false)
-            props.assignLogNotif(['', json.message, 'danger']);
+            props.assignAuthEmail(email);
+            props.assignLogNotif(['Account not verified!', 'This account has not yet been verified. If you are the owner of this account and did not recieve a verification email, please click Resend to send another verification link to your email.', 'warning']);
+        } else if (json.message === 'A user with this email does not exist.') {
+            setLoading(false)
+            props.assignLogNotif(['Account not found!', 'A user with this email does not exist.', 'danger']);
+        } else if (json.message === 'Your email or password is incorrect') {
+            setLoading(false)
+            props.assignLogNotif(['Invalid Credentials!', 'Your email or password is incorrect.', 'danger']);
         }
         
     }

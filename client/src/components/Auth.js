@@ -83,7 +83,7 @@ const Auth = (props) => {
         setLogNotification([]);
     }
 
-    const handleResendTokenReg = async() => {
+    const handleResendToken = async() => {
         let response;
         let json;
 
@@ -103,10 +103,6 @@ const Auth = (props) => {
 
         setLoading(false);
 
-
-    }
-
-    const handleResendTokenLog = async() => {
 
     }
 
@@ -143,7 +139,7 @@ const Auth = (props) => {
                                         <Alert.Heading>{regNotification[0]}</Alert.Heading>
                                         <p>{regNotification[1]}</p>
                                         {(regNotification[0] === 'Registration Successful!') && (<div className="d-flex justify-content-end">
-                                            <Button onClick={() => handleResendTokenReg()} variant="outline-success" disabled={loading}>
+                                            <Button onClick={() => handleResendToken()} variant="outline-success" disabled={loading}>
                                                 {!loading && 'Resend'}
                                                 {loading && <Lottie options={defaultOptions} height={35} width={35}></Lottie>}
                                             </Button>
@@ -156,6 +152,12 @@ const Auth = (props) => {
         logNotificationDisplay  = ( <Alert className='alert-align' variant={logNotification[2]} onClose={() => logNotifClose()} dismissible>
                                         <Alert.Heading>{logNotification[0]}</Alert.Heading>
                                         <p>{logNotification[1]}</p>
+                                        {(logNotification[0] === 'Account not verified!') && (<div className="d-flex justify-content-end">
+                                            <Button onClick={() => handleResendToken()} variant="outline-warning" disabled={loading}>
+                                                {!loading && 'Resend'}
+                                                {loading && <Lottie options={defaultOptions} height={35} width={35}></Lottie>}
+                                            </Button>
+                                        </div>)}
                                     </Alert>);
         (logShow !== true) && setLogShow(true);
     }
@@ -207,7 +209,8 @@ const Auth = (props) => {
                     classNames="login-transition"
                     unmountOnExit
                 >
-                    <Login assignLogNotif={(logNotif) => assignLogNotif(logNotif)}/>
+                    <Login assignLogNotif={(logNotif) => assignLogNotif(logNotif)}
+                           assignAuthEmail={(email) => assignAuthEmail(email)}/>
                 </CSSTransition>
             </div>
             
