@@ -3,14 +3,14 @@ import '../css/Login.css';
 import Context from '../utils/context'
 import Lottie from 'react-lottie';
 import loadingData from '../lotties/loading';
+import { useHistory } from 'react-router-dom';
 
 const Login = (props) => {
     const context = useContext(Context);
+    let history = useHistory();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [fName, setFName] = useState('');
-    const [lName, setLName] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     let showPasswordIcon;
@@ -46,16 +46,17 @@ const Login = (props) => {
         })
 
         json = await response.json();
-        context.assignTokenFunction(json.token);
 
 
         if (json.token){
+            localStorage.setItem('token', json.token);
             response = await fetch('/api/user', {headers: { 'x-access-tokens': json.token}});
             json = await response.json();
             setLoading(false);
-            setFName(', ' + json.firstName);
-            setLName(json.lastName);
+            context.assignFName(json.firstName);
+            context.assignLName(json.lastName);
             props.assignLogNotif([]);
+            history.push('/');
         } else if (json.message === 'User is not verified'){
             setLoading(false)
             props.assignAuthEmail(email);
@@ -88,7 +89,7 @@ const Login = (props) => {
 
     return (
         <div className='login-container'>
-            <h1 className='welcome-message'>Welcome{fName} {lName}</h1>
+            <h1 className='welcome-message'>Welcome</h1>
             <form className='login-form' onSubmit={handleSubmit}>
                 <input className='login-form-item login-input' type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
                 <div className='password-container'>

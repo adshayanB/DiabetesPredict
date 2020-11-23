@@ -179,6 +179,7 @@
 
 .auth-notification-container {
   position: absolute;
+  z-index: 6;
   width: 100%;
   padding-right: 12.085%;
   padding-left: 12.085%;
@@ -187,4 +188,39 @@
 
 .alert-align {
   text-align: left;
+}
+
+.auth-logo {
+  position: absolute;
+  z-index: 5;
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-family: 'Open Sans', sans-serif;
+  left: 1rem;
+  top: 0.96895rem;
+  text-decoration: none;
+}
+
+.auth-logo-login {
+  color: white;
+  transition: color 0.5s ease-in-out;
+}
+
+.auth-logo-register {
+  color: rgba(231, 76, 60, 1);
+  transition: color 0.5s ease-in-out;
+}
+
+.auth-logo-login:hover {
+  color: #e8e8e8;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.125s ease-in-out;
+}
+
+.auth-logo-register:hover {
+  color: rgba(230, 126, 34, 1);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.125s ease-in-out;
 }

@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useLayoutEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import Lottie from 'react-lottie';
 import { CSSTransition } from 'react-transition-group'; 
 import {Alert, Button} from 'react-bootstrap'
 import loadingData from '../lotties/loading';
+import Context from '../utils/context';
 import '../css/Auth.css';
 
 const Auth = (props) => {
+    const context = useContext(Context);
+    
     const [loginRegister, setLoginRegister] = useState(false);
     const [regNotification, setRegNotification] = useState([]);
     const [logNotification, setLogNotification] = useState([]);
@@ -15,33 +19,54 @@ const Auth = (props) => {
     const [logShow, setLogShow] = useState(false);
     const [authEmail, setAuthEmail] = useState('');
     const [loading, setLoading] = useState(false);
+    const { token } = props.match.params;
 
     let gradientDisplay;
     let resizeTimer;
     let regNotificationDisplay;
     let logNotificationDisplay;
 
+    useLayoutEffect(() => {
+        context.assignShowNav(false);
+        if (token === 'register'){
+            setLoginRegister(true);
+        }
+        
+        else if (token === 'login') {
+            setLoginRegister(false);
+        }
+    }, [])
+
     useEffect(async() => {
-        const { token } = props.match.params;
         let response;
         let json;
-        if (token){
-            response = await fetch(`/api/confirm_email/${token}`);
-            json = await response.json();
 
-            if (json.message === 'token_expired') {
-                setLogNotification(['Verification Token Expired!', 'Your verification token session has expired. Please press Resend to send another verification link to your email.', 'danger']);
-                setLogShow(true);
-            }
-            else if (json.message === 'email_already_confirmed') {
-                setLogNotification(['Account already verified!', 'You have already verified this account.', 'warning']);
-                setLogShow(true);
-            }
-            else if (json.message === 'email_confirm_success') {
-                setLogNotification(['Account verified successfully!', 'Thank you for verifying your account. You may now log in.', 'success']);
-                setLogShow(true);
+        if (localStorage.getItem('token')) {
+            localStorage.removeItem('token');
+            context.assignFName('');
+            context.assignLName('');
+        }
+
+        if (token){
+            if (token !== 'register' || token !== 'login'){
+                response = await fetch(`/api/confirm_email/${token}`);
+                json = await response.json();
+    
+                if (json.message === 'token_expired') {
+                    setLogNotification(['Verification Token Expired!', 'Your verification token session has expired. Please press Resend to send another verification link to your email.', 'danger']);
+                    setLogShow(true);
+                }
+                else if (json.message === 'email_already_confirmed') {
+                    setLogNotification(['Account already verified!', 'You have already verified this account.', 'warning']);
+                    setLogShow(true);
+                }
+                else if (json.message === 'email_confirm_success') {
+                    setLogNotification(['Account verified successfully!', 'Thank you for verifying your account. You may now log in.', 'success']);
+                    setLogShow(true);
+                }
             }
         }
+
     }, []);
 
     window.addEventListener("resize", () => {
@@ -135,7 +160,7 @@ const Auth = (props) => {
 
     //Show any registration notifications
     if (regNotification.length) {
-        regNotificationDisplay = (  <Alert className='alert-align' variant={regNotification[2]} onClose={() => regNotifClose()} dismissible>
+        regNotificationDisplay = (  <Alert className='alert-align auth-index' variant={regNotification[2]} onClose={() => regNotifClose()} dismissible>
                                         <Alert.Heading>{regNotification[0]}</Alert.Heading>
                                         <p>{regNotification[1]}</p>
                                         {(regNotification[0] === 'Registration Successful!') && (<div className="d-flex justify-content-end">
@@ -165,6 +190,7 @@ const Auth = (props) => {
 
     return (
         <div className="auth-container">
+            <Link className={`auth-logo ${(loginRegister) ? 'auth-logo-register' : 'auth-logo-login'}`} to='/'>Diabetes Doctor</Link>
             {gradientDisplay}
 
             <div className='fill'>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useLayoutEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Context from '../utils/context';
 
@@ -28,6 +28,10 @@ const PredictorForm = () => {
     const [bmi, setBmi] = useState(0);
     const [dpf, setDpf] = useState(0);
     const [age, setAge] = useState(0);
+
+    useLayoutEffect(() => {
+        context.assignShowNav(true);
+    });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
