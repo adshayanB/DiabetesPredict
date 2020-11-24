@@ -1,5 +1,5 @@
 .navbar-c {
-  background-image: linear-gradient(to right, #374785, #2980b9) !important;
+  background-color: white !important;
 }
 
 .left-container-c {
@@ -19,22 +19,24 @@
 
 .navbar-light .navbar-nav .nav-link {
   font-family: 'Open Sans', sans-serif !important;
-  color: white !important;
   font-weight: 600 !important;
 }
 
 .navbar-light .navbar-brand {
   font-family: 'Open Sans', sans-serif !important;
-  color: white !important;
   font-weight: 600 !important;
 }
 
 .navbar-light .navbar-toggler {
-  border-color: white;
+  border-color: #212121;
 }
 
 .navbar-position {
   position: relative;
+}
+
+.navbar {
+  padding: 1rem 2rem !important;
 }
 
 .nav-center {
@@ -56,7 +58,7 @@
   color: white;
   font-weight: bold;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 .logo-c:hover {
@@ -91,7 +93,7 @@
 }
 
 .navbar-light .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Cpath stroke='rgba(33, 33, 33, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 .navbar-signin-c {
@@ -101,9 +103,9 @@
   border-radius: 8px;
   border: none;
   background-image: linear-gradient(
-    to left,
-    rgba(231, 76, 60, 1),
-    rgba(230, 126, 34, 1)
+    to right,
+    rgba(0, 188, 255, 1),
+    rgba(100, 114, 243, 1)
   );
   color: white;
   cursor: pointer;
@@ -120,29 +122,33 @@
 }
 
 .navbar-title {
-  color: white;
-}
-
-.navbar-title:hover {
-  color: #ffc107;
-  transition: color 0.2s ease-in-out;
+  background: linear-gradient(
+    to left,
+    rgba(0, 188, 255, 1),
+    rgba(100, 114, 243, 1)
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.5rem !important;
 }
 
 .navbar-item-normal {
-  color: white;
+  color: #212121;
+  font-size: 1.15rem !important;
 }
 
 .navbar-item-normal:hover {
-  color: #ffd99c;
+  color: rgba(0, 188, 255, 1);
   transition: color 0.2s ease-in-out;
 }
 
 .navbar-selected {
-  color: #ffc107;
+  color: rgba(0, 188, 255, 1);
+  font-size: 1.15rem !important;
 }
 
 .navbar-selected:hover {
-  color: #ffc107;
+  color: rgba(0, 188, 255, 1);
 }
 
 .navbar-signup-c {
@@ -150,8 +156,8 @@
   height: 30px;
   border-radius: 8px;
   border-style: none;
-  border: 1px white solid;
-  color: white;
+  border: 1px #212121 solid;
+  color: #212121;
   background-color: transparent;
   cursor: pointer;
   transition: background-color 0.1s ease-in-out;
@@ -162,16 +168,19 @@
 }
 
 .navbar-signup-c:hover {
-  background-color: rgba(0, 188, 255, 0.5);
-  color: white;
-  transition: background-color 0.1s ease-in-out;
+  color: rgba(0, 188, 255, 1);
+  border: 1px rgba(0, 188, 255, 1) solid;
+  transition: all 0.1s ease-in-out;
 }
-.navbar-profile-dropdown {
-  border: 1px white solid;
+#collasible-nav-dropdown {
+  color: #212121 !important;
+  border: 1px #212121 solid;
   border-radius: 8px;
+  transition: all 0.1s ease-in-out;
 }
 
-.navbar-profile-dropdown:hover {
-  background-color: rgba(0, 188, 255, 0.5);
-  transition: background-color 0.1s ease-in-out;
+#collasible-nav-dropdown:hover {
+  color: rgba(0, 188, 255, 1) !important;
+  border: 1px rgba(0, 188, 255, 1) solid;
+  transition: all 0.1s ease-in-out;
 }
