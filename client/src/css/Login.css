@@ -29,11 +29,7 @@
   border-radius: 15px;
   border: none;
   font-size: 25px;
-  background-image: linear-gradient(
-    to left,
-    rgba(0, 188, 255, 1),
-    rgba(100, 114, 243, 1)
-  );
+  background-image: linear-gradient(to left, #0f4c82, #2a70ae);
   color: white;
   font-weight: bold;
   cursor: pointer;

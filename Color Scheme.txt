@@ -1,0 +1,12 @@
+razer viper
+endgame xm1
+
+
+NEW BLUE: #0f4c82 rgba(15, 76, 130, 1)
+
+NEW ORANGE: #e3a143 rgba(227, 161, 67, 1)
+
+
+darker orange for gradient: #ff802c rgba(255, 128, 44, 1)	
+
+light blue for gradient: #2a70ae rgba(42, 112, 174, 1)

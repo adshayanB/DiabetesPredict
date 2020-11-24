@@ -43,8 +43,8 @@
   opacity: 0;
   background-image: linear-gradient(
     to right,
-    rgba(231, 76, 60, 0.8),
-    rgba(230, 126, 34, 0.8)
+    rgba(255, 128, 44, 0.8),
+    rgba(227, 161, 67, 0.8)
   );
   transition: left 1s ease-in-out, opacity 1s ease-in-out;
 }
@@ -56,8 +56,8 @@
   opacity: 1;
   background-image: linear-gradient(
     to right,
-    rgba(0, 188, 255, 0.8),
-    rgba(100, 114, 243, 0.8)
+    rgba(15, 76, 130, 0.8),
+    rgba(42, 112, 174, 0.8)
   );
   transition: left 1s ease-in-out, opacity 1s ease-in-out;
 }
@@ -69,8 +69,8 @@
   opacity: 1;
   background-image: linear-gradient(
     to right,
-    rgba(231, 76, 60, 0.8),
-    rgba(230, 126, 34, 0.8)
+    rgba(255, 128, 44, 0.8),
+    rgba(227, 161, 67, 0.8)
   );
   transition: left 1s ease-in-out, opacity 1s ease-in-out;
 }
@@ -81,8 +81,8 @@
   opacity: 0;
   background-image: linear-gradient(
     to right,
-    rgba(0, 188, 255, 0.8),
-    rgba(100, 114, 243, 0.8)
+    rgba(15, 76, 130, 0.8),
+    rgba(42, 112, 174, 0.8)
   );
   transition: left 1s ease-in-out, opacity 1s ease-in-out;
 }
@@ -122,15 +122,15 @@
 
 .gradient-display-button-blue:hover {
   background-color: white;
-  border: 2px rgba(0, 188, 255, 1) solid;
-  color: rgba(0, 188, 255, 1);
+  border: 2px #0f4c82 solid;
+  color: #0f4c82;
   transition: background-color 0.1s ease-in-out;
 }
 
 .gradient-display-button-red:hover {
   background-color: white;
-  border: 2px rgba(231, 76, 60, 1) solid;
-  color: rgba(231, 76, 60, 1);
+  border: 2px #ff802c solid;
+  color: #ff802c;
 }
 
 .reg-transition-enter {
@@ -207,7 +207,7 @@
 }
 
 .auth-logo-register {
-  color: rgba(231, 76, 60, 1);
+  color: #ff802c;
   transition: color 0.5s ease-in-out;
 }
 
@@ -219,7 +219,7 @@
 }
 
 .auth-logo-register:hover {
-  color: rgba(230, 126, 34, 1);
+  color: #e3a143;
   cursor: pointer;
   text-decoration: none;
   transition: color 0.125s ease-in-out;

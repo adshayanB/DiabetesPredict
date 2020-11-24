@@ -28,11 +28,7 @@
   border-radius: 15px;
   border: none;
   font-size: 25px;
-  background-image: linear-gradient(
-    to left,
-    rgba(231, 76, 60, 1),
-    rgba(230, 126, 34, 1)
-  );
+  background-image: linear-gradient(to left, #ff802c, #e3a143);
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -73,8 +69,8 @@
 .back-button {
   border-radius: 15px;
   border-style: none;
-  border: 2px rgba(0, 188, 255, 1) solid;
-  color: rgba(0, 188, 255, 1);
+  border: 2px #0f4c82 solid;
+  color: #0f4c82;
   background-color: transparent;
   font-size: 25px;
   cursor: pointer;
@@ -83,7 +79,7 @@
 }
 
 .back-button:hover {
-  background-color: rgba(0, 188, 255, 1);
+  background-color: #0f4c82;
   color: white;
   transition: background-color 0.1s ease-in-out;
 }

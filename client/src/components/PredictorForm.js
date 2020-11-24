@@ -1,6 +1,7 @@
 import React, { useState, useContext, useLayoutEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Context from '../utils/context';
+import '../css/Predictor.css';
 
 const PredictorForm = () => {
     //Values that give a prediction outcome of True (Have Diabetes) for
@@ -58,21 +59,25 @@ const PredictorForm = () => {
     }
 
     return (
-        <div>
-            <h1>Predictor Form</h1>
+        <div className='predict-main-container'>
+            <div className='predict-split-container'>
+                    <h1 className='predict-title'>Predictor Form</h1>
+                    
+                    <form onSubmit={handleSubmit} className="predict-form">
+                        <input className="predict-form-item predict-input" type="text" placeholder="Pregnancies" onChange={e => setPregnancies(e.target.value)}/>
+                        <input className="predict-form-item predict-input" type="text" placeholder="Glucose" onChange={e => setGlucose(e.target.value)}/>
+                        <input className="predict-form-item predict-input" type="text" placeholder="Bloodpressure" onChange={e => setBloodpressure(e.target.value)}/>
+                        <input className="predict-form-item predict-input" type="text" placeholder="Skinthickness" onChange={e => setSkinthickness(e.target.value)}/>
+                        <input className="predict-form-item predict-input" type="text" placeholder="Insulin" onChange={e => setInsulin(e.target.value)}/>
+                        <input className="predict-form-item predict-input" type="text" placeholder="Bmi" onChange={e => setBmi(e.target.value)}/>
+                        <input className="predict-form-item predict-input" type="text" placeholder="Dpf" onChange={e => setDpf(e.target.value)}/>
+                        <input className="predict-form-item predict-input" type="text" placeholder="Age" onChange={e => setAge(e.target.value)}/>
+                        <button className="predict-form-item predict-button" type="submit">Predict</button>
+                    </form>
+            </div>
+
+            <div className='predict-split-container'></div>
             
-            <form onSubmit={handleSubmit} className="predict-container">
-                <input className="predict-form-item" type="text" placeholder="Pregnancies" onChange={e => setPregnancies(e.target.value)}/>
-                <input className="predict-form-item" type="text" placeholder="Glucose" onChange={e => setGlucose(e.target.value)}/>
-                <input className="predict-form-item" type="text" placeholder="Bloodpressure" onChange={e => setBloodpressure(e.target.value)}/>
-                <input className="predict-form-item" type="text" placeholder="Skinthickness" onChange={e => setSkinthickness(e.target.value)}/>
-                <input className="predict-form-item" type="text" placeholder="Insulin" onChange={e => setInsulin(e.target.value)}/>
-                <input className="predict-form-item" type="text" placeholder="Bmi" onChange={e => setBmi(e.target.value)}/>
-                <input className="predict-form-item" type="text" placeholder="Dpf" onChange={e => setDpf(e.target.value)}/>
-                <input className="predict-form-item" type="text" placeholder="Age" onChange={e => setAge(e.target.value)}/>
-                <button className="predict-form-item" type="submit">Predict</button>
-            </form>
-            <Link to='/'>Go Home</Link>
         </div>
     )
 }

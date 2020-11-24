@@ -102,11 +102,7 @@
   height: 30px;
   border-radius: 8px;
   border: none;
-  background-image: linear-gradient(
-    to right,
-    rgba(0, 188, 255, 1),
-    rgba(100, 114, 243, 1)
-  );
+  background-image: linear-gradient(to right, #0f4c82, #2a70ae);
   color: white;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
@@ -122,11 +118,7 @@
 }
 
 .navbar-title {
-  background: linear-gradient(
-    to left,
-    rgba(0, 188, 255, 1),
-    rgba(100, 114, 243, 1)
-  );
+  background: linear-gradient(to left, #0f4c82, #2a70ae);
   background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 1.5rem !important;
@@ -138,17 +130,17 @@
 }
 
 .navbar-item-normal:hover {
-  color: rgba(0, 188, 255, 1);
+  color: #0f4c82;
   transition: color 0.2s ease-in-out;
 }
 
 .navbar-selected {
-  color: rgba(0, 188, 255, 1);
+  color: #0f4c82;
   font-size: 1.15rem !important;
 }
 
 .navbar-selected:hover {
-  color: rgba(0, 188, 255, 1);
+  color: #0f4c82;
 }
 
 .navbar-signup-c {
@@ -168,8 +160,8 @@
 }
 
 .navbar-signup-c:hover {
-  color: rgba(0, 188, 255, 1);
-  border: 1px rgba(0, 188, 255, 1) solid;
+  color: #0f4c82;
+  border: 1px #0f4c82 solid;
   transition: all 0.1s ease-in-out;
 }
 #collasible-nav-dropdown {
@@ -180,7 +172,7 @@
 }
 
 #collasible-nav-dropdown:hover {
-  color: rgba(0, 188, 255, 1) !important;
-  border: 1px rgba(0, 188, 255, 1) solid;
+  color: #0f4c82 !important;
+  border: 1px #0f4c82 solid;
   transition: all 0.1s ease-in-out;
 }
