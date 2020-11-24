@@ -21,9 +21,6 @@ const Navigation = () => {
         context.assignLName('');
     }
 
-    //if authenticated then show welcome, else, show sign in and sign up nav items
-    
-    //ADD THE IF BLOCK
     if (localStorage.getItem('token')) {
         if (context.stateFName === '' && context.stateLName === '') {
             getUserInfo();

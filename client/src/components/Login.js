@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import '../css/Login.css';
 import Context from '../utils/context'
 import Lottie from 'react-lottie';
@@ -13,8 +13,15 @@ const Login = (props) => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const emailElement = useRef(null);
+
     let showPasswordIcon;
     let passwordType;
+
+    useEffect(() => {
+        emailElement.current.focus();
+    }, [emailElement])
 
     const defaultOptions = {
         loop: true,
@@ -91,7 +98,7 @@ const Login = (props) => {
         <div className='login-container'>
             <h1 className='welcome-message'>Welcome</h1>
             <form className='login-form' onSubmit={handleSubmit}>
-                <input className='login-form-item login-input' type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
+                <input ref={emailElement} className='login-form-item login-input' type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
                 <div className='password-container'>
                     <input className='password-item login-input' type={passwordType} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
                     {showPasswordIcon}

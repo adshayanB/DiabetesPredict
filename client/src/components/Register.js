@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../css/Register.css';
 import Lottie from 'react-lottie';
 import loadingData from '../lotties/loading';
@@ -33,6 +33,11 @@ const Register = (props) => {
 
     const [loading, setLoading] = useState(false);
 
+    const firstNameElement = useRef(null);
+    const emailElement = useRef(null);
+    const passwordElement = useRef(null);
+
+
     let regFormPage;
     let passwordType;
     let confirmPasswordType;
@@ -46,6 +51,18 @@ const Register = (props) => {
     let phoneNumberBorder = 'border-normal';
     let passwordBorder = 'border-normal';
     
+    useEffect(() => {
+        if (nameEmailPassword === 0) {
+            firstNameElement.current.focus();
+        }
+        else if (nameEmailPassword === 1) {
+            emailElement.current.focus();
+        }
+        else {
+            passwordElement.current.focus();
+        }
+    }, [nameEmailPassword]);
+
     const defaultOptions = {
         loop: true,
         autoplay: true,
@@ -322,7 +339,7 @@ if (passwordError) {
         regFormPage = (
             <form className='register-form' onSubmit={handleNameNext}>
                 <h5 className='input-error-message'>{(submittedOnce) ? firstNameError : null}</h5>
-                <input className={`register-form-item register-input ${(submittedOnce) ? firstNameBorder: 'border-normal'} ${firstNameShake}`} value={firstName} type='text' placeholder='First Name' onChange={e => setFirstName(e.target.value)}/>
+                <input ref={firstNameElement} className={`register-form-item register-input ${(submittedOnce) ? firstNameBorder: 'border-normal'} ${firstNameShake}`} value={firstName} type='text' placeholder='First Name' onChange={e => setFirstName(e.target.value)}/>
                 <h5 className='input-error-message'>{(submittedOnce) ? lastNameError : null}</h5>
                 <input className={`register-form-item register-input ${(submittedOnce) ? lastNameBorder: 'border-normal'} ${lastNameShake}`} value={lastName} type='text' placeholder='Last Name' onChange={e => setLastName(e.target.value)}/>
                 <div className='submission-buttons'>
@@ -336,7 +353,7 @@ if (passwordError) {
         regFormPage = (
             <form className='register-form' onSubmit={handleEmailNext}>
                 <h5 className='input-error-message'>{(submittedOnce) ? emailError : null}</h5>
-                <input className={`register-form-item register-input ${(submittedOnce) ? emailBorder: 'border-normal'} ${emailShake}`} value={email} type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
+                <input ref={emailElement} className={`register-form-item register-input ${(submittedOnce) ? emailBorder: 'border-normal'} ${emailShake}`} value={email} type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
                 <h5 className='input-error-message'>{(submittedOnce) ? phoneNumberError : null}</h5>
                 <input className={`register-form-item register-input ${(submittedOnce) ? phoneNumberBorder: 'border-normal'} ${phoneNumberShake}`} value={phoneNumber} type='text' placeholder='Phone Number' onChange={e => setPhoneNumber(e.target.value)}/>
                 <div></div>
@@ -354,7 +371,7 @@ if (passwordError) {
             <form className='register-form' onSubmit={handleSubmit}>
                 <h5 className='input-error-message'>{(submittedOnce) ? passwordError : null}</h5>
                 <div className='password-container'>
-                    <input className={`password-item register-input ${(submittedOnce) ? passwordBorder: 'border-normal'} ${passwordShake}`} type={passwordType} value={password} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
+                    <input ref={passwordElement} className={`password-item register-input ${(submittedOnce) ? passwordBorder: 'border-normal'} ${passwordShake}`} type={passwordType} value={password} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
                     {showPasswordIcon}
                 </div>
                 <div className='password-container'>
