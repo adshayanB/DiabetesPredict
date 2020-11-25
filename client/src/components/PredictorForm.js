@@ -1,5 +1,6 @@
-import React, { useState, useContext, useLayoutEffect } from 'react';
+import React, { useState, useContext, useLayoutEffect, Fragment } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import Wave from 'react-wavify';
 import Context from '../utils/context';
 import '../css/Predictor.css';
 
@@ -59,26 +60,55 @@ const PredictorForm = () => {
     }
 
     return (
-        <div className='predict-main-container'>
-            <div className='predict-split-container'>
-                    <h1 className='predict-title'>Predictor Form</h1>
-                    
-                    <form onSubmit={handleSubmit} className="predict-form">
-                        <input className="predict-form-item predict-input" type="text" placeholder="Pregnancies" onChange={e => setPregnancies(e.target.value)}/>
-                        <input className="predict-form-item predict-input" type="text" placeholder="Glucose" onChange={e => setGlucose(e.target.value)}/>
-                        <input className="predict-form-item predict-input" type="text" placeholder="Bloodpressure" onChange={e => setBloodpressure(e.target.value)}/>
-                        <input className="predict-form-item predict-input" type="text" placeholder="Skinthickness" onChange={e => setSkinthickness(e.target.value)}/>
-                        <input className="predict-form-item predict-input" type="text" placeholder="Insulin" onChange={e => setInsulin(e.target.value)}/>
-                        <input className="predict-form-item predict-input" type="text" placeholder="Bmi" onChange={e => setBmi(e.target.value)}/>
-                        <input className="predict-form-item predict-input" type="text" placeholder="Dpf" onChange={e => setDpf(e.target.value)}/>
-                        <input className="predict-form-item predict-input" type="text" placeholder="Age" onChange={e => setAge(e.target.value)}/>
-                        <button className="predict-form-item predict-button" type="submit">Predict</button>
-                    </form>
-            </div>
+        <Fragment>
+            <div className='predict-background-container'></div>
+            <div className='predict-page-main-container'>
+                <div className='predict-main-container'>
+                    <div className='predict-inner-container'>
+                            <h1 className='predict-title'>Do you have <span className='predict-title-diabetes'>diabetes?</span></h1>
+                            
+                            <form onSubmit={handleSubmit} className="predict-form">
+                                <input className="predict-form-item predict-input" type="text" placeholder="Pregnancies" onChange={e => setPregnancies(e.target.value)}/>
+                                <input className="predict-form-item predict-input" type="text" placeholder="Glucose" onChange={e => setGlucose(e.target.value)}/>
+                                <input className="predict-form-item predict-input" type="text" placeholder="Bloodpressure" onChange={e => setBloodpressure(e.target.value)}/>
+                                <input className="predict-form-item predict-input" type="text" placeholder="Skinthickness" onChange={e => setSkinthickness(e.target.value)}/>
+                                <input className="predict-form-item predict-input" type="text" placeholder="Insulin" onChange={e => setInsulin(e.target.value)}/>
+                                <input className="predict-form-item predict-input" type="text" placeholder="Bmi" onChange={e => setBmi(e.target.value)}/>
+                                <input className="predict-form-item predict-input" type="text" placeholder="Dpf" onChange={e => setDpf(e.target.value)}/>
+                                <input className="predict-form-item predict-input" type="text" placeholder="Age" onChange={e => setAge(e.target.value)}/>
+                                <button className="predict-form-item predict-button" type="submit">Predict</button>
+                            </form>
+                    </div>                
+                </div>
+                <div className='prediction-hist-main-container'>
+                    <Wave fill='#fff'
+                        paused={false}
+                        className='predictor-wave predictor-wave-1'
+                        options={{
+                        height: 15,
+                        amplitude: 20,
+                        speed: 0.15,
+                        points: 4
+                        }}
+                    />
 
-            <div className='predict-split-container'></div>
-            
-        </div>
+                    <Wave fill='#f6f6f6'
+                        paused={false}
+                        className='predictor-wave predictor-wave-2'
+                        options={{
+                        height: 20,
+                        amplitude: 25,
+                        speed: 0.15,
+                        points: 3
+                        }}
+                    />
+
+                    <h1 className='predict-title'>Prediction History</h1>
+
+                    <div className='prediction-hist-inner-container'></div>
+                </div>
+            </div>
+        </Fragment>
     )
 }
 

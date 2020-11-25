@@ -1,40 +1,75 @@
+.predict-background-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0;
+  z-index: -1;
+  background-image: url('../images/background.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.predict-page-main-container {
+  position: relative;
+  top: 62px;
+}
+
 .predict-main-container {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: #00539cff;
+  background-image: linear-gradient(
+    to right,
+    rgba(15, 76, 130, 0.8),
+    rgba(42, 112, 174, 0.8)
+  );
+  padding-top: 1rem;
+  padding-bottom: 3rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
 }
 
-.predict-split-container {
+.predict-inner-container {
   display: flex;
-  flex: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem;
   border-radius: 25px;
   margin: 2rem;
+  width: 960px;
+  background-color: white;
 }
 
 .predict-title {
-  color: white;
+  color: #212121;
   margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.predict-title-diabetes {
+  color: #e3a143 !important;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .predict-input {
   border-radius: 50px;
   border-style: none;
-  border: 2px #7e7e7e solid;
-  background-color: #e8e8e8;
-  font-size: 20px;
+  border: 2px #e8e8e8 solid;
+  background-color: #f6f6f6;
+  font-size: 19px;
   padding: 20px;
 }
 
 .predict-form-item {
   width: 100%;
-  margin-bottom: 20px;
-  height: 55px;
+  margin-bottom: 15px;
+  height: 50px;
 }
 
 .predict-form {
@@ -60,4 +95,41 @@
 .predict-button:hover {
   transform: scale(1.025);
   transition: transform 0.2s ease-in-out;
+}
+
+.prediction-hist-main-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 2rem;
+  height: calc(1080px / 2) !important;
+}
+
+.prediction-hist-inner-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  width: 100%;
+  height: 70vh;
+  background-color: #f6f6f6;
+}
+
+.predictor-wave {
+  position: absolute;
+  top: -70px;
+  left: 0px;
+  width: 100%;
+  height: 70px;
+}
+.predictor-wave-1 {
+  z-index: 2;
+}
+
+.predictor-wave-2 {
+  z-index: 1;
 }
