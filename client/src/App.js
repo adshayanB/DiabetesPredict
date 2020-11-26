@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Context from './utils/context';
 import Home from './components/Home';
-import PredictorForm from './components/PredictorForm';
+import Predictor from './components/Predictor';
 import Result from './components/Result';
 import Auth from './components/Auth';
 import Navigation from './components/Navigation';
@@ -54,7 +54,7 @@ function App() {
           {(showNav) && <Navigation />}
           <Switch>
             <Route exact path='/' component={Home}/>
-            <Route exact path='/predict' component={PredictorForm}/>
+            <Route exact path='/predict' component={Predictor}/>
             <Route exact path='/track' component={Tracker}/>
             <Route exact path='/results' component={Result}/>
             <Route exact path='/auth/:token?' component={Auth}/>

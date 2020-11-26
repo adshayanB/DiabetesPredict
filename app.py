@@ -18,7 +18,7 @@ import datetime
 import requests
 from functools import wraps
 
-filename = 'diabetes-model2.pkl'
+filename = 'diabetes-model.pkl'
 model = pickle.load(open(filename, 'rb'))
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -251,7 +251,6 @@ def predict(current_user):
     age = int(json_data['age'])
 
     data = np.array([[pregnancies, glucose, bp, st, insulin, bmi, dpf, age]])
-
 
     my_prediction = model.predict(data)
     serializable_prediction = my_prediction.tolist()
