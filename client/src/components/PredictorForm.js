@@ -15,6 +15,9 @@ const PredictorForm = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (localStorage.getItem('token')){
+
+        
             const response = await fetch('/api/predict', {
                 method: 'POST',
                 headers: {
@@ -39,11 +42,16 @@ const PredictorForm = (props) => {
             console.log(json[0])
             props.assignPredictResults(1);
             if (json[0]) {
-                props.assignResult('Oops! You have DIABETES.');
-            }
+                props.assignResult('Oh no! You have diabetes!');
+                props.assignResultFace(<div className='frown-container'></div>);
+            } 
             else {
-                props.assignResult("Great! You DON'T have diabetes.");
+                props.assignResult("Great! You don't have diabetes!");
+                props.assignResultFace(<div className='smile-container'></div>);
             }
+        } else {
+            console.log('You must be logged in to predict.')
+        }
             
     }
     

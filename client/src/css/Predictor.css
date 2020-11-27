@@ -34,7 +34,9 @@
 }
 
 .predict-inner-container {
+  background-color: white;
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -42,21 +44,25 @@
   border-radius: 25px;
   margin: 2rem;
   width: 960px;
+  height: 762px;
 }
 
 .predict-inner-white {
-  background-color: white;
-  transition: background-color 500ms ease-in-out;
+  background-color: white !important;
+  height: 762px !important;
+  transition: background-color 500ms ease-in-out, height 1s ease-in-out;
 }
 
 .predict-inner-green {
-  background-color: #2ecc71;
-  transition: background-color 500ms ease-in-out;
+  background-color: #2ecc71 !important;
+  height: 500px !important;
+  transition: background-color 500ms ease-in-out, height 1s ease-in-out;
 }
 
 .predict-inner-red {
-  background-color: #e74c3c;
-  transition: background-color 500ms ease-in-out;
+  background-color: #e74c3c !important;
+  height: 500px !important;
+  transition: background-color 500ms ease-in-out, height 1s ease-in-out;
 }
 
 .predict-title {
@@ -120,19 +126,26 @@
 }
 
 .predict-transition-exit {
-  transform: translateY(0px);
   opacity: 1;
 }
 
 .predict-transition-exit-active {
-  transform: translateY(50px);
   opacity: 0;
-  transition: transform 500ms ease-in-out, opacity 500ms ease-in-out;
+  transition: opacity 500ms ease-in-out;
 }
 
 .result-container {
   color: white !important;
 }
 
-.predict-result-position {
+.predict-form-position {
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  position: absolute;
+}
+
+.result-component {
+  height: 100%;
+  width: 100%;
 }

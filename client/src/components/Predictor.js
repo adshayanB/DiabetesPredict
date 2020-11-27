@@ -27,6 +27,7 @@ const Predictor = () => {
 
     const [predictResults, setPredictResults] = useState(0);
     const [result, setResult] = useState('');
+    const [resultFace, setResultFace] = useState(null);
 
     let predictInnerBackground;
 
@@ -42,15 +43,20 @@ const Predictor = () => {
         setResult(text);
     }
 
+    const assignResultFace = (face) => {
+        setResultFace(face);
+    }
+
     if (predictResults) {
-        if (result === 'Oops! You have DIABETES.') {
+        if (result === 'Oh no! You have diabetes!') {
             predictInnerBackground = 'predict-inner-red';
         }
 
-        else if (result === "Great! You DON'T have diabetes.") {
+        else if (result === "Great! You don't have diabetes!") {
             predictInnerBackground = 'predict-inner-green';
         }
     } else {
+        console.log('test')
         predictInnerBackground = 'predict-inner-white'
     }
 
@@ -61,25 +67,31 @@ const Predictor = () => {
                 <div className='predict-main-container'>
                     <div className={`predict-inner-container ${predictInnerBackground}`}>
                         <CSSTransition
-                        in={!predictResults}
-                        timeout={500}
-                        classNames="predict-transition"
-                        unmountOnExit
+                            in={!predictResults}
+                            timeout={1000}
+                            classNames="predict-transition"
+                            unmountOnExit
                         >
-                            <PredictorForm  className='predict-form-position' assignPredictResults={(page) => assignPredictResults(page)}
-                                            assignResult={(text) => assignResult(text)}/>
+                            <div className='predict-form-position'>
+                                
+                                    <PredictorForm  assignPredictResults={(page) => assignPredictResults(page)}
+                                                    assignResult={(text) => assignResult(text)}
+                                                    assignResultFace={(face) => assignResultFace(face)}/>
+                                
+                            </div>
                         </CSSTransition>
 
                         <CSSTransition
-                        in={predictResults}
-                        timeout={500}
-                        classNames="predict-transition"
-                        unmountOnExit
+                            in={predictResults}
+                            timeout={1000}
+                            classNames="predict-transition"
+                            unmountOnExit
                         >
-                                
-                            <Result assignPredictResults={(page) => assignPredictResults(page)}
-                                    stateResult={result}/>
-
+                            <div className='predict-form-position'>
+                                    <Result className='result-component' assignPredictResults={(page) => assignPredictResults(page)}
+                                            stateResult={result}
+                                            stateResultFace={resultFace}/>
+                            </div>
                         </CSSTransition>
                     </div>                
                 </div>
