@@ -18,7 +18,7 @@ const PredictorForm = (props) => {
         if (localStorage.getItem('token')){
 
         
-            const response = await fetch('/api/predict', {
+            let response1 = await fetch('/api/predict', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
@@ -36,12 +36,38 @@ const PredictorForm = (props) => {
                 })
             })
 
-            const json = await response.json();
-            context.assignPredictionFunction(json[0])
+            let json1 = await response1.json()
+            console.log(json1[0])
+
+            let response2 = await fetch('/api/predictData', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                'x-access-tokens': localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    pregnancies,
+                    glucose,
+                    bp: bloodpressure,
+                    st: skinthickness,
+                    insulin,
+                    bmi,
+                    dpf,
+                    age,
+                    result: json1[0]
+                })
+            })
+
+            let json2 = await response2.json();
+            console.log(json2);
+
             //history.push('/results')
-            console.log(json[0])
             props.assignPredictResults(1);
-            if (json[0]) {
+
+            context.assignPredictionFunction(json1[0])
+            props.assignUpdatePredictHistory(!props.stateUpdatePredictHistory)
+
+            if (json1[0]) {
                 props.assignResult('Oh no! You have diabetes!');
                 props.assignResultFace(<div className='frown-container'></div>);
             } 
@@ -49,6 +75,7 @@ const PredictorForm = (props) => {
                 props.assignResult("Great! You don't have diabetes!");
                 props.assignResultFace(<div className='smile-container'></div>);
             }
+
         } else {
             console.log('You must be logged in to predict.')
         }

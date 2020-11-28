@@ -85,7 +85,6 @@
   align-items: center;
   background-color: white;
   padding: 2rem;
-  height: calc(1080px / 2) !important;
 }
 
 .prediction-hist-inner-container {
@@ -95,7 +94,6 @@
   align-items: center;
   border-radius: 25px;
   width: 100%;
-  height: 70vh;
   background-color: #f6f6f6;
 }
 

@@ -76,15 +76,18 @@ class Data(db.Model):
     id=Column(Integer,primary_key=True)
     user_id=Column(String(50))
     pregnancies=Column(Integer)
+    glucose=Column(Float)
     bp=Column(Float)
     st=Column(Float)
     insulin=Column(Float)
     bmi=Column(Float)
     dpf=Column(Float)
     age=Column(Integer)
+    result=Column(Integer)
     dateTested=Column(String())
+
 class Track(db.Model):
-    id =Column(Integer,primary_key=True)
+    id=Column(Integer,primary_key=True)
     user_id=Column(String(50))
     dailyGlucose=Column(Integer)
     hours=Column(Integer)
@@ -329,12 +332,14 @@ def predictData(current_user):
     newData=Data(
         user_id=user_data['public_id'],
         pregnancies=data['pregnancies'],
+        glucose=data['glucose'],
         bp=data['bp'],
         st=data['st'],
         insulin=data['insulin'],
         bmi=data['bmi'],
         dpf=data['dpf'],
         age=data['age'],
+        result=data['result'],
         dateTested=datetime.datetime.now()
     )
     db.session.add(newData)
@@ -353,12 +358,15 @@ def getPredictDataAll(current_user):
         for user in userDataAll:
             user_data={}
             user_data['pregnancies']=user.pregnancies
+            user_data['glucose'] = user.glucose
             user_data['bp']=user.bp
             user_data['st']=user.st
             user_data['insulin']=user.insulin
             user_data['bmi']=user.bmi
             user_data['dpf']=user.dpf
             user_data['age']=user.age
+            user_data['result']=user.result
+            user_data['dateTime']=user.dateTested
             output.append(user_data)
 
         return jsonify(userData=output)

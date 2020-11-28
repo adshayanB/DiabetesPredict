@@ -6,6 +6,7 @@ import { CSSTransition } from 'react-transition-group';
 import '../css/Predictor.css';
 import PredictorForm from './PredictorForm';
 import Result from './Result';
+import PredictionHistory from './PredictionHistory';
 
 const Predictor = () => {
     //Values that give a prediction outcome of True (Have Diabetes) for
@@ -28,12 +29,13 @@ const Predictor = () => {
     const [predictResults, setPredictResults] = useState(0);
     const [result, setResult] = useState('');
     const [resultFace, setResultFace] = useState(null);
+    const [updatePredictHistory, setUpdatePredictHistory] = useState(false);
 
     let predictInnerBackground;
 
     useLayoutEffect(() => {
         context.assignShowNav(true);
-    });
+    }, []);
 
     const assignPredictResults = (page) => {
         setPredictResults(page);
@@ -45,6 +47,10 @@ const Predictor = () => {
 
     const assignResultFace = (face) => {
         setResultFace(face);
+    }
+
+    const assignUpdatePredictHistory = (update) => {
+        setUpdatePredictHistory(update);
     }
 
     if (predictResults) {
@@ -76,7 +82,9 @@ const Predictor = () => {
                                 
                                     <PredictorForm  assignPredictResults={(page) => assignPredictResults(page)}
                                                     assignResult={(text) => assignResult(text)}
-                                                    assignResultFace={(face) => assignResultFace(face)}/>
+                                                    assignResultFace={(face) => assignResultFace(face)}
+                                                    assignUpdatePredictHistory={(update) => assignUpdatePredictHistory(update)}
+                                                    stateUpdatePredictHistory={updatePredictHistory}/>
                                 
                             </div>
                         </CSSTransition>
@@ -119,8 +127,7 @@ const Predictor = () => {
                     />
 
                     <h1 className='predict-title'>Prediction History</h1>
-
-                    <div className='prediction-hist-inner-container'></div>
+                    <PredictionHistory stateUpdatePredictHistory={updatePredictHistory}/>
                 </div>
             </div>
         </Fragment>
