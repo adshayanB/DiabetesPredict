@@ -367,6 +367,7 @@ def getPredictDataAll(current_user):
             user_data['age']=user.age
             user_data['result']=user.result
             user_data['dateTime']=user.dateTested
+            user_data['id'] = user.id
             output.append(user_data)
 
         return jsonify(userData=output)

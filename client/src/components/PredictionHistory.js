@@ -5,6 +5,7 @@ import '../css/PredictionHistory.css';
 const PredictionHistory = (props) => {
 
     const [columns, setColumns] = useState([
+        { title: 'ID', field: 'id', type:'numeric', hidden:true },
         { title: 'Pregnancies', field: 'pregnancies', type: 'numeric' },
         { title: 'Glucose', field: 'glucose', type: 'numeric'},
         { title: 'Bloodpressure', field: 'bp', type: 'numeric' },
