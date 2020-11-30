@@ -5,7 +5,7 @@ import '../css/PredictionHistory.css';
 const PredictionHistory = (props) => {
 
     const [columns, setColumns] = useState([
-        { title: 'ID', field: 'id', type:'numeric', hidden:true },
+        { title: 'ID', field: 'data_id', hidden:true },
         { title: 'Pregnancies', field: 'pregnancies', type: 'numeric' },
         { title: 'Glucose', field: 'glucose', type: 'numeric'},
         { title: 'Bloodpressure', field: 'bp', type: 'numeric' },
@@ -45,6 +45,20 @@ const PredictionHistory = (props) => {
             console.log('updated')
         }
     }, [props.stateUpdatePredictHistory]);
+
+    const deletePrediction = async (data) => {
+      const response = await fetch(`/api/predictData/${data.data_id}`,
+      {
+        method: 'DELETE',
+        headers: {
+                  'x-access-tokens': localStorage.getItem('token')
+                }
+      })
+
+      const json = await response.json();
+                  
+      console.log(json);
+    }
   
     return (
       <MaterialTable
@@ -55,11 +69,15 @@ const PredictionHistory = (props) => {
           onRowDelete: oldData =>
             new Promise((resolve, reject) => {
               setTimeout(() => {
-                const dataDelete = [...data];
-                const index = oldData.tableData.id;
-                dataDelete.splice(index, 1);
-                setData([...dataDelete]);
-                
+                if (localStorage.getItem('token')){
+
+                  deletePrediction(oldData);
+
+                  const dataDelete = [...data];
+                  const index = oldData.tableData.id;
+                  dataDelete.splice(index, 1);
+                  setData([...dataDelete]);
+                }
                 resolve()
               }, 1000)
             }),
@@ -67,7 +85,8 @@ const PredictionHistory = (props) => {
         options={{
             rowStyle: rowData => ({
               backgroundColor: (rowData.tableData.id % 2 === 0) ? '#f6f6f6' : '#e6e6e6'
-            })
+            }),
+            exportButton:true
           }}
       />
     )
