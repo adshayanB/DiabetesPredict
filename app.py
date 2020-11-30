@@ -329,8 +329,14 @@ def getTrackData(current_user):
 def predictData(current_user):
    
     user_data={}
+
     user_data['public_id']=current_user.public_id
     data=request.json
+    if not isinstance(data['pregnancies'], int) :
+        return jsonify(message=f'Pregnancies must be of an integer value')
+    if not isinstance(data['age'], int):
+        return jsonify(message=f'Age must be of an integer value')
+    
     newData=Data(
         user_id=user_data['public_id'],
         data_id=str(uuid.uuid4()),
