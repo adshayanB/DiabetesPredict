@@ -75,6 +75,7 @@ class User(db.Model):
 class Data(db.Model):
     id=Column(Integer,primary_key=True)
     user_id=Column(String(50))
+    data_id=Column(String(50))
     pregnancies=Column(Integer)
     glucose=Column(Float)
     bp=Column(Float)
@@ -261,6 +262,7 @@ def predict(current_user):
 
     return json.dumps(serializable_prediction)
     #return render_template('result.html', prediction=my_prediction)
+
 @app.route('/api/trackData', methods =['POST'])
 @token_required
 def trackData(current_user):
@@ -331,6 +333,7 @@ def predictData(current_user):
     data=request.json
     newData=Data(
         user_id=user_data['public_id'],
+        data_id=str(uuid.uuid4()),
         pregnancies=data['pregnancies'],
         glucose=data['glucose'],
         bp=data['bp'],
@@ -345,6 +348,22 @@ def predictData(current_user):
     db.session.add(newData)
     db.session.commit()
     return jsonify(message='Data Added'),201
+@app.route('/api/predictData/<dataId>',methods=['DELETE'])
+@token_required
+def deletePredictData(current_user,dataId):
+    user={}
+    user['public_id']=current_user.public_id
+    deleteData=Data.query.filter_by(data_id=dataId,user_id=user['public_id']).first()
+
+    if deleteData:
+        db.session.delete(deleteData)
+        db.session.commit()
+        return jsonify(message='Data has been deleted')
+    else:
+        return jsonify(message='Data does not exist')
+
+
+
 
 @app.route('/api/predictData',methods=['GET'])
 @token_required
@@ -368,6 +387,7 @@ def getPredictDataAll(current_user):
             user_data['result']=user.result
             user_data['dateTime']=user.dateTested
             user_data['id'] = user.id
+            user_data['data_id']=user.data_id
             output.append(user_data)
 
         return jsonify(userData=output)
