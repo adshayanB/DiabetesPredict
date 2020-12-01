@@ -1,6 +1,4 @@
-razer viper
-endgame xm1
-
+COLOR SCHEME:
 
 NEW BLUE: #0f4c82 rgba(15, 76, 130, 1)
 

@@ -85,16 +85,6 @@
   padding: 2rem;
 }
 
-.prediction-hist-inner-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border-radius: 25px;
-  width: 100%;
-  background-color: #f6f6f6;
-}
-
 .predictor-wave {
   position: absolute;
   top: -70px;

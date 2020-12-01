@@ -13,8 +13,14 @@ const Navigation = () => {
     const getUserInfo = async () => {
         let response = await fetch('/api/user', {headers: { 'x-access-tokens': localStorage.getItem('token')}});
         let json = await response.json();
-        context.assignFName(json.firstName);
-        context.assignLName(json.lastName);
+        if (json.message === 'Token is invalid' || json.message === 'Token is missing') {
+            console.log(json.message);
+            return 0;
+        } else {
+            context.assignFName(json.firstName);
+            context.assignLName(json.lastName);
+            return 1;
+        }
     }
     const signoutUser = () => {
         localStorage.removeItem('token');
@@ -22,18 +28,7 @@ const Navigation = () => {
         context.assignLName('');
     }
 
-    if (localStorage.getItem('token')) {
-        if (context.stateFName === '' && context.stateLName === '') {
-            getUserInfo();
-        }
-        rightNav = (<Fragment>
-                        <NavDropdown alignRight title={`Welcome, ${context.stateFName} ${context.stateLName}`} id="collasible-nav-dropdown" className='navbar-profile-dropdown'>
-                            <NavDropdown.Item onClick={() => signoutUser()}>
-                                Sign out
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                    </Fragment>);
-    } else {
+    const setRightNavToWelcome = () => {
         rightNav = (<Fragment>
             <Nav.Link>
                 <Link to="/auth/register" onClick={() => setNavbarColor('Home')} className="navbar-item-button-c">
@@ -46,6 +41,34 @@ const Navigation = () => {
                 </Link>
             </Nav.Link>
         </Fragment>);
+    }
+
+    const setRightNavToLoginSignup = () => {
+        rightNav = (<Fragment>
+            <NavDropdown alignRight title={`Welcome, ${context.stateFName} ${context.stateLName}`} id="collasible-nav-dropdown" className='navbar-profile-dropdown'>
+                <NavDropdown.Item onClick={() => signoutUser()}>
+                    Sign out
+                </NavDropdown.Item>
+            </NavDropdown>
+        </Fragment>);
+    }
+
+    if (localStorage.getItem('token')) {
+        let result;
+
+        if (context.stateFName === '' && context.stateLName === '') {
+            result = getUserInfo();
+        } else{
+            result = 1;
+        }
+
+        if (result) {
+            setRightNavToLoginSignup();
+        } else {
+            setRightNavToWelcome();
+        }
+    } else {
+        setRightNavToWelcome();
     }
     
 
