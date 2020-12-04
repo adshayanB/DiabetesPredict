@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useLayoutEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import Lottie from 'react-lottie';
@@ -11,6 +11,7 @@ import '../css/Auth.css';
 
 const Auth = (props) => {
     const context = useContext(Context);
+    const location = useLocation();
     
     const [loginRegister, setLoginRegister] = useState(false);
     const [regNotification, setRegNotification] = useState([]);
@@ -236,7 +237,8 @@ const Auth = (props) => {
                     unmountOnExit
                 >
                     <Login assignLogNotif={(logNotif) => assignLogNotif(logNotif)}
-                           assignAuthEmail={(email) => assignAuthEmail(email)}/>
+                           assignAuthEmail={(email) => assignAuthEmail(email)}
+                           currentLocation={location} />
                 </CSSTransition>
             </div>
             

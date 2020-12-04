@@ -21,6 +21,10 @@ const Login = (props) => {
 
     useEffect(() => {
         emailElement.current.focus();
+        if (props.currentLocation.state){
+            console.log(props.currentLocation.state.detail)
+        }
+        
     }, [emailElement])
 
     const defaultOptions = {
@@ -63,7 +67,13 @@ const Login = (props) => {
             context.assignFName(json.firstName);
             context.assignLName(json.lastName);
             props.assignLogNotif([]);
-            history.push('/');
+
+            if (props.currentLocation.state && props.currentLocation.state.detail === 'DIRECTED') {
+                history.goBack();
+            } else {
+                history.push('/');
+            }
+            
         } else if (json.message === 'User is not verified'){
             setLoading(false)
             props.assignAuthEmail(email);

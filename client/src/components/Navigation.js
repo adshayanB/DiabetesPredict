@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext } from 'react'
+import React, { useState, Fragment, useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import Wave from 'react-wavify';
@@ -8,18 +8,41 @@ import Context from '../utils/context';
 const Navigation = () => {
     const context = useContext(Context);
     const [navbarColor, setNavbarColor] = useState('Home');
-    let rightNav;
+    const [rightNav, setRightNav] = useState();
+
+    useEffect(async() => {
+        if (localStorage.getItem('token')) {
+            let result;
+    
+            if (context.stateFName === '' && context.stateLName === '') {
+                result = await getUserInfo();
+            } else{
+                result = [context.stateFName, context.stateLName];
+            }
+    
+            if (result.length > 0) {
+                setRightNavToWelcome(result);
+            } else {
+                console.log('working')
+                setRightNavToLoginSignup();
+            }
+        } else {
+            setRightNavToLoginSignup();
+        }
+    }, [navbarColor, rightNav]);
 
     const getUserInfo = async () => {
         let response = await fetch('/api/user', {headers: { 'x-access-tokens': localStorage.getItem('token')}});
         let json = await response.json();
         if (json.message === 'Token is invalid' || json.message === 'Token is missing') {
             console.log(json.message);
-            return 0;
+            return [];
         } else {
+            console.log(json.firstName)
+            console.log(json.lastName)
             context.assignFName(json.firstName);
             context.assignLName(json.lastName);
-            return 1;
+            return [json.firstName, json.lastName];
         }
     }
     const signoutUser = () => {
@@ -28,24 +51,27 @@ const Navigation = () => {
         context.assignLName('');
     }
 
-    const setRightNavToWelcome = () => {
-        rightNav = (<Fragment>
+    const setRightNavToLoginSignup = () => {
+        setRightNav(<Fragment>
             <Nav.Link>
                 <Link to="/auth/register" onClick={() => setNavbarColor('Home')} className="navbar-item-button-c">
                     <button className='navbar-signup-c'>Sign up</button>
                 </Link>
             </Nav.Link>
             <Nav.Link>
-                <Link to="/auth/login" onClick={() => setNavbarColor('Home')} className="navbar-item-button-c">
-                    <button className='navbar-signin-c'>Sign in</button>
+                <Link to={{
+                            pathname: '/auth/login',
+                            state: { detail: 'DIRECTED' }
+                        }} onClick={() => setNavbarColor('Home')} className="navbar-item-button-c">
+                    <button className='navbar-signin-c navbar-signin-colour'>Sign in</button>
                 </Link>
             </Nav.Link>
         </Fragment>);
     }
 
-    const setRightNavToLoginSignup = () => {
-        rightNav = (<Fragment>
-            <NavDropdown alignRight title={`Welcome, ${context.stateFName} ${context.stateLName}`} id="collasible-nav-dropdown" className='navbar-profile-dropdown'>
+    const setRightNavToWelcome = (result) => {
+        setRightNav(<Fragment>
+            <NavDropdown alignRight title={`Welcome, ${result[0]} ${result[1]}`} id="collasible-nav-dropdown" className='navbar-profile-dropdown'>
                 <NavDropdown.Item onClick={() => signoutUser()}>
                     Sign out
                 </NavDropdown.Item>
@@ -53,28 +79,9 @@ const Navigation = () => {
         </Fragment>);
     }
 
-    if (localStorage.getItem('token')) {
-        let result;
-
-        if (context.stateFName === '' && context.stateLName === '') {
-            result = getUserInfo();
-        } else{
-            result = 1;
-        }
-
-        if (result) {
-            setRightNavToLoginSignup();
-        } else {
-            setRightNavToWelcome();
-        }
-    } else {
-        setRightNavToWelcome();
-    }
-    
-
     return (
-        <div>
-            <Navbar collapseOnSelect expand="lg" bg="dark" className='navbar-c'>
+        <div className='nav-inner'>
+            <Navbar collapseOnSelect expand="lg" bg="dark" className={`${(navbarColor === 'Predictor') ? 'navbar-b' : 'navbar-r'}`}>
                 <Navbar.Brand>
                     <Link to='/' onClick={() => setNavbarColor('Home')} className='navbar-item-c navbar-item-width-height navbar-title'>
                         Diabetes Doctor
@@ -98,8 +105,7 @@ const Navigation = () => {
                         {rightNav}
                     </Nav>
                 </Navbar.Collapse>
-            </Navbar>
-            <Wave fill='#fff'
+                <Wave fill='#fff'
                 paused={false}
                 className='navbar-wave navbar-wave-1'
                 options={{
@@ -120,6 +126,7 @@ const Navigation = () => {
                 points: 3
                 }}
             />
+            </Navbar>
         </div>
     )
 }

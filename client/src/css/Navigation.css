@@ -1,6 +1,6 @@
-.navbar-c {
-  position: absolute;
-  z-index: 3;
+.navbar-b,
+.navbar-r {
+  position: relative;
   width: 100%;
   background-color: white !important;
 }
@@ -34,8 +34,12 @@
   border-color: #212121;
 }
 
-.navbar-light .navbar-toggler:hover {
+.navbar-b .navbar-toggler:hover {
   border-color: #0f4c82;
+}
+
+.navbar-r .navbar-toggler:hover {
+  border-color: #e3a143;
 }
 
 .navbar-position {
@@ -106,8 +110,12 @@
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Cpath stroke='rgba(33, 33, 33, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
-.navbar-light .navbar-toggler-icon:hover {
+.navbar-b .navbar-toggler-icon:hover {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Cpath stroke='rgba(15, 76, 130, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar-r .navbar-toggler-icon:hover {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Cpath stroke='rgba(227, 161, 67, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 .navbar-signin-c {
@@ -116,7 +124,6 @@
   height: 30px;
   border-radius: 8px;
   border: none;
-  background-image: linear-gradient(to right, #0f4c82, #2a70ae);
   color: white;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
@@ -126,13 +133,28 @@
   padding-bottom: 0;
 }
 
+.navbar-b .navbar-signin-colour {
+  background-image: linear-gradient(to right, #0f4c82, #2a70ae);
+}
+
+.navbar-r .navbar-signin-colour {
+  background-image: linear-gradient(to left, #e3a143, #ff802c);
+}
+
 .navbar-signin-c:hover {
   transform: scale(1.025);
   transition: transform 0.2s ease-in-out;
 }
 
-.navbar-title {
+.navbar-b .navbar-title {
   background: linear-gradient(to left, #0f4c82, #2a70ae);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.5rem !important;
+}
+
+.navbar-r .navbar-title {
+  background: linear-gradient(to left, #e3a143, #ff802c);
   background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 1.5rem !important;
@@ -143,18 +165,32 @@
   font-size: 1.15rem !important;
 }
 
-.navbar-item-normal:hover {
+.navbar-b .navbar-item-normal:hover {
   color: #0f4c82;
   transition: color 0.2s ease-in-out;
 }
 
-.navbar-selected {
+.navbar-b .navbar-selected {
   color: #0f4c82;
   font-size: 1.15rem !important;
 }
 
-.navbar-selected:hover {
+.navbar-b .navbar-selected:hover {
   color: #0f4c82;
+}
+
+.navbar-r .navbar-item-normal:hover {
+  color: #e3a143;
+  transition: color 0.2s ease-in-out;
+}
+
+.navbar-r .navbar-selected {
+  color: #e3a143;
+  font-size: 1.15rem !important;
+}
+
+.navbar-r .navbar-selected:hover {
+  color: #e3a143;
 }
 
 .navbar-signup-c {
@@ -173,11 +209,18 @@
   padding-bottom: 0;
 }
 
-.navbar-signup-c:hover {
+.navbar-b .navbar-signup-c:hover {
   color: #0f4c82;
   border: 1px #0f4c82 solid;
   transition: all 0.1s ease-in-out;
 }
+
+.navbar-r .navbar-signup-c:hover {
+  color: #e3a143;
+  border: 1px #e3a143 solid;
+  transition: all 0.1s ease-in-out;
+}
+
 #collasible-nav-dropdown {
   color: #212121 !important;
   border: 1px #212121 solid;
@@ -185,18 +228,24 @@
   transition: all 0.1s ease-in-out;
 }
 
-#collasible-nav-dropdown:hover {
+.navbar-b #collasible-nav-dropdown:hover {
   color: #0f4c82 !important;
   border: 1px #0f4c82 solid;
   transition: all 0.1s ease-in-out;
 }
 
+.navbar-r #collasible-nav-dropdown:hover {
+  color: #e3a143 !important;
+  border: 1px #e3a143 solid;
+  transition: all 0.1s ease-in-out;
+}
+
 .navbar-wave {
   position: absolute;
-  top: 35px;
+  top: 100%;
   left: 0px;
   width: 100%;
-  height: 70px;
+  height: 45px;
   transform: scaleY(-1);
 }
 .navbar-wave-1 {
@@ -205,4 +254,10 @@
 
 .navbar-wave-2 {
   z-index: 1;
+}
+
+.nav-inner {
+  width: 100%;
+  z-index: 10;
+  position: absolute;
 }
