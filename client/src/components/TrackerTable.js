@@ -9,10 +9,12 @@ const TrackerTable = () => {
     { title: 'Hours', field: 'hours', type: 'numeric'},
     { title: 'Weight', field: 'weight', type: 'numeric' },
     { title: 'Height', field: 'height', type: 'numeric' },
-    { title: 'Date & Time', field: 'dateTested', type: 'numeric'}
+    { title: 'BMI', field: 'bmi', type: 'numeric', editable: 'never' },
+    { title: 'Date & Time', field: 'dateTested', type: 'numeric', editable: 'never'}
   ]);
 
 const [data, setData] = useState([]);
+const [updateTrackerTable, setUpdateTrackerTable] = useState(false);
 
 useEffect(async () => {
     if (localStorage.getItem('token')){
@@ -29,7 +31,32 @@ useEffect(async () => {
 
         console.log('updated Tracker Table')
     }
-}, []);
+}, [updateTrackerTable]);
+
+const addTrack = async (data) => {
+  
+  if (localStorage.getItem('token')){
+    console.log(data);
+    const response = await fetch('/api/trackData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-tokens': localStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        dailyGlucose: data.dailyGlucose,
+        hours: data.hours,
+        weight: data.weight,
+        height: data.height
+      })
+    });
+
+    const json = await response.json();
+
+    console.log(json);
+  }
+
+}
 
 const deleteTrack = async (data) => {
   const response = await fetch(`/api/predictData/${data.data_id}`,
@@ -54,7 +81,12 @@ return (
       onRowAdd: newData =>
         new Promise((resolve, reject) => {
           setTimeout(() => {
+
+            addTrack(newData);
+
             setData([...data, newData]);
+
+            setUpdateTrackerTable(!updateTrackerTable);
                 
             resolve();
           }, 1000)
@@ -67,6 +99,8 @@ return (
             dataUpdate[index] = newData;
             setData([...dataUpdate]);
   
+            setUpdateTrackerTable(!updateTrackerTable);
+
             resolve();
           }, 1000)
         }),
@@ -81,6 +115,9 @@ return (
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
               setData([...dataDelete]);
+
+              setUpdateTrackerTable(!updateTrackerTable);
+
             }
             resolve()
           }, 1000)

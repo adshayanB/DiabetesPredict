@@ -296,6 +296,7 @@ def trackDataAll(current_user):
             trackData['hours']=data.hours
             trackData['weight']=data.weight
             trackData['height']=data.height
+            trackData['bmi']=data.bmi
             trackData['dateTested']=data.dateTested
             output.append(trackData)
         return jsonify(userData=output)
@@ -317,6 +318,7 @@ def getTrackData(current_user):
         user_data['hours']=userData.hours
         user_data['weight']=userData.weight
         user_data['height']=userData.height
+        trackData['bmi']=data.bmi
         user_data['dateTested']=userData.dateTested
 
         return jsonify(user_data=user_data)
