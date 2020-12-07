@@ -49,7 +49,7 @@ const Auth = (props) => {
         }
 
         if (token){
-            if (token !== 'register' || token !== 'login'){
+            if (token !== 'register' && token !== 'login'){
                 response = await fetch(`/api/confirm_email/${token}`);
                 json = await response.json();
     

@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useContext, Fragment } from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import Context from '../utils/context';
-import PredictionHistory from './PredictionHistory';
+import TrackerTable from './TrackerTable';
 import Wave from 'react-wavify';
 import '../css/Tracker.css';
 
@@ -19,7 +19,7 @@ const Tracker = () => {
             <div className='tracker-background-container'></div>
             <div className='tracker-page-main-container'>
                 <div className='tracker-main-container'>
-                    <PredictionHistory />       
+                    <TrackerTable />       
                 </div>
                 <div className='tracker-hist-main-container'>
                     <Wave fill='#fff'

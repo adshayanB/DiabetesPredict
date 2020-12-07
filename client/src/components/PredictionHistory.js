@@ -42,7 +42,7 @@ const PredictionHistory = (props) => {
 
             setData(json.userData);
 
-            console.log('updated')
+            console.log('updated Prediction History')
         }
     }, [props.stateUpdatePredictHistory]);
 

@@ -1,29 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import MaterialTable from 'material-table';
-import '../css/TrackerTable.css';
+//import '../css/TrackerTable.css';
 
 const TrackerTable = () => {
   const [columns, setColumns] = useState([
-    { title: 'ID', field: 'data_id', hidden:true },
-    { title: 'Pregnancies', field: 'pregnancies', type: 'numeric' },
-    { title: 'Glucose', field: 'glucose', type: 'numeric'},
-    { title: 'Bloodpressure', field: 'bp', type: 'numeric' },
-    { title: 'Skin Thickness', field: 'st', type: 'numeric' },
-    { title: 'Insulin', field: 'insulin', type: 'numeric'},
-    { title: 'BMI', field: 'bmi', type: 'numeric' },
-    { title: 'DPF', field: 'dpf', type: 'numeric' },
-    { title: 'Age', field: 'age', type: 'numeric' },
-    { title: 'Date & Time', field: 'dateTime', type: 'datetime', defaultSort: 'desc'},
-    {
-        title: 'Result',
-        field: 'result',
-        render: rowData => {
-            return(
-            (rowData.result) ? <div className='positive-container'>POSITIVE</div> : <div className='negative-container'>NEGATIVE</div>
-            );
-        }
-    }
-
+    //{ title: 'ID', field: 'data_id', hidden:true },
+    { title: 'Daily Glucose', field: 'dailyGlucose', type: 'numeric' },
+    { title: 'Hours', field: 'hours', type: 'numeric'},
+    { title: 'Weight', field: 'weight', type: 'numeric' },
+    { title: 'Height', field: 'height', type: 'numeric' },
+    { title: 'Date & Time', field: 'dateTested', type: 'numeric'}
   ]);
 
 const [data, setData] = useState([]);
@@ -31,7 +17,7 @@ const [data, setData] = useState([]);
 useEffect(async () => {
     if (localStorage.getItem('token')){
     
-        const response = await fetch('/api/predictData', {
+        const response = await fetch('/api/trackDataAll', {
             headers: {
             'x-access-tokens': localStorage.getItem('token')
             }
@@ -41,9 +27,9 @@ useEffect(async () => {
 
         setData(json.userData);
 
-        console.log('updated')
+        console.log('updated Tracker Table')
     }
-}, [props.stateUpdatePredictHistory]);
+}, []);
 
 const deleteTrack = async (data) => {
   const response = await fetch(`/api/predictData/${data.data_id}`,
@@ -89,7 +75,7 @@ return (
           setTimeout(() => {
             if (localStorage.getItem('token')){
 
-              deleteTrack(oldData);
+              //deleteTrack(oldData);
 
               const dataDelete = [...data];
               const index = oldData.tableData.id;
@@ -104,7 +90,8 @@ return (
         rowStyle: rowData => ({
           backgroundColor: (rowData.tableData.id % 2 === 0) ? '#f6f6f6' : '#e6e6e6'
         }),
-        exportButton:true
+        exportButton:true,
+        pageSize: 10
       }}
   />
 )

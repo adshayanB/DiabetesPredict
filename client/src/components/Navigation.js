@@ -9,6 +9,7 @@ const Navigation = () => {
     const context = useContext(Context);
     const [navbarColor, setNavbarColor] = useState('Home');
     const [rightNav, setRightNav] = useState();
+    const [sign, setSign] = useState(false);
 
     useEffect(async() => {
         if (localStorage.getItem('token')) {
@@ -29,7 +30,7 @@ const Navigation = () => {
         } else {
             setRightNavToLoginSignup();
         }
-    }, [navbarColor, rightNav]);
+    }, [navbarColor, sign]);
 
     const getUserInfo = async () => {
         let response = await fetch('/api/user', {headers: { 'x-access-tokens': localStorage.getItem('token')}});
@@ -49,6 +50,7 @@ const Navigation = () => {
         localStorage.removeItem('token');
         context.assignFName('');
         context.assignLName('');
+        setSign(!sign);
     }
 
     const setRightNavToLoginSignup = () => {
