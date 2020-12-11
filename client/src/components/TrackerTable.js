@@ -6,11 +6,11 @@ const TrackerTable = () => {
   const [columns, setColumns] = useState([
     //{ title: 'ID', field: 'data_id', hidden:true },
     { title: 'Daily Glucose', field: 'dailyGlucose', type: 'numeric' },
-    { title: 'Hours', field: 'hours', type: 'numeric'},
+    { title: 'Hours of Sleep', field: 'hours', type: 'numeric'},
     { title: 'Weight', field: 'weight', type: 'numeric' },
     { title: 'Height', field: 'height', type: 'numeric' },
     { title: 'BMI', field: 'bmi', type: 'numeric', editable: 'never' },
-    { title: 'Date & Time', field: 'dateTested', type: 'numeric', editable: 'never'}
+    { title: 'Date & Time', field: 'dateTested', type: 'datetime', defaultSort: 'desc'}
   ]);
 
 const [data, setData] = useState([]);

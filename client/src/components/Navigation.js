@@ -1,15 +1,17 @@
 import React, { useState, Fragment, useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import Wave from 'react-wavify';
 import '../css/Navigation.css';
 import Context from '../utils/context';
 
 const Navigation = () => {
+    let history = useHistory();
     const context = useContext(Context);
     const [navbarColor, setNavbarColor] = useState('Home');
     const [rightNav, setRightNav] = useState();
     const [sign, setSign] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(async() => {
         if (localStorage.getItem('token')) {
@@ -23,12 +25,15 @@ const Navigation = () => {
     
             if (result.length > 0) {
                 setRightNavToWelcome(result);
+                setLoggedIn(true);
             } else {
                 console.log('working')
                 setRightNavToLoginSignup();
+                setLoggedIn(false);
             }
         } else {
             setRightNavToLoginSignup();
+            setLoggedIn(false);
         }
     }, [navbarColor, sign]);
 
@@ -51,6 +56,7 @@ const Navigation = () => {
         context.assignFName('');
         context.assignLName('');
         setSign(!sign);
+        history.push('/')
     }
 
     const setRightNavToLoginSignup = () => {
@@ -92,16 +98,16 @@ const Navigation = () => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className='m-auto navbar-item-font'>
-                        <Nav.Link>
+                        {(loggedIn) && <Nav.Link>
                             <Link to='/predict' onClick={() => setNavbarColor('Predictor')} className={`navbar-item-c navbar-item-width-height ${(navbarColor === 'Predictor') ? 'navbar-selected' : 'navbar-item-normal'}`}>
                                 Predictor
                             </Link>
-                        </Nav.Link>
-                        <Nav.Link>
+                        </Nav.Link>}
+                        {(loggedIn) && <Nav.Link>
                             <Link to='/track' onClick={() => setNavbarColor('Tracker')} className={`navbar-item-c navbar-item-width-height ${(navbarColor === 'Tracker') ? 'navbar-selected' : 'navbar-item-normal'}`}>
                                 Tracker
                             </Link>
-                        </Nav.Link>
+                        </Nav.Link>}
                     </Nav>
                     <Nav>
                         {rightNav}

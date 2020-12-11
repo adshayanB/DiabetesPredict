@@ -39,7 +39,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: #f6f6f6;
   padding: 2rem;
 }
 
@@ -56,4 +56,80 @@
 
 .tracker-wave-2 {
   z-index: 1;
+}
+
+.tracker-title {
+  color: #212121;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.tracker-graphs-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  height: 500px;
+  width: 100%;
+}
+
+.inner-graph-card {
+  width: 1075.59px;
+  height: 90%;
+  border-radius: 25px;
+  background-color: white;
+  padding: 1rem;
+}
+
+.graph-options {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 25px;
+}
+
+.graph-button {
+  flex: 1;
+  height: 100%;
+  border: 1px #e6e6e6 solid;
+  background-color: #f6f6f6;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.graph-button-left {
+  border-top-left-radius: 20px;
+}
+
+.graph-button-right {
+  border-top-right-radius: 20px;
+}
+
+.graph-hover:hover {
+  background-color: #e6e6e6;
+}
+
+.graph-red {
+  background-color: #c0392b;
+  color: white;
+}
+
+.graph-orange {
+  background-color: #e3a143;
+  color: white;
+}
+
+.graph-green {
+  background-color: #27ae60;
+  color: white;
+}
+
+.graph-blue {
+  background-color: #0f4c82;
+  color: white;
+}
+
+.graph-purple {
+  background-color: #8e44ad;
+  color: white;
 }
