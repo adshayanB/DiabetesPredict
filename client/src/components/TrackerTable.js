@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import MaterialTable from 'material-table';
 //import '../css/TrackerTable.css';
 
-const TrackerTable = () => {
+const TrackerTable = (props) => {
   const [columns, setColumns] = useState([
     //{ title: 'ID', field: 'data_id', hidden:true },
     { title: 'Daily Glucose', field: 'dailyGlucose', type: 'numeric' },
@@ -10,10 +10,9 @@ const TrackerTable = () => {
     { title: 'Weight', field: 'weight', type: 'numeric' },
     { title: 'Height', field: 'height', type: 'numeric' },
     { title: 'BMI', field: 'bmi', type: 'numeric', editable: 'never' },
-    { title: 'Date & Time', field: 'dateTested', type: 'datetime', defaultSort: 'desc'}
+    { title: 'Date & Time', field: 'dateTested', type: 'datetime', defaultSort: 'desc', editable: 'never'}
   ]);
 
-const [data, setData] = useState([]);
 const [updateTrackerTable, setUpdateTrackerTable] = useState(false);
 
 useEffect(async () => {
@@ -27,7 +26,7 @@ useEffect(async () => {
 
         const json = await response.json();
 
-        setData(json.userData);
+        props.assignData(json.userData);
 
         console.log('updated Tracker Table')
     }
@@ -76,7 +75,7 @@ return (
   <MaterialTable
     title="Tracker"
     columns={columns}
-    data={data}
+    data={props.stateData}
     editable={{
       onRowAdd: newData =>
         new Promise((resolve, reject) => {
@@ -84,7 +83,7 @@ return (
 
             addTrack(newData);
 
-            setData([...data, newData]);
+            props.assignData([...props.stateData, newData]);
 
             setUpdateTrackerTable(!updateTrackerTable);
                 
@@ -94,10 +93,10 @@ return (
       onRowUpdate: (newData, oldData) =>
         new Promise((resolve, reject) => {
           setTimeout(() => {
-            const dataUpdate = [...data];
+            const dataUpdate = [...props.stateData];
             const index = oldData.tableData.id;
             dataUpdate[index] = newData;
-            setData([...dataUpdate]);
+            props.assignData([...dataUpdate]);
   
             setUpdateTrackerTable(!updateTrackerTable);
 
@@ -111,10 +110,10 @@ return (
 
               //deleteTrack(oldData);
 
-              const dataDelete = [...data];
+              const dataDelete = [...props.stateData];
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
-              setData([...dataDelete]);
+              props.assignData([...dataDelete]);
 
               setUpdateTrackerTable(!updateTrackerTable);
 

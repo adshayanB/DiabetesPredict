@@ -69,7 +69,6 @@
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  height: 500px;
   width: 100%;
 }
 
@@ -79,6 +78,15 @@
   border-radius: 25px;
   background-color: white;
   padding: 1rem;
+}
+
+.inner-graph-container-resize {
+  width: calc(100vw - 4rem) !important;
+}
+
+.main-graph-container {
+  position: relative;
+  width: 100%;
 }
 
 .graph-options {
