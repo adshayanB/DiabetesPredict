@@ -89,7 +89,7 @@ const Navigation = () => {
 
     return (
         <div className='nav-inner'>
-            <Navbar collapseOnSelect expand="lg" bg="dark" className={`${(navbarColor === 'Predictor') ? 'navbar-b' : 'navbar-r'}`}>
+            <Navbar collapseOnSelect expand="lg" bg="dark" className={`${(navbarColor === 'Predictor') ? 'navbar-b' : (navbarColor === 'Tracker') ? 'navbar-r' : 'navbar-w'}`}>
                 <Navbar.Brand>
                     <Link to='/' onClick={() => setNavbarColor('Home')} className='navbar-item-c navbar-item-width-height navbar-title'>
                         Diabetes Doctor
@@ -113,27 +113,27 @@ const Navigation = () => {
                         {rightNav}
                     </Nav>
                 </Navbar.Collapse>
-                <Wave fill='#fff'
-                paused={false}
-                className='navbar-wave navbar-wave-1'
-                options={{
-                height: 15,
-                amplitude: 20,
-                speed: 0.15,
-                points: 4
-                }}
-            />
+                {(navbarColor != 'Home') && <Wave fill='#fff'
+                    paused={false}
+                    className='navbar-wave navbar-wave-1'
+                    options={{
+                        height: 15,
+                        amplitude: 20,
+                        speed: 0.15,
+                        points: 4
+                    }}
+                />}
 
-            <Wave fill='#f6f6f6'
-                paused={false}
-                className='navbar-wave navbar-wave-2'
-                options={{
-                height: 20,
-                amplitude: 25,
-                speed: 0.15,
-                points: 3
-                }}
-            />
+                {(navbarColor != 'Home') && <Wave fill='#f6f6f6'
+                    paused={false}
+                    className='navbar-wave navbar-wave-2'
+                    options={{
+                        height: 20,
+                        amplitude: 25,
+                        speed: 0.15,
+                        points: 3
+                    }}
+                />}
             </Navbar>
         </div>
     )

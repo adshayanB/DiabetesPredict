@@ -1,26 +1,27 @@
 {
   "files": {
-    "main.css": "/static/react/css/main.c54ce8ec.chunk.css",
-    "main.js": "/static/react/js/main.2b5bbe66.chunk.js",
-    "main.js.map": "/static/react/js/main.2b5bbe66.chunk.js.map",
+    "main.css": "/static/react/css/main.999d9ca2.chunk.css",
+    "main.js": "/static/react/js/main.2433a0a0.chunk.js",
+    "main.js.map": "/static/react/js/main.2433a0a0.chunk.js.map",
     "runtime-main.js": "/static/react/js/runtime-main.c6bcda95.js",
     "runtime-main.js.map": "/static/react/js/runtime-main.c6bcda95.js.map",
     "css/2.1a02f21c.chunk.css": "/static/react/css/2.1a02f21c.chunk.css",
-    "js/2.a22ebc93.chunk.js": "/static/react/js/2.a22ebc93.chunk.js",
-    "js/2.a22ebc93.chunk.js.map": "/static/react/js/2.a22ebc93.chunk.js.map",
+    "js/2.839b5d84.chunk.js": "/static/react/js/2.839b5d84.chunk.js",
+    "js/2.839b5d84.chunk.js.map": "/static/react/js/2.839b5d84.chunk.js.map",
     "../../templates/index.html": "/static/react/../../templates/index.html",
     "css/2.1a02f21c.chunk.css.map": "/static/react/css/2.1a02f21c.chunk.css.map",
-    "css/main.c54ce8ec.chunk.css.map": "/static/react/css/main.c54ce8ec.chunk.css.map",
-    "js/2.a22ebc93.chunk.js.LICENSE.txt": "/static/react/js/2.a22ebc93.chunk.js.LICENSE.txt",
+    "css/main.999d9ca2.chunk.css.map": "/static/react/css/main.999d9ca2.chunk.css.map",
+    "js/2.839b5d84.chunk.js.LICENSE.txt": "/static/react/js/2.839b5d84.chunk.js.LICENSE.txt",
     "media/Tracker.css": "/static/react/media/background.e1bcae5c.jpg",
     "media/Login.css": "/static/react/media/show-password.ced99001.svg",
+    "media/medical_background_video_12s_loop.e602e74b.mp4": "/static/react/media/medical_background_video_12s_loop.e602e74b.mp4",
     "media/Result.css": "/static/react/media/smiley-4.d323f311.svg"
   },
   "entrypoints": [
     "js/runtime-main.c6bcda95.js",
     "css/2.1a02f21c.chunk.css",
-    "js/2.a22ebc93.chunk.js",
-    "css/main.c54ce8ec.chunk.css",
-    "js/main.2b5bbe66.chunk.js"
+    "js/2.839b5d84.chunk.js",
+    "css/main.999d9ca2.chunk.css",
+    "js/main.2433a0a0.chunk.js"
   ]
 }
