@@ -361,6 +361,24 @@ def viewTrackData(current_user,dataId):
     else:
         return jsonify(message='No Tracking Data')
 
+@app.route('api/trackdata/<dataId>', methods=['PUT'])
+@token_required
+def editTackData(current_user,dataId):
+    user={}
+    user['public_id']=current_user.public_id
+    userData=Track.query.filter_by(data_id=dataId,user_id=user['public_id']).first()
+    data=request.json
+    if userData:
+        userData.dailyGlucose=data['dailyGlucose'],
+        userData.hours=data['hours'],
+        userData.weight=data['weight'],
+        userData.height=data['height'],
+        userData.bmi=round((data['weight']/data['height']/data['height'])*10000, 2)
+        db.session.commit()
+        return jsonify(user_data=user_data)
+    else:
+        return jsonify(message='No Tracking Data')
+
 
 
 @app.route('/api/predictData',methods=['POST'])
