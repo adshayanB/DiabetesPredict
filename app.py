@@ -90,6 +90,7 @@ class Data(db.Model):
 class Track(db.Model):
     id=Column(Integer,primary_key=True)
     user_id=Column(String(50))
+    data_id=Column(String(50))
     dailyGlucose=Column(Integer)
     hours=Column(Integer)
     weight=Column(Float)
@@ -271,6 +272,7 @@ def trackData(current_user):
     data=request.json
     newTrackData=Track(
         user_id=user_data['public_id'],
+        data_id=str(uuid.uuid4()),
         dailyGlucose=data['dailyGlucose'],
         hours=data['hours'],
         weight=data['weight'],
@@ -303,9 +305,9 @@ def trackDataAll(current_user):
     else:
         return jsonify(message='You do not have any Tracking Data')
 
-@app.route('/api/trackData', methods=['GET'])
+@app.route('/api/trackDataRecent', methods=['GET'])
 @token_required
-def getTrackData(current_user):
+def getTrackDataRecent(current_user):
     user={}
     user['public_id']=current_user.public_id
 
@@ -318,12 +320,47 @@ def getTrackData(current_user):
         user_data['hours']=userData.hours
         user_data['weight']=userData.weight
         user_data['height']=userData.height
-        trackData['bmi']=data.bmi
+        user_data['bmi']=userData.bmi
         user_data['dateTested']=userData.dateTested
 
         return jsonify(user_data=user_data)
     else:
         return jsonify(message='No Tracking Data')
+
+@app.route('/api/trackData/<dataId>',methods=['DELETE'])
+@token_required
+def deleteTrackData(current_user,dataId):
+    user={}
+    user['public_id']=current_user.public_id
+    deleteData=Track.query.filter_by(data_id=dataId,user_id=user['public_id']).first()
+
+    if deleteData:
+        db.session.delete(deleteData)
+        db.session.commit()
+        return jsonify(message='Data has been deleted')
+    else:
+        return jsonify(message='Data does not exist')
+
+@app.route('/api/trackData/<dataId>',methods=['GET'])
+@token_required
+def viewTrackData(current_user,dataId):
+    user={}
+    user['public_id']=current_user.public_id
+    userData=Track.query.filter_by(data_id=dataId,user_id=user['public_id']).first()
+
+    if userData:
+        user_data={}
+        user_data['dailyGlucose']=userData.dailyGlucose
+        user_data['hours']=userData.hours
+        user_data['weight']=userData.weight
+        user_data['height']=userData.height
+        user_data['bmi']=userData.bmi
+        user_data['dateTested']=userData.dateTested
+
+        return jsonify(user_data=user_data)
+    else:
+        return jsonify(message='No Tracking Data')
+
 
 
 @app.route('/api/predictData',methods=['POST'])
@@ -334,10 +371,10 @@ def predictData(current_user):
 
     user_data['public_id']=current_user.public_id
     data=request.json
-    if not isinstance(data['pregnancies'], int) :
-        return jsonify(message=f'Pregnancies must be of an integer value')
-    if not isinstance(data['age'], int):
-        return jsonify(message=f'Age must be of an integer value')
+    # if not isinstance(data['pregnancies'], int) :
+    #     return jsonify(message=f'Pregnancies must be of an integer value')
+    # if not isinstance(data['age'], int):
+    #     return jsonify(message=f'Age must be of an integer value')
     
     newData=Data(
         user_id=user_data['public_id'],
