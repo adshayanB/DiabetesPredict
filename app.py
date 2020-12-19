@@ -375,7 +375,7 @@ def editTackData(current_user,dataId):
         userData.height=data['height'],
         userData.bmi=round((data['weight']/data['height']/data['height'])*10000, 2)
         db.session.commit()
-        return jsonify(user_data=user_data)
+        return (jsonify(message="Data updated"))
     else:
         return jsonify(message='No Tracking Data')
 
