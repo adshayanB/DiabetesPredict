@@ -13,6 +13,25 @@ const Navigation = () => {
     const [sign, setSign] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
 
+    useEffect(() => {
+        /* if (localStorage.getItem("navbarColor")) {
+            setNavbarColor(localStorage.getItem("navbarColor"));
+        } */
+        console.log(window.location.pathname);
+        if (window.location.pathname === '/predict') {
+            console.log('you found predictor')
+            setNavbarColor('Predictor')
+        }
+        else if (window.location.pathname === '/track') {
+            console.log('you found tracker')
+            setNavbarColor('Tracker')
+        }
+        else {
+            console.log('you found home')
+            setNavbarColor('Home');
+        }
+    }, [])
+    
     useEffect(async() => {
         if (localStorage.getItem('token')) {
             let result;
@@ -27,7 +46,6 @@ const Navigation = () => {
                 setRightNavToWelcome(result);
                 setLoggedIn(true);
             } else {
-                console.log('working')
                 setRightNavToLoginSignup();
                 setLoggedIn(false);
             }
@@ -35,7 +53,12 @@ const Navigation = () => {
             setRightNavToLoginSignup();
             setLoggedIn(false);
         }
+
     }, [navbarColor, sign]);
+
+    /* useEffect(() => {
+        localStorage.setItem("navbarColor", navbarColor);
+    }, [navbarColor]) */
 
     const getUserInfo = async () => {
         let response = await fetch('/api/user', {headers: { 'x-access-tokens': localStorage.getItem('token')}});
@@ -56,7 +79,8 @@ const Navigation = () => {
         context.assignFName('');
         context.assignLName('');
         setSign(!sign);
-        history.push('/')
+        setNavbarColor('Home');
+        history.push('/');
     }
 
     const setRightNavToLoginSignup = () => {

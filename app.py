@@ -300,6 +300,7 @@ def trackDataAll(current_user):
             trackData['height']=data.height
             trackData['bmi']=data.bmi
             trackData['dateTested']=data.dateTested
+            trackData['data_id']=data.data_id
             output.append(trackData)
         return jsonify(userData=output)
     else:
@@ -361,7 +362,7 @@ def viewTrackData(current_user,dataId):
     else:
         return jsonify(message='No Tracking Data')
 
-@app.route('api/trackdata/<dataId>', methods=['PUT'])
+@app.route('/api/trackdata/<dataId>', methods=['PUT'])
 @token_required
 def editTackData(current_user,dataId):
     user={}

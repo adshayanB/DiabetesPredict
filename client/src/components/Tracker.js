@@ -33,32 +33,34 @@ const Tracker = () => {
     }, []);
 
     useEffect(() => {
-        let tempSeparatedData = [];
+        if (undefined !== data) {
+            let tempSeparatedData = [];
 
-        sortedData = data;
-
-        sortedData.sort((a, b) => new Date(a.dateTested).getTime() - new Date(b.dateTested).getTime())
-
-        for (let i = 0; i < sortedData.length; i++) {
-            sortedData[i].dateTested = new Date(sortedData[i].dateTested);
-        }
-
-        for (let i = 0; i < sortedData.length; i += count) {
-            let tempArray = [sortedData[i]];
-            count = 1;
-            for (let j = i + 1; j < sortedData.length; j++) {
-                if ((sortedData[i].dateTested.getFullYear() === sortedData[j].dateTested.getFullYear()) && (sortedData[i].dateTested.getMonth() === sortedData[j].dateTested.getMonth()) && (sortedData[i].dateTested.getDate() === sortedData[j].dateTested.getDate())){
-                    tempArray.push(sortedData[j]);
-                    count++;
-                } else {
-                    break;
-                }
+            sortedData = data;
+    
+            sortedData.sort((a, b) => new Date(a.dateTested).getTime() - new Date(b.dateTested).getTime())
+    
+            for (let i = 0; i < sortedData.length; i++) {
+                sortedData[i].dateTested = new Date(sortedData[i].dateTested);
             }
-            tempSeparatedData.push(tempArray);
+    
+            for (let i = 0; i < sortedData.length; i += count) {
+                let tempArray = [sortedData[i]];
+                count = 1;
+                for (let j = i + 1; j < sortedData.length; j++) {
+                    if ((sortedData[i].dateTested.getFullYear() === sortedData[j].dateTested.getFullYear()) && (sortedData[i].dateTested.getMonth() === sortedData[j].dateTested.getMonth()) && (sortedData[i].dateTested.getDate() === sortedData[j].dateTested.getDate())){
+                        tempArray.push(sortedData[j]);
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+                tempSeparatedData.push(tempArray);
+            }
+    
+            console.log(tempSeparatedData);
+            setSeparatedData(tempSeparatedData);
         }
-
-        console.log(tempSeparatedData);
-        setSeparatedData(tempSeparatedData);
     }, [data]);
 
     const getFormattedDate = (date) => {

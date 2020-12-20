@@ -4,7 +4,7 @@ import MaterialTable from 'material-table';
 
 const TrackerTable = (props) => {
   const [columns, setColumns] = useState([
-    //{ title: 'ID', field: 'data_id', hidden:true },
+    { title: 'ID', field: 'data_id', hidden:true },
     { title: 'Daily Glucose', field: 'dailyGlucose', type: 'numeric' },
     { title: 'Hours of Sleep', field: 'hours', type: 'numeric'},
     { title: 'Weight', field: 'weight', type: 'numeric' },
@@ -58,7 +58,7 @@ const addTrack = async (data) => {
 }
 
 const deleteTrack = async (data) => {
-  const response = await fetch(`/api/predictData/${data.data_id}`,
+  const response = await fetch(`/api/trackData/${data.data_id}`,
   {
     method: 'DELETE',
     headers: {
@@ -108,7 +108,7 @@ return (
           setTimeout(() => {
             if (localStorage.getItem('token')){
 
-              //deleteTrack(oldData);
+              deleteTrack(oldData);
 
               const dataDelete = [...props.stateData];
               const index = oldData.tableData.id;
