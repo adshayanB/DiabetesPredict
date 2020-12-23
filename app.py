@@ -217,7 +217,7 @@ def login():
         return jsonify(message='User is not verified')
     if check_password_hash(user.password,login['password']):
         token=jwt.encode({'public_id': user.public_id,'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-        return jsonify(token=token.decode('UTF-8'))
+        return jsonify(token=token)
     else:
         return jsonify(message='Your email or password is incorrect'),401
 
@@ -370,10 +370,10 @@ def editTackData(current_user,dataId):
     userData=Track.query.filter_by(data_id=dataId,user_id=user['public_id']).first()
     data=request.json
     if userData:
-        userData.dailyGlucose=data['dailyGlucose'],
-        userData.hours=data['hours'],
-        userData.weight=data['weight'],
-        userData.height=data['height'],
+        userData.dailyGlucose=data['dailyGlucose']
+        userData.hours=data['hours']
+        userData.weight=data['weight']
+        userData.height=data['height']
         userData.bmi=round((data['weight']/data['height']/data['height'])*10000, 2)
         db.session.commit()
         return (jsonify(message="Data updated"))
