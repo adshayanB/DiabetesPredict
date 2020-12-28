@@ -217,7 +217,7 @@ def login():
         return jsonify(message='User is not verified')
     if check_password_hash(user.password,login['password']):
         token=jwt.encode({'public_id': user.public_id,'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-        return jsonify(token=token)
+        return jsonify(token=token.decode('UTF-8'))
     else:
         return jsonify(message='Your email or password is incorrect'),401
 
@@ -362,7 +362,7 @@ def viewTrackData(current_user,dataId):
     else:
         return jsonify(message='No Tracking Data')
 
-@app.route('/api/trackdata/<dataId>', methods=['PUT'])
+@app.route('/api/trackData/<dataId>', methods=['PUT'])
 @token_required
 def editTackData(current_user,dataId):
     user={}

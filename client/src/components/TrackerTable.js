@@ -57,6 +57,28 @@ const addTrack = async (data) => {
 
 }
 
+const editTrack = async (data) => {
+  
+  if (localStorage.getItem('token')){
+    const response = await fetch(`/api/trackData/${data.data_id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-tokens': localStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        dailyGlucose: data.dailyGlucose,
+        hours: data.hours,
+        weight: data.weight,
+        height: data.height
+      })
+    });
+
+    const json = await response.json();
+  }
+
+}
+
 const deleteTrack = async (data) => {
   const response = await fetch(`/api/trackData/${data.data_id}`,
   {
@@ -93,6 +115,9 @@ return (
       onRowUpdate: (newData, oldData) =>
         new Promise((resolve, reject) => {
           setTimeout(() => {
+
+            editTrack(newData);
+
             const dataUpdate = [...props.stateData];
             const index = oldData.tableData.id;
             dataUpdate[index] = newData;

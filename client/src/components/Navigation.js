@@ -123,12 +123,12 @@ const Navigation = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className='m-auto navbar-item-font'>
                         {(loggedIn) && <Nav.Link>
-                            <Link to='/predict' onClick={() => setNavbarColor('Predictor')} className={`navbar-item-c navbar-item-width-height ${(navbarColor === 'Predictor') ? 'navbar-selected' : 'navbar-item-normal'}`}>
+                            <Link to='/predict' onClick={() => setNavbarColor('Predictor')} className={`navbar-item-c navbar-item-width-height ${(navbarColor === 'Predictor') ? 'navbar-selected' : (navbarColor === 'Home') ? 'navbar-item-left' : 'navbar-item-normal'}`}>
                                 Predictor
                             </Link>
                         </Nav.Link>}
                         {(loggedIn) && <Nav.Link>
-                            <Link to='/track' onClick={() => setNavbarColor('Tracker')} className={`navbar-item-c navbar-item-width-height ${(navbarColor === 'Tracker') ? 'navbar-selected' : 'navbar-item-normal'}`}>
+                            <Link to='/track' onClick={() => setNavbarColor('Tracker')} className={`navbar-item-c navbar-item-width-height ${(navbarColor === 'Tracker') ? 'navbar-selected' : (navbarColor === 'Home') ? 'navbar-item-right' : 'navbar-item-normal'}`}>
                                 Tracker
                             </Link>
                         </Nav.Link>}

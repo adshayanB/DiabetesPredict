@@ -197,7 +197,9 @@
 }
 
 .navbar-w .navbar-title {
-  color: white;
+  background: linear-gradient(to left, #0f4c82, #2a70ae);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-size: 1.5rem !important;
 }
 
@@ -211,8 +213,13 @@
   font-size: 1.15rem !important;
 }
 
-.navbar-w .navbar-item-normal {
+.navbar-w .navbar-item-right {
   color: #fff;
+  font-size: 1.15rem !important;
+}
+
+.navbar-w .navbar-item-left {
+  color: #2a70ae;
   font-size: 1.15rem !important;
 }
 
@@ -244,8 +251,13 @@
   color: #e3a143;
 }
 
-.navbar-w .navbar-item-normal:hover {
-  color: #e6e6e6;
+.navbar-w .navbar-item-right:hover {
+  color: #e3a143;
+  transition: color 0.2s ease-in-out;
+}
+
+.navbar-w .navbar-item-left:hover {
+  color: #e3a143;
   transition: color 0.2s ease-in-out;
 }
 

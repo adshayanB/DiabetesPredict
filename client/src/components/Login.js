@@ -119,7 +119,7 @@ const Login = (props) => {
                 </button>
                 
             </form>
-            <h5 className='forgot-password'>Forgot your password?</h5>
+            {/*<h5 className='forgot-password'>Forgot your password?</h5>*/}
         </div>
     )
 }
