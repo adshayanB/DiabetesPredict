@@ -70,6 +70,10 @@ const Login = (props) => {
 
             if (props.currentLocation.state && props.currentLocation.state.detail === 'DIRECTED') {
                 history.goBack();
+            } else if (props.currentLocation.state && props.currentLocation.state.detail === 'PREDICTOR') {
+                history.push('/predict');
+            } else if (props.currentLocation.state && props.currentLocation.state.detail === 'TRACKER') {
+                history.push('/track');
             } else {
                 history.push('/');
             }

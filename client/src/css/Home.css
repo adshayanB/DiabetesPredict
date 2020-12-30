@@ -26,12 +26,20 @@
   padding: 2rem;
 }
 
+.home-content-button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .home-content-left {
   flex: 1;
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+  flex-direction: column;
 }
 
 .home-content-right {
@@ -43,8 +51,8 @@
 }
 
 .home-page-art {
-  height: 110vh;
-  width: 110vh;
+  height: 48vw;
+  width: 48vw;
 }
 
 .home-predict-content-left {
@@ -55,7 +63,11 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
-  margin-right: 50px;
+  margin-right: 25px;
+}
+
+.typewriter-display {
+  display: inline-block;
 }
 
 .home-predict-content-right {
@@ -66,7 +78,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 50px;
+  margin-left: 25px;
 }
 
 .home-tracker-content-right {
@@ -107,8 +119,8 @@
 
 .paragraph-font {
   color: #23272a;
-  font-size: 20px;
-  line-height: 32px;
+  font-size: 18px;
+  line-height: 31px;
   text-align: justify;
 }
 
@@ -189,4 +201,29 @@
 .home-orange-button:hover {
   transform: scale(1.025);
   transition: transform 0.2s ease-in-out;
+}
+
+.remove-link-styles {
+  text-decoration: none;
+}
+
+.home-arrow {
+  position: absolute;
+  width: 65px;
+  height: 65px;
+  bottom: 50px;
+  left: 50%;
+  transform-origin: center center;
+  transform: translateX(50%) scale(1);
+  background-image: url('../images/Arrow.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.home-arrow:hover {
+  transform: translateX(50%) scale(1.15);
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
 }

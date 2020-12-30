@@ -8,27 +8,25 @@ import Context from '../utils/context';
 const Navigation = () => {
     let history = useHistory();
     const context = useContext(Context);
-    const [navbarColor, setNavbarColor] = useState('Home');
     const [rightNav, setRightNav] = useState();
     const [sign, setSign] = useState(false);
-    const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
-        /* if (localStorage.getItem("navbarColor")) {
-            setNavbarColor(localStorage.getItem("navbarColor"));
+        /* if (localStorage.getItem("context.stateNavbarColor")) {
+            context.assignNavbarColor(localStorage.getItem("context.stateNavbarColor"));
         } */
         console.log(window.location.pathname);
         if (window.location.pathname === '/predict') {
             console.log('you found predictor')
-            setNavbarColor('Predictor')
+            context.assignNavbarColor('Predictor')
         }
         else if (window.location.pathname === '/track') {
             console.log('you found tracker')
-            setNavbarColor('Tracker')
+            context.assignNavbarColor('Tracker')
         }
         else {
             console.log('you found home')
-            setNavbarColor('Home');
+            context.assignNavbarColor('Home');
         }
     }, [])
     
@@ -44,21 +42,21 @@ const Navigation = () => {
     
             if (result.length > 0) {
                 setRightNavToWelcome(result);
-                setLoggedIn(true);
+                context.assignLoggedIn(true);
             } else {
                 setRightNavToLoginSignup();
-                setLoggedIn(false);
+                context.assignLoggedIn(false);
             }
         } else {
             setRightNavToLoginSignup();
-            setLoggedIn(false);
+            context.assignLoggedIn(false);
         }
 
-    }, [navbarColor, sign]);
+    }, [context.stateNavbarColor, sign]);
 
     /* useEffect(() => {
-        localStorage.setItem("navbarColor", navbarColor);
-    }, [navbarColor]) */
+        localStorage.setItem("context.stateNavbarColor", context.stateNavbarColor);
+    }, [context.stateNavbarColor]) */
 
     const getUserInfo = async () => {
         let response = await fetch('/api/user', {headers: { 'x-access-tokens': localStorage.getItem('token')}});
@@ -79,14 +77,14 @@ const Navigation = () => {
         context.assignFName('');
         context.assignLName('');
         setSign(!sign);
-        setNavbarColor('Home');
+        context.assignNavbarColor('Home');
         history.push('/');
     }
 
     const setRightNavToLoginSignup = () => {
         setRightNav(<Fragment>
             <Nav.Link>
-                <Link to="/auth/register" onClick={() => setNavbarColor('Home')} className="navbar-item-button-c">
+                <Link to="/auth/register" onClick={() => context.assignNavbarColor('Home')} className="navbar-item-button-c">
                     <button className='navbar-signup-c'>Sign up</button>
                 </Link>
             </Nav.Link>
@@ -94,7 +92,7 @@ const Navigation = () => {
                 <Link to={{
                             pathname: '/auth/login',
                             state: { detail: 'DIRECTED' }
-                        }} onClick={() => setNavbarColor('Home')} className="navbar-item-button-c">
+                        }} onClick={() => context.assignNavbarColor('Home')} className="navbar-item-button-c">
                     <button className='navbar-signin-c navbar-signin-colour'>Sign in</button>
                 </Link>
             </Nav.Link>
@@ -113,22 +111,22 @@ const Navigation = () => {
 
     return (
         <div className='nav-inner'>
-            <Navbar collapseOnSelect expand="lg" bg="dark" className={`${(navbarColor === 'Predictor') ? 'navbar-b' : (navbarColor === 'Tracker') ? 'navbar-r' : 'navbar-w'}`}>
+            <Navbar collapseOnSelect expand="lg" bg="dark" className={`${(context.stateNavbarColor === 'Predictor') ? 'navbar-b' : (context.stateNavbarColor === 'Tracker') ? 'navbar-r' : 'navbar-w'}`}>
                 <Navbar.Brand>
-                    <Link to='/' onClick={() => setNavbarColor('Home')} className='navbar-item-c navbar-item-width-height navbar-title'>
+                    <Link to='/' onClick={() => context.assignNavbarColor('Home')} className='navbar-item-c navbar-item-width-height navbar-title'>
                         Diabetes Doctor
                     </Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className='m-auto navbar-item-font'>
-                        {(loggedIn) && <Nav.Link>
-                            <Link to='/predict' onClick={() => setNavbarColor('Predictor')} className={`navbar-item-c navbar-item-width-height ${(navbarColor === 'Predictor') ? 'navbar-selected' : (navbarColor === 'Home') ? 'navbar-item-left' : 'navbar-item-normal'}`}>
+                        {(context.stateLoggedIn) && <Nav.Link>
+                            <Link to='/predict' onClick={() => context.assignNavbarColor('Predictor')} className={`navbar-item-c navbar-item-width-height ${(context.stateNavbarColor === 'Predictor') ? 'navbar-selected' : (context.stateNavbarColor === 'Home') ? 'navbar-item-left' : 'navbar-item-normal'}`}>
                                 Predictor
                             </Link>
                         </Nav.Link>}
-                        {(loggedIn) && <Nav.Link>
-                            <Link to='/track' onClick={() => setNavbarColor('Tracker')} className={`navbar-item-c navbar-item-width-height ${(navbarColor === 'Tracker') ? 'navbar-selected' : (navbarColor === 'Home') ? 'navbar-item-right' : 'navbar-item-normal'}`}>
+                        {(context.stateLoggedIn) && <Nav.Link>
+                            <Link to='/track' onClick={() => context.assignNavbarColor('Tracker')} className={`navbar-item-c navbar-item-width-height ${(context.stateNavbarColor === 'Tracker') ? 'navbar-selected' : (context.stateNavbarColor === 'Home') ? 'navbar-item-right' : 'navbar-item-normal'}`}>
                                 Tracker
                             </Link>
                         </Nav.Link>}
@@ -137,7 +135,7 @@ const Navigation = () => {
                         {rightNav}
                     </Nav>
                 </Navbar.Collapse>
-                {(navbarColor != 'Home') && <Wave fill='#fff'
+                {(context.stateNavbarColor != 'Home') && <Wave fill='#fff'
                     paused={false}
                     className='navbar-wave navbar-wave-1'
                     options={{
@@ -148,7 +146,7 @@ const Navigation = () => {
                     }}
                 />}
 
-                {(navbarColor != 'Home') && <Wave fill='#f6f6f6'
+                {(context.stateNavbarColor != 'Home') && <Wave fill='#f6f6f6'
                     paused={false}
                     className='navbar-wave navbar-wave-2'
                     options={{
