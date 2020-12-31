@@ -18,6 +18,15 @@ function App() {
   const [lName, setLName] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [navbarColor, setNavbarColor] = useState('Home');
+  const [isMobile, setIsMobile] = useState(false);
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth < 992) {
+        !isMobile && setIsMobile(true);
+    } else {
+        isMobile && setIsMobile(false);
+    }
+  });
 
   const assignPrediction = (pred) => {
     setPrediction(pred);
@@ -46,6 +55,10 @@ function App() {
   const assignNavbarColor = (color) => {
     setNavbarColor(color);
   }
+
+  const assignIsMobile = (mobile) => {
+    setIsMobile(mobile);
+  }
   
   return (
     <Context.Provider value = {{
@@ -62,7 +75,9 @@ function App() {
       stateLoggedIn: loggedIn,
       assignLoggedIn: (login) => assignLoggedIn(login),
       stateNavbarColor: navbarColor,
-      assignNavbarColor: (color) => assignNavbarColor(color)
+      assignNavbarColor: (color) => assignNavbarColor(color),
+      stateIsMobile: isMobile,
+      assignIsMobile: (mobile) => assignIsMobile(mobile)
     }}>
       <Router>
         <div className="App">

@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext, Fragment } from 'react';
 import '../css/Register.css';
 import Lottie from 'react-lottie';
 import loadingData from '../lotties/loading';
+import Context from '../utils/context';
 
 const Register = (props) => {
+    const context = useContext(Context);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -45,11 +47,11 @@ const Register = (props) => {
     let showConfirmPasswordIcon;
     let showHiddenDiv;
 
-    let firstNameBorder = 'border-normal';
-    let lastNameBorder = 'border-normal';
-    let emailBorder = 'border-normal';
-    let phoneNumberBorder = 'border-normal';
-    let passwordBorder = 'border-normal';
+    let firstNameBorder = null;
+    let lastNameBorder = null;
+    let emailBorder = null;
+    let phoneNumberBorder = null;
+    let passwordBorder = null;
     
     useEffect(() => {
         if (nameEmailPassword === 0) {
@@ -339,9 +341,9 @@ if (passwordError) {
         regFormPage = (
             <form className='register-form' onSubmit={handleNameNext}>
                 <h5 className='input-error-message'>{(submittedOnce) ? firstNameError : null}</h5>
-                <input ref={firstNameElement} className={`register-form-item register-input ${(submittedOnce) ? firstNameBorder: 'border-normal'} ${firstNameShake}`} value={firstName} type='text' placeholder='First Name' onChange={e => setFirstName(e.target.value)}/>
+                <input ref={firstNameElement} className={`register-form-item register-input ${(submittedOnce) ? firstNameBorder: null} ${firstNameShake}`} value={firstName} type='text' placeholder='First Name' onChange={e => setFirstName(e.target.value)}/>
                 <h5 className='input-error-message'>{(submittedOnce) ? lastNameError : null}</h5>
-                <input className={`register-form-item register-input ${(submittedOnce) ? lastNameBorder: 'border-normal'} ${lastNameShake}`} value={lastName} type='text' placeholder='Last Name' onChange={e => setLastName(e.target.value)}/>
+                <input className={`register-form-item register-input ${(submittedOnce) ? lastNameBorder: null} ${lastNameShake}`} value={lastName} type='text' placeholder='Last Name' onChange={e => setLastName(e.target.value)}/>
                 <div className='submission-buttons'>
                     <button className='register-form-item register-button' type='submit'>Next</button>
                 </div>
@@ -353,13 +355,13 @@ if (passwordError) {
         regFormPage = (
             <form className='register-form' onSubmit={handleEmailNext}>
                 <h5 className='input-error-message'>{(submittedOnce) ? emailError : null}</h5>
-                <input ref={emailElement} className={`register-form-item register-input ${(submittedOnce) ? emailBorder: 'border-normal'} ${emailShake}`} value={email} type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
+                <input ref={emailElement} className={`register-form-item register-input ${(submittedOnce) ? emailBorder: null} ${emailShake}`} value={email} type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
                 <h5 className='input-error-message'>{(submittedOnce) ? phoneNumberError : null}</h5>
-                <input className={`register-form-item register-input ${(submittedOnce) ? phoneNumberBorder: 'border-normal'} ${phoneNumberShake}`} value={phoneNumber} type='text' placeholder='Phone Number' onChange={e => setPhoneNumber(e.target.value)}/>
+                <input className={`register-form-item register-input ${(submittedOnce) ? phoneNumberBorder: null} ${phoneNumberShake}`} value={phoneNumber} type='text' placeholder='Phone Number' onChange={e => setPhoneNumber(e.target.value)}/>
                 <div></div>
                 <div className='submission-buttons'>
                     <button className='register-form-item back-button' type='button' onClick={() => setNameEmailPassword(0)}>Back</button>
-                    <div className='register-form-item'></div>
+                    <div className='register-form-item register-button-placeholder'></div>
                     <button className='register-form-item register-button' type='submit'>Next</button>
                 </div>
             </form>
@@ -371,20 +373,21 @@ if (passwordError) {
             <form className='register-form' onSubmit={handleSubmit}>
                 <h5 className='input-error-message'>{(submittedOnce) ? passwordError : null}</h5>
                 <div className='password-container'>
-                    <input ref={passwordElement} className={`password-item register-input ${(submittedOnce) ? passwordBorder: 'border-normal'} ${passwordShake}`} type={passwordType} value={password} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
+                    <input ref={passwordElement} className={`password-item register-input ${(submittedOnce) ? passwordBorder: null} ${passwordShake}`} type={passwordType} value={password} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
                     {showPasswordIcon}
                 </div>
                 <div className='password-container'>
-                    <input className={`password-item register-input ${(submittedOnce) ? passwordBorder: 'border-normal'} ${passwordShake}`} type={confirmPasswordType} value={confirmPassword} placeholder='Confirm Password' onChange={e => setConfirmPassword(e.target.value)}/>
+                    <input className={`password-item register-input ${(submittedOnce) ? passwordBorder: null} ${passwordShake}`} type={confirmPasswordType} value={confirmPassword} placeholder='Confirm Password' onChange={e => setConfirmPassword(e.target.value)}/>
                     {showConfirmPasswordIcon}
                 </div>
                 {showHiddenDiv}
                 <div className='submission-buttons'>
                     <button className='register-form-item back-button' type='button' onClick={() => setNameEmailPassword(1)}>Back</button>
-                    <div className='register-form-item'></div>
+                    <div className='register-form-item register-button-placeholder'></div>
                     <button className='register-form-item register-button' type='submit' disabled={loading}>
                         {!loading && 'Sign up'}
-                        {loading && <Lottie options={defaultOptions} height={75} width={75}></Lottie>}
+                        {loading && !context.stateIsMobile && <Lottie options={defaultOptions} height={75} width={75}></Lottie>}
+                        {loading && context.stateIsMobile && <Lottie options={defaultOptions} height={40} width={40}></Lottie>}
                     </button>
                 </div>
             </form>
@@ -394,8 +397,16 @@ if (passwordError) {
 
     return (
         <div className='register-container'>
+            
+            {(context.stateIsMobile) && <div className='register-form-mobile-container'>
+                <h1 className='welcome-message'>Create account</h1>
+                {regFormPage}
+            </div>}
+
+            {(!context.stateIsMobile) && <Fragment>
             <h1 className='welcome-message'>Create account</h1>
-            {regFormPage}
+            {regFormPage}</Fragment>}
+            
         </div>
     )
 }

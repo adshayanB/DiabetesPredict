@@ -1,3 +1,12 @@
+.fill-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
 .auth-container {
   display: flex;
   flex-direction: row;
@@ -12,112 +21,10 @@
   overflow: hidden;
 }
 
-.gradient-display-background-login {
-  clip: rect(0px, 50vw, 100vh, 0px);
-  transition: clip 1s ease-in-out;
-}
-
-.gradient-display-background-register {
-  clip: rect(0px, 100vw, 100vh, 50vw);
-  transition: clip 1s ease-in-out;
-}
-
-.gradient-display-background {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 1;
-  background-color: white;
-  background-image: url('../images/background.jpg');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-}
-
-.gradient-display-login-rfalse {
-  z-index: 2;
-  top: 0;
-  left: 0px;
-  opacity: 0;
-  background-image: linear-gradient(
-    to right,
-    rgba(255, 128, 44, 0.8),
-    rgba(227, 161, 67, 0.8)
-  );
-  transition: left 1s ease-in-out, opacity 1s ease-in-out;
-}
-
-.gradient-display-login-btrue {
-  z-index: 3;
-  top: 0;
-  left: 0px;
-  opacity: 1;
-  background-image: linear-gradient(
-    to right,
-    rgba(15, 76, 130, 0.8),
-    rgba(42, 112, 174, 0.8)
-  );
-  transition: left 1s ease-in-out, opacity 1s ease-in-out;
-}
-
-.gradient-display-register-rtrue {
-  top: 0;
-  z-index: 3;
-  left: 50vw;
-  opacity: 1;
-  background-image: linear-gradient(
-    to right,
-    rgba(255, 128, 44, 0.8),
-    rgba(227, 161, 67, 0.8)
-  );
-  transition: left 1s ease-in-out, opacity 1s ease-in-out;
-}
-.gradient-display-register-bfalse {
-  top: 0;
-  z-index: 2;
-  left: 50vw;
-  opacity: 0;
-  background-image: linear-gradient(
-    to right,
-    rgba(15, 76, 130, 0.8),
-    rgba(42, 112, 174, 0.8)
-  );
-  transition: left 1s ease-in-out, opacity 1s ease-in-out;
-}
-
-.gradient-display {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 50vw;
-  height: 100%;
-}
-
 .gradient-display-text {
   z-index: 4;
   font-size: 20px;
   color: white;
-}
-
-.gradient-display-button {
-  z-index: 4;
-  border-radius: 50px;
-  border-style: none;
-  border: 2px #ffffff solid;
-  color: white;
-  background-color: transparent;
-  font-size: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-  margin-top: 20px;
-  cursor: pointer;
-  transition: background-color 0.1s ease-in-out;
 }
 
 .gradient-display-button-blue:hover {
@@ -192,6 +99,7 @@
 
 .auth-logo {
   position: absolute;
+  color: white;
   z-index: 5;
   font-size: 1.25rem;
   font-weight: 600;
@@ -199,28 +107,252 @@
   left: 1rem;
   top: 0.96895rem;
   text-decoration: none;
-}
-
-.auth-logo-login {
-  color: white;
   transition: color 0.5s ease-in-out;
 }
 
-.auth-logo-register {
-  color: #ff802c;
-  transition: color 0.5s ease-in-out;
-}
-
-.auth-logo-login:hover {
+.auth-logo:hover {
   color: #e8e8e8;
   cursor: pointer;
   text-decoration: none;
   transition: color 0.125s ease-in-out;
 }
 
-.auth-logo-register:hover {
-  color: #e3a143;
-  cursor: pointer;
-  text-decoration: none;
+.auth-logo-login {
+  color: white !important;
+  transition: color 0.5s ease-in-out;
+}
+
+.auth-logo-register {
+  color: #ff802c !important;
+  transition: color 0.5s ease-in-out;
+}
+
+.auth-logo-login:hover {
+  color: #e8e8e8;
   transition: color 0.125s ease-in-out;
+}
+
+.auth-logo-register:hover {
+  color: #e3a143 !important;
+  transition: color 0.125s ease-in-out;
+}
+
+@media (min-width: 992px) {
+  .gradient-display-button {
+    z-index: 4;
+    border-radius: 50px;
+    border-style: none;
+    border: 2px #ffffff solid;
+    color: white;
+    background-color: transparent;
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+  }
+
+  .gradient-display-text {
+    z-index: 4;
+    font-size: 20px;
+    color: white;
+  }
+
+  .gradient-display-background-login {
+    clip: rect(0px, 50vw, 100vh, 0px);
+    transition: clip 1s ease-in-out;
+  }
+
+  .gradient-display-background-register {
+    clip: rect(0px, 100vw, 100vh, 50vw);
+    transition: clip 1s ease-in-out;
+  }
+
+  .gradient-display-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    background-color: white;
+    background-image: url('../images/background.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .gradient-display {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 50vw;
+    height: 100%;
+  }
+
+  .gradient-display-login-rfalse {
+    z-index: 2;
+    top: 0;
+    left: 0px;
+    opacity: 0;
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 128, 44, 0.8),
+      rgba(227, 161, 67, 0.8)
+    );
+    transition: left 1s ease-in-out, opacity 1s ease-in-out;
+  }
+
+  .gradient-display-login-btrue {
+    z-index: 3;
+    top: 0;
+    left: 0px;
+    opacity: 1;
+    background-image: linear-gradient(
+      to right,
+      rgba(15, 76, 130, 0.8),
+      rgba(42, 112, 174, 0.8)
+    );
+    transition: left 1s ease-in-out, opacity 1s ease-in-out;
+  }
+
+  .gradient-display-register-rtrue {
+    top: 0;
+    z-index: 3;
+    left: 50vw;
+    opacity: 1;
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 128, 44, 0.8),
+      rgba(227, 161, 67, 0.8)
+    );
+    transition: left 1s ease-in-out, opacity 1s ease-in-out;
+  }
+  .gradient-display-register-bfalse {
+    top: 0;
+    z-index: 2;
+    left: 50vw;
+    opacity: 0;
+    background-image: linear-gradient(
+      to right,
+      rgba(15, 76, 130, 0.8),
+      rgba(42, 112, 174, 0.8)
+    );
+    transition: left 1s ease-in-out, opacity 1s ease-in-out;
+  }
+}
+
+@media (max-width: 991px) {
+  .gradient-display-button {
+    z-index: 3;
+    border-radius: 50px;
+    border-style: none;
+    border: 2px #ffffff solid;
+    color: white;
+    background-color: transparent;
+    font-size: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+  }
+
+  .gradient-display-text {
+    z-index: 3;
+    font-size: 15px;
+    color: white;
+  }
+
+  .gradient-display-text-margin {
+    margin: 0px 20px 0px 0px;
+  }
+
+  .gradient-display-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    background-color: white;
+    background-image: url('../images/background.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .gradient-display {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 100%;
+  }
+
+  .gradient-display-login-rfalse {
+    z-index: 1;
+    top: 0;
+    left: 0px;
+    opacity: 0;
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 128, 44, 0.8),
+      rgba(227, 161, 67, 0.8)
+    );
+    transition: left 1s ease-in-out, opacity 1s ease-in-out;
+  }
+
+  .gradient-display-login-btrue {
+    z-index: 2;
+    top: 0;
+    left: 0px;
+    opacity: 1;
+    background-image: linear-gradient(
+      to right,
+      rgba(15, 76, 130, 0.8),
+      rgba(42, 112, 174, 0.8)
+    );
+    transition: left 1s ease-in-out, opacity 1s ease-in-out;
+  }
+
+  .gradient-display-register-rtrue {
+    top: 0;
+    z-index: 2;
+    left: 0px;
+    opacity: 1;
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 128, 44, 0.8),
+      rgba(227, 161, 67, 0.8)
+    );
+    transition: left 1s ease-in-out, opacity 1s ease-in-out;
+  }
+  .gradient-display-register-bfalse {
+    top: 0;
+    z-index: 1;
+    left: 0px;
+    opacity: 0;
+    background-image: linear-gradient(
+      to right,
+      rgba(15, 76, 130, 0.8),
+      rgba(42, 112, 174, 0.8)
+    );
+    transition: left 1s ease-in-out, opacity 1s ease-in-out;
+  }
+
+  .have-make-account {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 75.83%;
+    height: 50px;
+  }
 }

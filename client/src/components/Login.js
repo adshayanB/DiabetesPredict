@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useEffect, useRef, Fragment } from 'react';
 import '../css/Login.css';
 import Context from '../utils/context'
 import Lottie from 'react-lottie';
@@ -110,6 +110,7 @@ const Login = (props) => {
 
     return (
         <div className='login-container'>
+            {(context.stateIsMobile) && <div className='login-form-mobile-container'>
             <h1 className='welcome-message'>Welcome</h1>
             <form className='login-form' onSubmit={handleSubmit}>
                 <input ref={emailElement} className='login-form-item login-input' type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
@@ -119,11 +120,32 @@ const Login = (props) => {
                 </div>
                 <button className='login-form-item login-button' type='submit' disabled={loading}>
                     {!loading && 'Sign in'}
-                    {loading && <Lottie options={defaultOptions} height={75} width={75}></Lottie>}
+                    {loading && !context.stateIsMobile && <Lottie options={defaultOptions} height={75} width={75}></Lottie>}
+                    {loading && context.stateIsMobile && <Lottie options={defaultOptions} height={40} width={40}></Lottie>}
                 </button>
                 
             </form>
             {/*<h5 className='forgot-password'>Forgot your password?</h5>*/}
+            </div>}
+
+            {(!context.stateIsMobile) && <Fragment>
+            <h1 className='welcome-message'>Welcome</h1>
+            <form className='login-form' onSubmit={handleSubmit}>
+                <input ref={emailElement} className='login-form-item login-input' type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
+                <div className='password-container'>
+                    <input className='password-item login-input' type={passwordType} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
+                    {showPasswordIcon}
+                </div>
+                <button className='login-form-item login-button' type='submit' disabled={loading}>
+                    {!loading && 'Sign in'}
+                    {loading && !context.stateIsMobile && <Lottie options={defaultOptions} height={75} width={75}></Lottie>}
+                    {loading && context.stateIsMobile && <Lottie options={defaultOptions} height={40} width={40}></Lottie>}
+                </button>
+                
+            </form>
+            {/*<h5 className='forgot-password'>Forgot your password?</h5>*/}
+            </Fragment>}
+            
         </div>
     )
 }

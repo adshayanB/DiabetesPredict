@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useContext, useLayoutEffect, Fragment } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
@@ -41,6 +41,10 @@ const Auth = (props) => {
     useEffect(async() => {
         let response;
         let json;
+
+        if (window.innerWidth < 992) {
+            context.assignIsMobile(true);
+        }
 
         if (localStorage.getItem('token')) {
             localStorage.removeItem('token');
@@ -136,11 +140,11 @@ const Auth = (props) => {
     if (loginRegister) {
             gradientDisplay = ( <div className="gradient-display-background gradient-display-background-register">
                                     <div className='gradient-display gradient-display-register-rtrue'>
-                                        <h1 className='gradient-display-text'>Already have an account?</h1>
-                                        <button  onClick={() => {
+                                        {(!context.stateIsMobile) && <h1 className='gradient-display-text'>Already have an account?</h1>}
+                                        {(!context.stateIsMobile) && <button  onClick={() => {
                                             setRegShow(false);
                                             setRegNotification([]);
-                                            setLoginRegister(false)}} className='gradient-display-button gradient-display-button-red'>Login</button>
+                                            setLoginRegister(false)}} className='gradient-display-button gradient-display-button-red'>Login</button>}
                                     </div>
                                     <div className='gradient-display gradient-display-register-bfalse'></div>
                                 </div>);
@@ -150,11 +154,11 @@ const Auth = (props) => {
             gradientDisplay = ( <div className="gradient-display-background gradient-display-background-login">
                                     <div className='gradient-display gradient-display-login-rfalse'></div>
                                     <div className='gradient-display gradient-display-login-btrue'>
-                                        <h1 className='gradient-display-text'>Don't have an account?</h1>
-                                        <button onClick={() => {
+                                        {(!context.stateIsMobile) && <h1 className='gradient-display-text'>Don't have an account?</h1>}
+                                        {(!context.stateIsMobile) && <button onClick={() => {
                                             setLogShow(false);
                                             setLogNotification([]);
-                                            setLoginRegister(true)}} className='gradient-display-button gradient-display-button-blue'>Register</button>
+                                            setLoginRegister(true)}} className='gradient-display-button gradient-display-button-blue'>Register</button>}
                                     </div>
                                 </div>);
     }
@@ -191,10 +195,10 @@ const Auth = (props) => {
 
     return (
         <div className="auth-container">
-            <Link className={`auth-logo ${(loginRegister) ? 'auth-logo-register' : 'auth-logo-login'}`} to='/'>Diabetes Doctor</Link>
+            <Link className={`auth-logo ${(!context.stateIsMobile) ? ((loginRegister) ? 'auth-logo-register' : 'auth-logo-login') : null}`} to='/'>Diabetes Doctor</Link>
             {gradientDisplay}
 
-            <div className='fill'>
+            {(!context.stateIsMobile || loginRegister) && <div className='fill'>
                 
                 
                 <CSSTransition
@@ -214,11 +218,22 @@ const Auth = (props) => {
                     classNames="reg-transition"
                     unmountOnExit
                 >
-                    <Register assignRegNotif={(regNotif) => assignRegNotif(regNotif)}
-                              assignAuthEmail={(email) => assignAuthEmail(email)}/>
+                    <div className='fill-flex'>
+                        <Register assignRegNotif={(regNotif) => assignRegNotif(regNotif)}
+                                assignAuthEmail={(email) => assignAuthEmail(email)}/>
+                        
+                        {(context.stateIsMobile) && <div className='have-make-account'>
+                            <h1 className='gradient-display-text gradient-display-text-margin'>Already have an account?</h1>
+                            <button  onClick={() => {
+                                setRegShow(false);
+                                setRegNotification([]);
+                                setLoginRegister(false)}} className='gradient-display-button gradient-display-button-red'>Login</button>
+                        </div>}
+                    </div>
+                    
                 </CSSTransition>
-            </div>
-            <div className='fill'>
+            </div>}
+            {(!(context.stateIsMobile && loginRegister)) && <div className='fill'>
                 
                 <CSSTransition
                     in={!loginRegister}
@@ -236,11 +251,22 @@ const Auth = (props) => {
                     classNames="login-transition"
                     unmountOnExit
                 >
-                    <Login assignLogNotif={(logNotif) => assignLogNotif(logNotif)}
+                    <div className='fill-flex'>
+                        <Login assignLogNotif={(logNotif) => assignLogNotif(logNotif)}
                            assignAuthEmail={(email) => assignAuthEmail(email)}
                            currentLocation={location} />
+
+                        {(context.stateIsMobile) && <div className='have-make-account'>
+                            <h1 className='gradient-display-text gradient-display-text-margin'>Don't have an account?</h1>
+                            <button onClick={() => {
+                                setLogShow(false);
+                                setLogNotification([]);
+                                setLoginRegister(true)}} className='gradient-display-button gradient-display-button-blue'>Register</button>
+                        </div>}
+                    </div>
+                    
                 </CSSTransition>
-            </div>
+            </div>}
             
         </div>
     )

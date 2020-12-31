@@ -1,71 +1,11 @@
-.login-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 75.83%;
-}
-
-.login-input {
-  border-radius: 50px;
-  border-style: none;
-  border: 2px #7e7e7e solid;
-  background-color: #e8e8e8;
-  font-size: 25px;
-  padding: 20px;
-}
-
-.login-button {
-  transform: scale(1);
-  border-radius: 15px;
-  border: none;
-  font-size: 25px;
-  background-image: linear-gradient(to left, #0f4c82, #2a70ae);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
-  padding: 0;
-}
-
 .login-button:hover {
   transform: scale(1.025);
   transition: transform 0.2s ease-in-out;
 }
 
-.login-form-item {
-  width: 100%;
-  margin-bottom: 50px;
-  height: 70px;
-}
-
-.welcome-message {
-  margin-bottom: 50px;
-  width: 75.83%;
-  text-align: left;
-  font-size: 60px;
-}
-
 .forgot-password {
   color: #07b6fe;
   cursor: pointer;
-}
-
-.password-container {
-  position: relative;
-  width: 100%;
-  height: 70px;
-  padding: 0px;
-  margin-bottom: 50px;
 }
 
 .password-item {
@@ -77,32 +17,187 @@
   padding-right: 80px;
 }
 
-.show-password {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  right: 20px;
-  top: 15px;
-  filter: invert(46%) sepia(6%) saturate(0%) hue-rotate(182deg) brightness(105%)
-    contrast(91%);
-  background-image: url('../images/show-password.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center center;
-  cursor: pointer;
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-.hide-password {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  right: 20px;
-  top: 15px;
-  filter: invert(46%) sepia(6%) saturate(0%) hue-rotate(182deg) brightness(105%)
-    contrast(91%);
-  background-image: url('../images/hide-password.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center center;
-  cursor: pointer;
+.login-form-mobile-container {
+  display: flex;
+  border-radius: 25px;
+  background-color: white;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  padding: 2rem;
+}
+
+@media (min-width: 992px) {
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 75.83%;
+  }
+
+  .password-container {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    padding: 0px;
+    margin-bottom: 50px;
+  }
+
+  .login-button {
+    transform: scale(1);
+    border-radius: 15px;
+    border: none;
+    font-size: 25px;
+    background-image: linear-gradient(to left, #0f4c82, #2a70ae);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    padding: 0;
+    margin-bottom: 0px !important;
+  }
+
+  .login-form-item {
+    width: 100%;
+    margin-bottom: 50px;
+    height: 70px;
+  }
+
+  .login-input {
+    border-radius: 50px;
+    border-style: none;
+    background-color: #e8e8e8;
+    font-size: 25px;
+    padding: 20px;
+  }
+
+  .show-password {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: 20px;
+    top: 15px;
+    filter: invert(46%) sepia(6%) saturate(0%) hue-rotate(182deg)
+      brightness(105%) contrast(91%);
+    background-image: url('../images/show-password.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    cursor: pointer;
+  }
+
+  .hide-password {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: 20px;
+    top: 15px;
+    filter: invert(46%) sepia(6%) saturate(0%) hue-rotate(182deg)
+      brightness(105%) contrast(91%);
+    background-image: url('../images/hide-password.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    cursor: pointer;
+  }
+
+  .welcome-message {
+    margin-bottom: 50px;
+    width: 75.83%;
+    text-align: left;
+    font-size: 60px;
+  }
+}
+
+@media (max-width: 991px) {
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .password-container {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    padding: 0px;
+    margin-bottom: 30px;
+  }
+
+  .login-button {
+    transform: scale(1);
+    border-radius: 15px;
+    border: none;
+    font-size: 20px;
+    background-image: linear-gradient(to left, #0f4c82, #2a70ae);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    padding: 0;
+    margin-bottom: 0px !important;
+  }
+
+  .login-form-item {
+    width: 100%;
+    margin-bottom: 30px;
+    height: 50px;
+  }
+
+  .login-input {
+    border-radius: 50px;
+    border-style: none;
+    background-color: #e8e8e8;
+    font-size: 20px;
+    padding: 20px;
+  }
+
+  .show-password {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 20px;
+    top: 10px;
+    filter: invert(46%) sepia(6%) saturate(0%) hue-rotate(182deg)
+      brightness(105%) contrast(91%);
+    background-image: url('../images/show-password.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    cursor: pointer;
+  }
+
+  .hide-password {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 20px;
+    top: 10px;
+    filter: invert(46%) sepia(6%) saturate(0%) hue-rotate(182deg)
+      brightness(105%) contrast(91%);
+    background-image: url('../images/hide-password.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    cursor: pointer;
+  }
+
+  .welcome-message {
+    margin-bottom: 50px;
+    width: 100%;
+    text-align: left;
+    font-size: 35px;
+  }
 }
