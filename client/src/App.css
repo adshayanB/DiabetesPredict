@@ -105,3 +105,20 @@
 .MuiPaper-elevation2 {
   box-shadow: none !important;
 }
+
+.MuiTableHead-root {
+  position: relative;
+  z-index: 0;
+}
+
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(-200px);
+  z-index: 1;
+}
+
+.page-transition-enter .page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: opacity 500ms ease-in-out, transform 500ms ease-in-out;
+}

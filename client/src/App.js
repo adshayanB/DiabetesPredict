@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Context from './utils/context';
@@ -27,6 +27,14 @@ function App() {
         isMobile && setIsMobile(false);
     }
   });
+
+  useEffect(() => {
+    if (window.innerWidth < 992) {
+      !isMobile && setIsMobile(true);
+    } else {
+      isMobile && setIsMobile(false);
+    }
+  }, [])
 
   const assignPrediction = (pred) => {
     setPrediction(pred);

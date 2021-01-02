@@ -1,4 +1,4 @@
-import React, { useState, useContext, useLayoutEffect, Fragment } from 'react';
+import React, { useState, useContext, useLayoutEffect, Fragment, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Wave from 'react-wavify';
 import Context from '../utils/context';
@@ -7,6 +7,7 @@ import '../css/Predictor.css';
 import PredictorForm from './PredictorForm';
 import Result from './Result';
 import PredictionHistory from './PredictionHistory';
+import styled from 'styled-components';
 
 const Predictor = () => {
     //Values that give a prediction outcome of True (Have Diabetes) for
@@ -30,8 +31,32 @@ const Predictor = () => {
     const [result, setResult] = useState('');
     const [resultFace, setResultFace] = useState(null);
     const [updatePredictHistory, setUpdatePredictHistory] = useState(false);
+    const [clipSize, setClipSize] = useState();
+    const [predictSize, setPredictSize] = useState(false);
+
+    const BackContainer = styled.div`
+        clip: rect(0px, 100vw, ${clipSize}px, 0px);
+    `;
 
     let predictInnerBackground;
+
+    window.addEventListener("resize", () => {
+        setClipSize(document.getElementById('predict-page-main').clientHeight);
+        if (window.innerWidth < 560) {
+            (predictSize != true) && setPredictSize(true)
+        } else {
+            (predictSize != false) && setPredictSize(false)
+        }
+    });
+
+    useEffect(() => {
+        setClipSize(document.getElementById('predict-page-main').clientHeight);
+        if (window.innerWidth < 560) {
+            (predictSize != true) && setPredictSize(true)
+        } else {
+            (predictSize != false) && setPredictSize(false)
+        }
+    }, []);
 
     useLayoutEffect(() => {
         context.assignShowNav(true);
@@ -63,13 +88,13 @@ const Predictor = () => {
         }
     } else {
         console.log('test')
-        predictInnerBackground = 'predict-inner-white'
+        predictInnerBackground = `predict-inner-white ${(predictSize) ? 'predict-white-height-small' : 'predict-white-height-big'}`
     }
 
     return (
         <Fragment>
-            <div className='predict-background-container'></div>
-            <div className='predict-page-main-container'>
+            <BackContainer className='predict-background-container'></BackContainer>
+            <div id='predict-page-main' className='predict-page-main-container'>
                 <div className='predict-main-container'>
                     <div className={`predict-inner-container ${predictInnerBackground}`}>
                         <CSSTransition

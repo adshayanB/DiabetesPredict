@@ -47,8 +47,15 @@
 
 .predict-inner-white {
   background-color: white !important;
-  height: 762px !important;
   transition: background-color 500ms ease-in-out, height 1s ease-in-out;
+}
+
+.predict-white-height-small {
+  height: 792px !important;
+}
+
+.predict-white-height-big {
+  height: 762px !important;
 }
 
 .predict-inner-green {

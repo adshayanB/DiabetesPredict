@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useContext, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import Wave from 'react-wavify';
 import '../css/Navigation.css';
@@ -7,6 +7,7 @@ import Context from '../utils/context';
 
 const Navigation = () => {
     let history = useHistory();
+    const currentLoc = useLocation();
     const context = useContext(Context);
     const [rightNav, setRightNav] = useState();
     const [sign, setSign] = useState(false);
@@ -28,7 +29,7 @@ const Navigation = () => {
             console.log('you found home')
             context.assignNavbarColor('Home');
         }
-    }, [])
+    }, [currentLoc])
     
     useEffect(async() => {
         if (localStorage.getItem('token')) {
@@ -77,14 +78,14 @@ const Navigation = () => {
         context.assignFName('');
         context.assignLName('');
         setSign(!sign);
-        context.assignNavbarColor('Home');
+        //''context.assignNavbarColor('Home');
         history.push('/');
     }
 
     const setRightNavToLoginSignup = () => {
         setRightNav(<Fragment>
             <Nav.Link>
-                <Link to="/auth/register" onClick={() => context.assignNavbarColor('Home')} className="navbar-item-button-c">
+                <Link to="/auth/register" className="navbar-item-button-c">
                     <button className='navbar-signup-c'>Sign up</button>
                 </Link>
             </Nav.Link>
@@ -92,7 +93,7 @@ const Navigation = () => {
                 <Link to={{
                             pathname: '/auth/login',
                             state: { detail: 'DIRECTED' }
-                        }} onClick={() => context.assignNavbarColor('Home')} className="navbar-item-button-c">
+                        }} className="navbar-item-button-c">
                     <button className='navbar-signin-c navbar-signin-colour'>Sign in</button>
                 </Link>
             </Nav.Link>
@@ -113,7 +114,7 @@ const Navigation = () => {
         <div className='nav-inner'>
             <Navbar collapseOnSelect expand="lg" bg="dark" className={`${(context.stateNavbarColor === 'Predictor') ? 'navbar-b' : (context.stateNavbarColor === 'Tracker') ? 'navbar-r' : 'navbar-w'}`}>
                 <Navbar.Brand>
-                    <Link to='/' onClick={() => context.assignNavbarColor('Home')} className='navbar-item-c navbar-item-width-height navbar-title'>
+                    <Link to='/' className='navbar-item-c navbar-item-width-height navbar-title'>
                         Diabetes Doctor
                     </Link>
                 </Navbar.Brand>
@@ -121,12 +122,12 @@ const Navigation = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className='m-auto navbar-item-font'>
                         {(context.stateLoggedIn) && <Nav.Link>
-                            <Link to='/predict' onClick={() => context.assignNavbarColor('Predictor')} className={`navbar-item-c navbar-item-width-height ${(context.stateNavbarColor === 'Predictor') ? 'navbar-selected' : (context.stateNavbarColor === 'Home') ? 'navbar-item-left' : 'navbar-item-normal'}`}>
+                            <Link to='/predict' className={`navbar-item-c navbar-item-width-height ${(context.stateNavbarColor === 'Predictor') ? 'navbar-selected' : (context.stateNavbarColor === 'Home') ? 'navbar-item-left' : 'navbar-item-normal'}`}>
                                 Predictor
                             </Link>
                         </Nav.Link>}
                         {(context.stateLoggedIn) && <Nav.Link>
-                            <Link to='/track' onClick={() => context.assignNavbarColor('Tracker')} className={`navbar-item-c navbar-item-width-height ${(context.stateNavbarColor === 'Tracker') ? 'navbar-selected' : (context.stateNavbarColor === 'Home') ? 'navbar-item-right' : 'navbar-item-normal'}`}>
+                            <Link to='/track' className={`navbar-item-c navbar-item-width-height ${(context.stateNavbarColor === 'Tracker') ? 'navbar-selected' : (context.stateNavbarColor === 'Home') ? 'navbar-item-right' : 'navbar-item-normal'}`}>
                                 Tracker
                             </Link>
                         </Nav.Link>}

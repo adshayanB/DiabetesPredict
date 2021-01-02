@@ -5,12 +5,6 @@
   background-color: white !important;
 }
 
-.navbar-w {
-  position: relative;
-  width: 100%;
-  background-color: transparent !important;
-}
-
 .left-container-c {
   flex: 1;
   display: flex;
@@ -64,11 +58,19 @@
   position: relative;
 }
 
-.navbar {
+.navbar-b,
+.navbar-r {
   padding-right: 2rem !important;
   padding-left: 2rem !important;
   padding-top: 1rem !important;
   padding-bottom: 0 !important;
+}
+
+.navbar-w {
+  padding-right: 2rem !important;
+  padding-left: 2rem !important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
 }
 
 .nav-center {
@@ -196,13 +198,6 @@
   font-size: 1.5rem !important;
 }
 
-.navbar-w .navbar-title {
-  background: linear-gradient(to left, #0f4c82, #2a70ae);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 1.5rem !important;
-}
-
 .navbar-b .navbar-item-normal {
   color: #212121;
   font-size: 1.15rem !important;
@@ -215,11 +210,6 @@
 
 .navbar-w .navbar-item-right {
   color: #fff;
-  font-size: 1.15rem !important;
-}
-
-.navbar-w .navbar-item-left {
-  color: #2a70ae;
   font-size: 1.15rem !important;
 }
 
@@ -367,4 +357,46 @@
   width: 100%;
   z-index: 10;
   position: absolute;
+}
+
+@media (min-width: 992px) {
+  .navbar-w {
+    position: relative;
+    width: 100%;
+    background: transparent !important;
+  }
+
+  .navbar-w .navbar-title {
+    background: linear-gradient(to left, #0f4c82, #2a70ae);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.5rem !important;
+  }
+
+  .navbar-w .navbar-item-left {
+    color: #2a70ae;
+    font-size: 1.15rem !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar-w {
+    position: relative;
+    width: 100%;
+    background-image: linear-gradient(
+      to right,
+      rgba(15, 76, 130, 0.8),
+      rgba(42, 112, 174, 0.8)
+    ) !important;
+  }
+
+  .navbar-w .navbar-title {
+    color: white;
+    font-size: 1.5rem !important;
+  }
+
+  .navbar-w .navbar-item-left {
+    color: white;
+    font-size: 1.15rem !important;
+  }
 }

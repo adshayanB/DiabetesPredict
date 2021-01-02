@@ -5,6 +5,7 @@ import TrackerTable from './TrackerTable';
 import Wave from 'react-wavify';
 import { Line } from 'react-chartjs-2';
 import '../css/Tracker.css';
+import styled from 'styled-components';
 
 const Tracker = () => {
     
@@ -15,8 +16,13 @@ const Tracker = () => {
     const [separatedData, setSeparatedData] = useState({x: [], y: []});
     const [graphColour, setGraphColour] = useState('');
     const [data, setData] = useState([]);
+    const [clipSize, setClipSize] = useState();
     let sortedData = [];
     let count = 0;
+
+    const BackContainer = styled.div`
+        clip: rect(0px, 100vw, ${clipSize}px, 0px);
+    `;
 
     window.addEventListener("resize", () => {
         if (window.innerWidth <= 1139.59) {
@@ -26,7 +32,13 @@ const Tracker = () => {
                 document.getElementById('inner-graph').classList.remove("inner-graph-container-resize");
             }
         }
+
+        setClipSize(document.getElementById('tracker-page-main').clientHeight);
     });
+
+    useEffect(() => {
+        setClipSize(document.getElementById('tracker-page-main').clientHeight);
+    }, []);
 
     useLayoutEffect(() => {
         context.assignShowNav(true);
@@ -117,8 +129,8 @@ const Tracker = () => {
 
     return (
         <Fragment>
-            <div className='tracker-background-container'></div>
-            <div className='tracker-page-main-container'>
+            <BackContainer className='tracker-background-container'></BackContainer>
+            <div id='tracker-page-main' className='tracker-page-main-container'>
                 <div className='tracker-main-container'>
                     <TrackerTable stateData={data}
                                   assignData={(table_data) => assignData(table_data)}/>       
