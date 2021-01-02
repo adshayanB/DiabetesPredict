@@ -61,7 +61,7 @@
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
   margin-top: 20px;
-  padding: 5px;
+  padding: 10px;
 }
 
 .home-orange-button {
@@ -75,7 +75,7 @@
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
   margin-top: 20px;
-  padding: 5px;
+  padding: 10px;
 }
 
 .home-blue-button:hover,
@@ -446,7 +446,7 @@
   .home-subheading {
     font-size: 1.35rem !important;
     width: 100%;
-    text-align: left;
+    text-align: center;
   }
 
   .paragraph-font {

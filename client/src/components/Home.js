@@ -96,7 +96,7 @@ const Home = () => {
                             <HomePageArt className='home-page-art' style={{transform: `translateY(${(context.stateIsMobile) ? translateUp : 0}%)`}}/>
                         </motion.div>
                     </div>
-                    {(!context.stateIsMobile) && <HashLink smooth to='/#home-predict-container' className='remove-link-styles'><div className='home-arrow'></div></HashLink>}
+                    <HashLink smooth to='/#home-predict-container' className='remove-link-styles'><div className='home-arrow'></div></HashLink>
                 </div>
             </div>
             <div id='home-predict-container' className='home-predict-info-container'>
@@ -105,8 +105,8 @@ const Home = () => {
                 </div>
 
                 <div className='home-predict-content-right'>
-                    <h2 id='home-predict-info' className='home-title home-subheading'>Want to know if you <span className='home-title-blue'>have diabetes?</span></h2>
-                    <div className='paragraph-font' style={{width: predictWidth}}>Our predictor helps users screen if they may have diabetes as they may not have access to a doctor or a test during these unprecedented times. This by no chance should be used as replacement for an actual medical test, but just as an initial screen to help manage it if you may not have access to a doctor.</div>
+                    <h2 id='home-predict-info' className='home-title home-subheading'>Find out if you <span className='home-title-blue'>have diabetes.</span></h2>
+                    {/*<div className='paragraph-font' style={{width: predictWidth}}>Our predictor helps users screen if they may have diabetes as they may not have access to a doctor or a test during these unprecedented times. This by no chance should be used as replacement for an actual medical test, but just as an initial screen to help manage it if you may not have access to a doctor.</div>*/}
                     {(!context.stateLoggedIn) && <Link to={{
                             pathname: '/auth',
                             state: { detail: 'PREDICTOR' }
@@ -140,7 +140,7 @@ const Home = () => {
                     />
                 <div className='home-tracker-content-left'>
                     <h2 id='home-tracker-info' className='home-title home-subheading'>Keep track of <span className='home-title-orange'>your medical data.</span></h2>
-                    <div className='paragraph-font' style={{width: trackerWidth}}>Our tracker helps users to help track and manage their glucose and other medical data. This way they can keep track of any changes as during these times it is very easy to lose track of time and change. This track section will ensure users manage themselves and keep in control of their health.</div>
+                    {/*<div className='paragraph-font' style={{width: trackerWidth}}>Our tracker helps users to help track and manage their glucose and other medical data. This way they can keep track of any changes as during these times it is very easy to lose track of time and change. This track section will ensure users manage themselves and keep in control of their health.</div>*/}
                     {(!context.stateLoggedIn) && <Link to={{
                             pathname: '/auth',
                             state: { detail: 'TRACKER' }
