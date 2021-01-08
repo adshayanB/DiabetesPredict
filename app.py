@@ -226,7 +226,7 @@ def login():
         return jsonify(message='User is not verified')
     if check_password_hash(user.password,login['password']):
         token=jwt.encode({'public_id': user.public_id,'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-        return jsonify(token=token)
+        return jsonify(token=token.decode('UTF-8'))
     else:
         return jsonify(message='Your email or password is incorrect'),401
 
