@@ -17,7 +17,8 @@ import jwt
 import datetime
 import requests
 from functools import wraps
-
+import re 
+regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 filename = 'diabetes-model.pkl'
 model = pickle.load(open(filename, 'rb'))
 app = Flask(__name__)
@@ -149,6 +150,14 @@ def register():
 
     if test:
         return jsonify(message='A user with this email already exists.'), 409
+    if len(data['password'])<8:
+        return jsonify(message="Password must be more then 8 chat")
+    if data['firstName']=="":
+        return jsonify(message="Enter a first name")
+    if not re.search(regex,data['email']):
+        return jsonify(message="Not valid email")
+    if data['lastname']=="":
+        return jsonify(message="Enter a last name")
     if data['password'] != data['confirmPassword']:
         return jsonify(message='Passwords do not  match')
     else:
@@ -217,7 +226,7 @@ def login():
         return jsonify(message='User is not verified')
     if check_password_hash(user.password,login['password']):
         token=jwt.encode({'public_id': user.public_id,'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-        return jsonify(token=token.decode('UTF-8'))
+        return jsonify(token=token)
     else:
         return jsonify(message='Your email or password is incorrect'),401
 
@@ -362,7 +371,7 @@ def viewTrackData(current_user,dataId):
     else:
         return jsonify(message='No Tracking Data')
 
-@app.route('/api/trackData/<dataId>', methods=['PUT'])
+@app.route('/api/trackdata/<dataId>', methods=['PUT'])
 @token_required
 def editTackData(current_user,dataId):
     user={}
