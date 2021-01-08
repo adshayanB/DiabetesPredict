@@ -9,13 +9,23 @@
   border: 2px #e8e8e8 solid;
   background-color: #f6f6f6;
   font-size: 19px;
-  padding: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 70px;
 }
 
 .predict-form-item {
   width: 100%;
-  margin-bottom: 15px;
+  height: 100%;
+}
+
+.predict-item-container {
+  position: relative;
+  width: 100%;
   height: 50px;
+  padding: 0px;
+  margin-bottom: 15px;
 }
 
 .predict-form {
@@ -36,9 +46,27 @@
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
+  width: 100%;
+  height: 50px;
+  margin-bottom: 15px;
 }
 
 .predict-button:hover {
   transform: scale(1.025);
   transition: transform 0.2s ease-in-out;
+}
+
+.information-icon {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  right: 20px;
+  top: 17px;
+  filter: invert(46%) sepia(6%) saturate(0%) hue-rotate(182deg) brightness(105%)
+    contrast(91%);
+  background-image: url('../images/information.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  cursor: pointer;
 }

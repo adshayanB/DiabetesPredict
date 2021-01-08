@@ -8,6 +8,7 @@ import PredictorForm from './PredictorForm';
 import Result from './Result';
 import PredictionHistory from './PredictionHistory';
 import styled from 'styled-components';
+import { Alert } from 'react-bootstrap';
 
 const Predictor = () => {
     //Values that give a prediction outcome of True (Have Diabetes) for
@@ -33,6 +34,9 @@ const Predictor = () => {
     const [updatePredictHistory, setUpdatePredictHistory] = useState(false);
     const [clipSize, setClipSize] = useState();
     const [predictSize, setPredictSize] = useState(false);
+    const [infoNotifShow, setInfoNotifShow] = useState(false);
+    const [infoNotification, setInfoNotification] = useState([]);
+    const [predictWidth, setPredictWidth] = useState();
 
     const BackContainer = styled.div`
         clip: rect(0px, 100vw, ${clipSize}px, 0px);
@@ -42,20 +46,40 @@ const Predictor = () => {
 
     window.addEventListener("resize", () => {
         setClipSize(document.getElementById('predict-page-main').clientHeight);
-        if (window.innerWidth < 560) {
+        if (window.innerWidth < 467) {
             (predictSize != true) && setPredictSize(true)
         } else {
             (predictSize != false) && setPredictSize(false)
+        }
+
+        if (window.innerWidth < (960 + 2*parseFloat(window.getComputedStyle(document.getElementById('predict-inner')).getPropertyValue('margin-right')))) {
+            setPredictWidth(true);
+            //document.getElementById('predict-inner').classList.add("inner-graph-container-resize");
+        } else {
+            setPredictWidth(false);
+            //if (document.getElementById('predict-inner').classList.contains('inner-graph-container-resize')) {
+             //   document.getElementById('predict-inner').classList.remove("inner-graph-container-resize");
+            //}
         }
     });
 
     useEffect(() => {
-        setClipSize(document.getElementById('predict-page-main').clientHeight);
         if (window.innerWidth < 560) {
             (predictSize != true) && setPredictSize(true)
         } else {
             (predictSize != false) && setPredictSize(false)
         }
+
+        if (window.innerWidth < (960 + 2*parseFloat(window.getComputedStyle(document.getElementById('predict-inner')).getPropertyValue('margin-right')))) {
+            setPredictWidth(true);
+            //document.getElementById('predict-inner').classList.add("inner-graph-container-resize");
+        } else {
+            setPredictWidth(false);
+            //if (document.getElementById('predict-inner').classList.contains('inner-graph-container-resize')) {
+             //   document.getElementById('predict-inner').classList.remove("inner-graph-container-resize");
+            //}
+        }
+        setClipSize(document.getElementById('predict-page-main').clientHeight);
     }, []);
 
     useLayoutEffect(() => {
@@ -78,17 +102,25 @@ const Predictor = () => {
         setUpdatePredictHistory(update);
     }
 
+    const assignInfoNotifShow = (show) => {
+        setInfoNotifShow(show);
+    }
+
+    const assignInfoNotification = (notif) => {
+        setInfoNotification(notif);
+    }
+
     if (predictResults) {
         if (result === 'Oh no! You have diabetes!') {
-            predictInnerBackground = 'predict-inner-red';
+            predictInnerBackground = `predict-inner-red ${(predictWidth) && 'inner-graph-container-resize'}`;
         }
 
         else if (result === "Great! You don't have diabetes!") {
-            predictInnerBackground = 'predict-inner-green';
+            predictInnerBackground = `predict-inner-green ${(predictWidth) && 'inner-graph-container-resize'}`;
         }
     } else {
         console.log('test')
-        predictInnerBackground = `predict-inner-white ${(predictSize) ? 'predict-white-height-small' : 'predict-white-height-big'}`
+        predictInnerBackground = `predict-inner-white ${(predictSize) ? 'predict-white-height-small' : 'predict-white-height-big'} ${(predictWidth) && 'inner-graph-container-resize'}`
     }
 
     return (
@@ -96,7 +128,11 @@ const Predictor = () => {
             <BackContainer className='predict-background-container'></BackContainer>
             <div id='predict-page-main' className='predict-page-main-container'>
                 <div className='predict-main-container'>
-                    <div className={`predict-inner-container ${predictInnerBackground}`}>
+                    {(infoNotifShow) && <Alert style={{width: `${(predictWidth) ? 'calc(100vw - 4rem)' : '960px'}`, textAlign: 'left', marginTop: '2rem'}} variant='info' onClose={() => setInfoNotifShow(false)} dismissible>
+                        <Alert.Heading>{infoNotification[0]}</Alert.Heading>
+                        <p>{infoNotification[1]}</p>
+                    </Alert>}
+                    <div id='predict-inner' className={`predict-inner-container ${predictInnerBackground}`}>
                         <CSSTransition
                             in={!predictResults}
                             timeout={1000}
@@ -109,6 +145,8 @@ const Predictor = () => {
                                                     assignResult={(text) => assignResult(text)}
                                                     assignResultFace={(face) => assignResultFace(face)}
                                                     assignUpdatePredictHistory={(update) => assignUpdatePredictHistory(update)}
+                                                    assignInfoNotifShow={(show) => assignInfoNotifShow(show)}
+                                                    assignInfoNotification={(notif) => assignInfoNotification(notif)}
                                                     stateUpdatePredictHistory={updatePredictHistory}/>
                                 
                             </div>

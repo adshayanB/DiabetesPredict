@@ -341,9 +341,9 @@ if (passwordError) {
         regFormPage = (
             <form className='register-form' onSubmit={handleNameNext}>
                 <h5 className='input-error-message'>{(submittedOnce) ? firstNameError : null}</h5>
-                <input ref={firstNameElement} className={`register-form-item register-input ${(submittedOnce) ? firstNameBorder: null} ${firstNameShake}`} value={firstName} type='text' placeholder='First Name' onChange={e => setFirstName(e.target.value)}/>
+                <input ref={firstNameElement} className={`register-form-item register-input ${(submittedOnce) ? firstNameBorder: null} ${firstNameShake}`} name='fname' value={firstName} type='text' placeholder='First Name' onChange={e => setFirstName(e.target.value)}/>
                 <h5 className='input-error-message'>{(submittedOnce) ? lastNameError : null}</h5>
-                <input className={`register-form-item register-input ${(submittedOnce) ? lastNameBorder: null} ${lastNameShake}`} value={lastName} type='text' placeholder='Last Name' onChange={e => setLastName(e.target.value)}/>
+                <input className={`register-form-item register-input ${(submittedOnce) ? lastNameBorder: null} ${lastNameShake}`} value={lastName} name='lname' type='text' placeholder='Last Name' onChange={e => setLastName(e.target.value)}/>
                 <div className='submission-buttons'>
                     <button className='register-form-item register-button' type='submit'>Next</button>
                 </div>
@@ -355,9 +355,9 @@ if (passwordError) {
         regFormPage = (
             <form className='register-form' onSubmit={handleEmailNext}>
                 <h5 className='input-error-message'>{(submittedOnce) ? emailError : null}</h5>
-                <input ref={emailElement} className={`register-form-item register-input ${(submittedOnce) ? emailBorder: null} ${emailShake}`} value={email} type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
+                <input ref={emailElement} className={`register-form-item register-input ${(submittedOnce) ? emailBorder: null} ${emailShake}`} name='email' value={email} type='email' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
                 <h5 className='input-error-message'>{(submittedOnce) ? phoneNumberError : null}</h5>
-                <input className={`register-form-item register-input ${(submittedOnce) ? phoneNumberBorder: null} ${phoneNumberShake}`} value={phoneNumber} type='text' placeholder='Phone Number' onChange={e => setPhoneNumber(e.target.value)}/>
+                <input className={`register-form-item register-input ${(submittedOnce) ? phoneNumberBorder: null} ${phoneNumberShake}`} name='phone' value={phoneNumber} type='text' placeholder='Phone Number' onChange={e => setPhoneNumber(e.target.value)}/>
                 <div></div>
                 <div className='submission-buttons'>
                     <button className='register-form-item back-button' type='button' onClick={() => setNameEmailPassword(0)}>Back</button>
@@ -373,11 +373,11 @@ if (passwordError) {
             <form className='register-form' onSubmit={handleSubmit}>
                 <h5 className='input-error-message'>{(submittedOnce) ? passwordError : null}</h5>
                 <div className='password-container'>
-                    <input ref={passwordElement} className={`password-item register-input ${(submittedOnce) ? passwordBorder: null} ${passwordShake}`} type={passwordType} value={password} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
+                    <input ref={passwordElement} className={`password-item register-input ${(submittedOnce) ? passwordBorder: null} ${passwordShake}`} name='password' type={passwordType} value={password} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
                     {showPasswordIcon}
                 </div>
                 <div className='password-container'>
-                    <input className={`password-item register-input ${(submittedOnce) ? passwordBorder: null} ${passwordShake}`} type={confirmPasswordType} value={confirmPassword} placeholder='Confirm Password' onChange={e => setConfirmPassword(e.target.value)}/>
+                    <input className={`password-item register-input ${(submittedOnce) ? passwordBorder: null} ${passwordShake}`} type={confirmPasswordType} name='passwordConfirm' value={confirmPassword} placeholder='Confirm Password' onChange={e => setConfirmPassword(e.target.value)}/>
                     {showConfirmPasswordIcon}
                 </div>
                 {showHiddenDiv}

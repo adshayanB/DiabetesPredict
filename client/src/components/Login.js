@@ -113,9 +113,9 @@ const Login = (props) => {
             {(context.stateIsMobile) && <div className='login-form-mobile-container'>
             <h1 className='welcome-message'>Welcome</h1>
             <form className='login-form' onSubmit={handleSubmit}>
-                <input ref={emailElement} className='login-form-item login-input' type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
+                <input ref={emailElement} className='login-form-item login-input' name='email' type='email' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
                 <div className='password-container'>
-                    <input className='password-item login-input' type={passwordType} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
+                    <input className='password-item login-input' type={passwordType} name='password' placeholder='Password' onChange={e => setPassword(e.target.value)}/>
                     {showPasswordIcon}
                 </div>
                 <button className='login-form-item login-button' type='submit' disabled={loading}>
@@ -131,9 +131,9 @@ const Login = (props) => {
             {(!context.stateIsMobile) && <Fragment>
             <h1 className='welcome-message'>Welcome</h1>
             <form className='login-form' onSubmit={handleSubmit}>
-                <input ref={emailElement} className='login-form-item login-input' type='text' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
+                <input ref={emailElement} className='login-form-item login-input' name='email' type='email' placeholder='Email' onChange={e => setEmail(e.target.value)}/>
                 <div className='password-container'>
-                    <input className='password-item login-input' type={passwordType} placeholder='Password' onChange={e => setPassword(e.target.value)}/>
+                    <input className='password-item login-input' type={passwordType} placeholder='Password' name='password' onChange={e => setPassword(e.target.value)}/>
                     {showPasswordIcon}
                 </div>
                 <button className='login-form-item login-button' type='submit' disabled={loading}>

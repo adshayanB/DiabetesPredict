@@ -19,7 +19,7 @@
 .predict-main-container {
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-image: linear-gradient(
@@ -40,7 +40,10 @@
   align-items: center;
   padding: 2rem;
   border-radius: 25px;
-  margin: 2rem;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
   width: 960px;
   height: 762px;
 }
@@ -51,11 +54,11 @@
 }
 
 .predict-white-height-small {
-  height: 792px !important;
+  height: 742px !important;
 }
 
 .predict-white-height-big {
-  height: 762px !important;
+  height: 702px !important;
 }
 
 .predict-inner-green {

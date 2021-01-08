@@ -4,7 +4,7 @@ import Login from './Login';
 import Register from './Register';
 import Lottie from 'react-lottie';
 import { CSSTransition } from 'react-transition-group'; 
-import {Alert, Button} from 'react-bootstrap'
+import {Alert, Button} from 'react-bootstrap';
 import loadingData from '../lotties/loading';
 import Context from '../utils/context';
 import '../css/Auth.css';
