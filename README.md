@@ -3,6 +3,6 @@ Diabetes Doctor is a virtual platform built to help individuals screen for diabe
 Checkout site here!
 http://diabetesdoctor.herokuapp.com/
 
-Test account to view all functionalites readily </br>
-email: diabetesd0@gmail.com
+Test account to view all functionalties readily </br>
+email: diabetesd0test@gmail.com </br>
 pass: test1234
