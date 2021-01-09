@@ -106,8 +106,6 @@ const Login = (props) => {
         passwordType = 'password';
     }
 
-    //Password field should be secured and should not be openly updated in state
-
     return (
         <div className='login-container'>
             {(context.stateIsMobile) && <div className='login-form-mobile-container'>

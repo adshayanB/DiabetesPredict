@@ -70,3 +70,7 @@
   background-position: center center;
   cursor: pointer;
 }
+
+.text-bold {
+  font-weight: bold;
+}

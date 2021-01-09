@@ -150,16 +150,16 @@ def register():
 
     if test:
         return jsonify(message='A user with this email already exists.'), 409
-    if len(data['password'])<8:
-        return jsonify(message="Password must be more then 8 chat")
     if data['firstName']=="":
         return jsonify(message="Enter a first name")
-    if not re.search(regex,data['email']):
-        return jsonify(message="Not valid email")
-    if data['lastname']=="":
+    if data['lastName']=="":
         return jsonify(message="Enter a last name")
+    if not re.search(regex,data['email']):
+        return jsonify(message="Invalid email")
+    if len(data['password'])<8:
+        return jsonify(message="Password must be more then 8 characters")
     if data['password'] != data['confirmPassword']:
-        return jsonify(message='Passwords do not  match')
+        return jsonify(message='Passwords do not match')
     else:
         hashed_password=generate_password_hash(data['password'], method='sha256')
         new_user=User(

@@ -126,6 +126,26 @@ const Register = (props) => {
         else if (json.message === 'A user with this email already exists.') {
             props.assignRegNotif(['Email already in use!',`A user with the email ${email} already exists. Please use another email.`, 'danger']);
         }
+
+        else if (json.message === 'Enter a first name') {
+            props.assignRegNotif(['Empty field!', 'Please input your first name.', 'danger'])
+        }
+
+        else if (json.message === 'Enter a last name') {
+            props.assignRegNotif(['Empty field!', 'Please input your last name.', 'danger'])
+        }
+
+        else if (json.message === 'Invalid email') {
+            props.assignRegNotif(['Invalid email!', 'Please input a valid email.', 'danger'])
+        }
+
+        else if (json.message === 'Password must be more then 8 characters') {
+            props.assignRegNotif(['Invalid password!', 'Your password must be at least 8 characters long.', 'danger'])
+        }
+
+        else if (json.message === 'Passwords do not match') {
+            props.assignRegNotif(['Confirm password mismatch', 'Your password and confirm password fields do not match.', 'danger'])
+        }
     }
 
     const validateEmail = address => {
