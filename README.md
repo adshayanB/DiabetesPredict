@@ -1,4 +1,4 @@
-Diabetes Doctor is a virtual platform built to help individuals screen for diabetes using our accurate machine learning model, and track and manage their medical data.
+Diabetes Doctor is a virtual platform built to help individuals screen for diabetes using an accurate machine learning model as well as enables users to track and manage their medical data.
 
 Checkout site here!
 http://diabetesdoctor.herokuapp.com/
